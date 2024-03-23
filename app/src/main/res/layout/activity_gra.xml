@@ -17,4 +17,13 @@
         android:textSize="48sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/czlowieczekUIIMG"
+        android:layout_width="248dp"
+        android:layout_height="219dp"
+        android:layout_marginStart="88dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imieCzlowieczka"
+        app:srcCompat="@android:drawable/btn_minus" />
 </androidx.constraintlayout.widget.ConstraintLayout>
