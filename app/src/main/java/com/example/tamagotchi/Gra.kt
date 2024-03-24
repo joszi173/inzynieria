@@ -1,21 +1,17 @@
 package com.example.tamagotchi
 
-import android.annotation.SuppressLint
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.content.ContentValues
-import android.graphics.BitmapFactory
 import android.provider.BaseColumns
-import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class Gra : AppCompatActivity() {
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -26,19 +22,6 @@ class Gra : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val mbd = BDManager(BDHelper(applicationContext))
-        val czlowieczekImg = BitmapFactory.decodeResource(getResources(), R.drawable.czlowieczek1)
-
-        mbd.zapiszWszystkieDane("Sliwka", czlowieczekImg)
-
-        val imie = mbd.odczytajImie()
-        val imieCzlowieczka = findViewById<TextView>(R.id.imieCzlowieczka)
-        imieCzlowieczka.setText(imie);
-
-        val img = mbd.odczytajObraz()
-        val czlowieczekUIIMG = findViewById<ImageView>(R.id.czlowieczekUIIMG)
-        czlowieczekUIIMG.setImageBitmap(img)
-
         /////////////////////////////////
         //1. baza danych istnieje/zawiera dane?
         //tak- Zczytaj z bazy
@@ -47,6 +30,35 @@ class Gra : AppCompatActivity() {
             //dodanie Czlowieczka do bazy
             //powrót/ponowne uruchomienie tej aktywności????
 //////////////////////////////////////////////////////////////////////////////////
+
+        //////////////////////////////////////////
+        //osobna klasa na bazę, zapis i odczyt?
+        //manager bazy danych
+        val mbd = ManagerBazyDanych(applicationContext)
+        //baza danych
+        val bd:SQLiteDatabase = mbd.writableDatabase
+        ////////////////////////////////////////////////
+        val imie="Sliwka"
+        val czlowieczek=Czlowieczek(this, imie)
+        ///////////////////////////////////////////////////////////
+
+        //////////////////////////////////////////////////////////////////////////////
+        //zapis do bazy
+        val daneDoBazy=ContentValues().apply { put(InfoTabeli.KOLUMNA_IMIE, imie) }
+        val nowyWiersz=bd.insert(InfoTabeli.NAZWA_TABELI, null, daneDoBazy)
+//////////////////////////////////////////////////////////////////
+        //czlowieczek.podajImie();
+        ///////////////////////////////////////////////////////////////
+        //odczyt z bazy
+        val projection = arrayOf(InfoTabeli.KOLUMNA_IMIE)
+        val selection = "${InfoTabeli.KOLUMNA_IMIE} = ?"
+        val selectionArgs = arrayOf("Sliwka")
+        val cursor = bd.query(InfoTabeli.NAZWA_TABELI,projection, selection, selectionArgs, null, null, null)
+        cursor.moveToNext()
+        val imieZBazy = cursor.getString(0)
+        val imieCzlowieczka = findViewById<TextView>(R.id.imieCzlowieczka)
+        imieCzlowieczka.setText(imieZBazy);
+        ////////////////////////////////////////////////////////
 
     }
 
