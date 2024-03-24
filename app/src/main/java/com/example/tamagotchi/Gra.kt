@@ -1,5 +1,6 @@
 package com.example.tamagotchi
 
+import Orzeszek
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.widget.Button
@@ -8,6 +9,7 @@ import android.content.ContentValues
 import android.provider.BaseColumns
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
@@ -22,6 +24,15 @@ class Gra : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+
+        val orzeszekView = Orzeszek(this, null)
+        val parentLayout = findViewById<ConstraintLayout>(R.id.main) // lub inne odpowiednie id rodzica
+        parentLayout.addView(orzeszekView)
+
+
+
+
         /////////////////////////////////
         //1. baza danych istnieje/zawiera dane?
         //tak- Zczytaj z bazy
@@ -65,3 +76,5 @@ class Gra : AppCompatActivity() {
 
 
 }
+
+
