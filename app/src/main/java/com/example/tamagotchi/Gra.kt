@@ -1,5 +1,6 @@
 package com.example.tamagotchi
 
+import Orzeszek
 import android.annotation.SuppressLint
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.provider.BaseColumns
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
@@ -26,6 +28,11 @@ class Gra : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        val orzeszekView = Orzeszek(this, null)
+        val parentLayout = findViewById<ConstraintLayout>(R.id.main) // lub inne odpowiednie id rodzica
+        parentLayout.addView(orzeszekView)
+
         val mbd = BDManager(BDHelper(applicationContext))
         val czlowieczekImg = BitmapFactory.decodeResource(getResources(), R.drawable.czlowieczek1)
 
