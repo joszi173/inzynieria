@@ -29,21 +29,37 @@ class Gra : AppCompatActivity() {
             insets
         }
 
+
         val orzeszekView = Orzeszek(this, null)
         val parentLayout = findViewById<ConstraintLayout>(R.id.main) // lub inne odpowiednie id rodzica
         parentLayout.addView(orzeszekView)
 
+
+        //baza danych
         val mbd = BDManager(BDHelper(applicationContext))
+
+        //temp. do sprawdzenia jak zapisać obraz w bazie danych
         val czlowieczekImg = BitmapFactory.decodeResource(getResources(), R.drawable.czlowieczek1)
 
+        //zapis do bazy
         mbd.zapiszWszystkieDane("Sliwka", czlowieczekImg)
 
+        //odczytanie imienia człowieczka z bazy danych
         val imie = mbd.odczytajImie()
+
+        //znalezienie elementu tekstowego UI
         val imieCzlowieczka = findViewById<TextView>(R.id.imieCzlowieczka)
+
+        //wypisanie imienia człowieczka
         imieCzlowieczka.setText(imie);
 
+        //odczytanie obrazu z bazy danych
         val img = mbd.odczytajObraz()
+
+        //znalezienie elementu img UI
         val czlowieczekUIIMG = findViewById<ImageView>(R.id.czlowieczekUIIMG)
+
+        //wyświetlenie obrazu
         czlowieczekUIIMG.setImageBitmap(img)
 
         /////////////////////////////////
