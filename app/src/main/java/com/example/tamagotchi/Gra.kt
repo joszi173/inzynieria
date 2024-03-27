@@ -1,6 +1,7 @@
 package com.example.tamagotchi
 
 import Orzeszek
+import Orange
 import android.annotation.SuppressLint
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
@@ -30,10 +31,19 @@ class Gra : AppCompatActivity() {
         }
         val czlowieczek = Czlowieczek(this, "imie")
 
-        //tworzenie orzeszka
-        val orzeszekView = Orzeszek(this, null, czlowieczek)
-        val parentLayout = findViewById<ConstraintLayout>(R.id.main) // lub inne odpowiednie id rodzica
-        parentLayout.addView(orzeszekView)
+
+
+//tworzenie orzeszka/pomaranczy - narazie mozna jeden obiekt przesuwać
+        val orangeView = Orange(this, null)
+        val parentLayoutOrange = findViewById<ConstraintLayout>(R.id.main)
+        parentLayoutOrange.addView(orangeView)
+
+
+
+
+
+
+
 
         val pasekGlod=PasekGlod()
 
