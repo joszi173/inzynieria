@@ -26,9 +26,7 @@ object PodstawoweKomendy{
 class BDHelper(context: Context):SQLiteOpenHelper(context, InfoTabeli.NAZWA_TABELI, null, 1) {
 
     override fun onCreate(db: SQLiteDatabase?) {
-        db?.execSQL(PodstawoweKomendy.SQL_USUN_TABELE)
         db?.execSQL(PodstawoweKomendy.SQL_STWORZ_TABELE)
-
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
