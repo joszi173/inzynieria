@@ -7,9 +7,11 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
+import com.example.tamagotchi.Czlowieczek
 import com.example.tamagotchi.R
+import com.example.tamagotchi.Glod
 
-class Orzeszek(context: Context, attrs: AttributeSet?) : View(context, attrs) {
+class Orzeszek(context: Context, attrs: AttributeSet?,  private val cz: Czlowieczek) : View(context, attrs) {
     private val normalBitmap: Bitmap
     private val paint = Paint()
     private var offsetX = 0f
@@ -20,13 +22,17 @@ class Orzeszek(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     private var lastClickTime: Long = 0
 
     init {
+        //grafika orzeszka
         normalBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.orzeszek)
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+
+        //wspolrzedne orzeszka
         val x = (width - normalBitmap.width) / 2f + offsetX
         val y = (height - normalBitmap.height) / 2f + offsetY
+
         canvas.drawBitmap(normalBitmap, x, y, paint)
     }
 
@@ -41,10 +47,20 @@ class Orzeszek(context: Context, attrs: AttributeSet?) : View(context, attrs) {
             }
             MotionEvent.ACTION_MOVE -> {
                 if (isMoving) {
-                    offsetX += event.x - lastTouchX
-                    offsetY += event.y - lastTouchY
-                    lastTouchX = event.x
-                    lastTouchY = event.y
+                    val newX = event.x
+                    val newY = event.y
+                    val deltaX = newX - lastTouchX
+                    val deltaY = newY - lastTouchY
+
+                    // Sprawdź, czy nowe położenie orzeszka nie wyjdzie poza granice ekranu
+                    if (offsetX + deltaX >= 0 && offsetX + deltaX + normalBitmap.width <= width &&
+                        offsetY + deltaY >= 0 && offsetY + deltaY + normalBitmap.height <= height) {
+                        offsetX += deltaX
+                        offsetY += deltaY
+                    }
+
+                    lastTouchX = newX
+                    lastTouchY = newY
                     invalidate()
                 }
             }
@@ -53,7 +69,9 @@ class Orzeszek(context: Context, attrs: AttributeSet?) : View(context, attrs) {
                 val clickTime = System.currentTimeMillis()
                 if (clickTime - lastClickTime < DOUBLE_CLICK_TIME_DELTA) {
                     // Podwójne kliknięcie, wywołaj funkcję Dodaj()
-                    Dodaj()
+                    //Glod.zmniejszPasek()
+                    cz.karmienie()
+                    println("O Witaj, świecie!")
                 }
                 lastClickTime = clickTime
             }
@@ -69,10 +87,6 @@ class Orzeszek(context: Context, attrs: AttributeSet?) : View(context, attrs) {
         val right = centerX + normalBitmap.width
         val bottom = centerY + normalBitmap.height
         return x >= left && x <= right && y >= top && y <= bottom
-    }
-
-    private fun Dodaj() {
-        Toast.makeText(context, "PASEK", Toast.LENGTH_SHORT).show()
     }
 
     companion object {

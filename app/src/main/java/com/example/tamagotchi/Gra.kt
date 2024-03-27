@@ -28,10 +28,14 @@ class Gra : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        val czlowieczek = Czlowieczek(this, "imie")
 
-        val orzeszekView = Orzeszek(this, null)
+        //tworzenie orzeszka
+        val orzeszekView = Orzeszek(this, null, czlowieczek)
         val parentLayout = findViewById<ConstraintLayout>(R.id.main) // lub inne odpowiednie id rodzica
         parentLayout.addView(orzeszekView)
+
+        val pasekGlod=PasekGlod()
 
         val mbd = BDManager(BDHelper(applicationContext))
         val czlowieczekImg = BitmapFactory.decodeResource(getResources(), R.drawable.czlowieczek1)
