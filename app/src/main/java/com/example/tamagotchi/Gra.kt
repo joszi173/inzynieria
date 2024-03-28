@@ -1,18 +1,27 @@
 package com.example.tamagotchi
 
 import Orzeszek
+import Orange
+import showNoti
 import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.content.ContentValues
+import android.content.Context
 import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.os.Build
 import android.provider.BaseColumns
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.resources.Compatibility.Api18Impl.setAutoCancel
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.NotificationCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
@@ -30,10 +39,15 @@ class Gra : AppCompatActivity() {
         }
         val czlowieczek = Czlowieczek(this, "imie")
 
-        //tworzenie orzeszka
-        val orzeszekView = Orzeszek(this, null, czlowieczek)
-        val parentLayout = findViewById<ConstraintLayout>(R.id.main) // lub inne odpowiednie id rodzica
-        parentLayout.addView(orzeszekView)
+
+
+//tworzenie orzeszka/pomaranczy - narazie mozna jeden obiekt przesuwać
+        val orangeView = Orange(this, null)
+        orangeView.ustaw(500f,1000f)
+        val parentLayoutOrange = findViewById<ConstraintLayout>(R.id.main)
+        parentLayoutOrange.addView(orangeView)
+
+
 
         val pasekGlod=PasekGlod()
 
@@ -64,3 +78,6 @@ class Gra : AppCompatActivity() {
 
 
 }
+
+
+
