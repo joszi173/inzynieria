@@ -17,6 +17,15 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class Gra : AppCompatActivity() {
+
+    /*
+    System.currentTimeMillis() - aktualny czas w milisekundach
+    BDManager.odczytajOstatnieKarmienie() - czas ostatnego karmienia w milisekundach
+
+
+
+     */
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -28,7 +37,10 @@ class Gra : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val czlowieczek = Czlowieczek(this, "imie")
+        val mbd = BDManager(BDHelper(applicationContext))
+
+
+        val czlowieczek = Czlowieczek(this, "Sliwka", mbd)
 
         //tworzenie orzeszka
         val orzeszekView = Orzeszek(this, null, czlowieczek)
@@ -37,18 +49,22 @@ class Gra : AppCompatActivity() {
 
         val pasekGlod=PasekGlod()
 
-        val mbd = BDManager(BDHelper(applicationContext))
+
         val czlowieczekImg = BitmapFactory.decodeResource(getResources(), R.drawable.czlowieczek1)
 
-        mbd.zapiszWszystkieDane("Sliwka", czlowieczekImg)
+        mbd.zapiszWszystkieDane(czlowieczek.imie, czlowieczekImg)
 
         val imie = mbd.odczytajImie()
         val imieCzlowieczka = findViewById<TextView>(R.id.imieCzlowieczka)
-        imieCzlowieczka.setText(imie);
+        println(imie)
+        println(czlowieczek.imie)
+        imieCzlowieczka.setText(imie.toString());
 
         val img = mbd.odczytajObraz()
         val czlowieczekUIIMG = findViewById<ImageView>(R.id.czlowieczekUIIMG)
         czlowieczekUIIMG.setImageBitmap(img)
+
+
 
         /////////////////////////////////
         //1. baza danych istnieje/zawiera dane?

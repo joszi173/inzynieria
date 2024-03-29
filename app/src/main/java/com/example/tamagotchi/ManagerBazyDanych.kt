@@ -14,12 +14,13 @@ import java.io.ByteArrayOutputStream
 object InfoTabeli:BaseColumns{
     const val NAZWA_TABELI = "Tamagotchi"
     //const val KOLUMNA_ID = "ID"
+    const val KOLUMNA_OST_KARMIENIE = "OstatnieKarmienie"
     const val KOLUMNA_IMIE = "Imie"
     const val KOLUMNA_OBRAZ = "Obraz"
 }
 
 object PodstawoweKomendy{
-    const val SQL_STWORZ_TABELE = "CREATE TABLE ${InfoTabeli.NAZWA_TABELI} (${BaseColumns._ID} INTEGER PRIMARY KEY, ${InfoTabeli.KOLUMNA_IMIE} VARCHAR(255) NOT NULL, ${InfoTabeli.KOLUMNA_OBRAZ} BLOB NOT NULL)"
+    const val SQL_STWORZ_TABELE = "CREATE TABLE ${InfoTabeli.NAZWA_TABELI} (${BaseColumns._ID} INTEGER PRIMARY KEY, ${InfoTabeli.KOLUMNA_IMIE} VARCHAR(255) NOT NULL,${InfoTabeli.KOLUMNA_OST_KARMIENIE} REAL, ${InfoTabeli.KOLUMNA_OBRAZ} BLOB NOT NULL)"
 
     const val SQL_USUN_TABELE = "DROP TABLE IF EXISTS ${InfoTabeli.NAZWA_TABELI}"
 }
@@ -65,10 +66,36 @@ class BDManager(val bdHelper: BDHelper){
         val imgDoBazy = byteArray.toByteArray()
 
         val daneDoBazy= ContentValues().apply { put(InfoTabeli.KOLUMNA_IMIE, imie)
-                                                put(InfoTabeli.KOLUMNA_OBRAZ, imgDoBazy) }
+                                                put(InfoTabeli.KOLUMNA_OST_KARMIENIE, System.currentTimeMillis())
+                                                put(InfoTabeli.KOLUMNA_OBRAZ, imgDoBazy)}
 
         val nowyWiersz=bd.insert(InfoTabeli.NAZWA_TABELI, null, daneDoBazy)
+        println(imie)
     }
+    public fun zapiszKarmienie(){
+        //System.currentTimeMillis();
+        //mapOf<String, Long> = Map(InfoTabeli.KOLUMNA_OST_KARMIENIE, System.currentTimeMillis())
+        val curTime= ContentValues().apply { put(InfoTabeli.KOLUMNA_OST_KARMIENIE, System.currentTimeMillis())}
+        //val map = mapOf(InfoTabeli.KOLUMNA_OST_KARMIENIE to System.currentTimeMillis())
+        val id=arrayOf("1")
+        bd.update(InfoTabeli.NAZWA_TABELI, curTime, "_id = ?", id)
+        //UPDATE table_name SET column1 = value1, column2 = value2 WHERE condition;
+    }
+
+    @SuppressLint("Range")
+    public fun odczytajOstatnieKarmienie(): Long {
+
+        val projection = arrayOf(InfoTabeli.KOLUMNA_OST_KARMIENIE)
+        val cursor:Cursor = bd.query(InfoTabeli.NAZWA_TABELI,projection, null, null/*selection, selectionArgs*/, null, null, null)
+        cursor.moveToFirst()
+        val czasKarmienia = cursor.getLong(cursor.getColumnIndex(projection[0]));
+        cursor.close();
+        return czasKarmienia
+
+    }
+
+
+
     @SuppressLint("Recycle", "Range")
     public fun odczytajImie(): String? {
 
@@ -85,6 +112,7 @@ class BDManager(val bdHelper: BDHelper){
         //}
         //val imieZBazy = cursor.getString(0)
         cursor.close();
+        println(imieZBazy)
         return imieZBazy
     }
 
