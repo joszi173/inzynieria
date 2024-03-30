@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.content.ContentValues
+import android.database.sqlite.SQLiteException
 import android.graphics.BitmapFactory
 import android.provider.BaseColumns
 import android.widget.ImageView
@@ -15,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import java.lang.Exception
+import java.lang.RuntimeException
 
 class Gra : AppCompatActivity() {
 
@@ -37,43 +40,43 @@ class Gra : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        //otworzenie/stworzenie bazy danych
         val mbd = BDManager(BDHelper(applicationContext))
-
-
-        val czlowieczek = Czlowieczek(this, "Sliwka", mbd)
+        //pusty wiersz
+        //mbd.stworzPustyWiersz()
+        //stworzenie człowieczka (klasa do wyrzucenia?)
+        val czlowieczek = Czlowieczek(this, "Kitkat", mbd)
 
         //tworzenie orzeszka
         val orzeszekView = Orzeszek(this, null, czlowieczek)
         val parentLayout = findViewById<ConstraintLayout>(R.id.main) // lub inne odpowiednie id rodzica
         parentLayout.addView(orzeszekView)
 
+        //stworzenie paska głodu
         val pasekGlod=PasekGlod()
-
-
+        //otwarcie obrazu człowieczka
         val czlowieczekImg = BitmapFactory.decodeResource(getResources(), R.drawable.czlowieczek1)
 
-        mbd.zapiszWszystkieDane(czlowieczek.imie, czlowieczekImg)
-
+        //aktualizowanie danych człowieczka w bazie
+        //try {
+         //   mbd.zapiszWszystkieDane(czlowieczek.imie, czlowieczekImg)
+        //}catch (e: RuntimeException){
+         //   mbd.stworzPustyWiersz()
+         //   mbd.zapiszWszystkieDane(czlowieczek.imie, czlowieczekImg)
+       // }
+        //odczytanie imienia z bazy i wyświetlenie na ekran
         val imie = mbd.odczytajImie()
         val imieCzlowieczka = findViewById<TextView>(R.id.imieCzlowieczka)
-        println(imie)
-        println(czlowieczek.imie)
+        //println(imie)
+        //println(czlowieczek.imie)
         imieCzlowieczka.setText(imie.toString());
 
+        //odczytanie obrazu z bazy i wyświetlenie na ekran
         val img = mbd.odczytajObraz()
         val czlowieczekUIIMG = findViewById<ImageView>(R.id.czlowieczekUIIMG)
         czlowieczekUIIMG.setImageBitmap(img)
 
-
-
-        /////////////////////////////////
-        //1. baza danych istnieje/zawiera dane?
-        //tak- Zczytaj z bazy
-        //nie- przekieruj to activity StworzCzlowieczka (wybor wygladu, koloru, imienia)
-            //stworzenie Czlowieczka
-            //dodanie Czlowieczka do bazy
-            //powrót/ponowne uruchomienie tej aktywności????
-//////////////////////////////////////////////////////////////////////////////////
 
     }
 

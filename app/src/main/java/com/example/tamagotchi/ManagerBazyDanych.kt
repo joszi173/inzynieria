@@ -20,7 +20,8 @@ object InfoTabeli:BaseColumns{
 }
 
 object PodstawoweKomendy{
-    const val SQL_STWORZ_TABELE = "CREATE TABLE ${InfoTabeli.NAZWA_TABELI} (${BaseColumns._ID} INTEGER PRIMARY KEY, ${InfoTabeli.KOLUMNA_IMIE} VARCHAR(255) NOT NULL,${InfoTabeli.KOLUMNA_OST_KARMIENIE} REAL, ${InfoTabeli.KOLUMNA_OBRAZ} BLOB NOT NULL)"
+    const val SQL_STWORZ_TABELE = "CREATE TABLE ${InfoTabeli.NAZWA_TABELI} (${BaseColumns._ID} INTEGER PRIMARY KEY, ${InfoTabeli.KOLUMNA_IMIE} VARCHAR(255),${InfoTabeli.KOLUMNA_OST_KARMIENIE} REAL, ${InfoTabeli.KOLUMNA_OBRAZ} BLOB)"
+    const val SQL_DODAJ_WIERSZ = "INSERT INTO ${InfoTabeli.NAZWA_TABELI} (${InfoTabeli.KOLUMNA_IMIE})VALUES( \"stworzonyWiersz\");"
 
     const val SQL_USUN_TABELE = "DROP TABLE IF EXISTS ${InfoTabeli.NAZWA_TABELI}"
 }
@@ -28,6 +29,7 @@ class BDHelper(context: Context):SQLiteOpenHelper(context, InfoTabeli.NAZWA_TABE
 
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(PodstawoweKomendy.SQL_STWORZ_TABELE)
+        db?.execSQL(PodstawoweKomendy.SQL_DODAJ_WIERSZ)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -58,8 +60,20 @@ class BDManager(val bdHelper: BDHelper){
 
      public fun onCreate(){
 
+
+             //stworzPustyWiersz()
+
+     }
+
+    public fun stworzPustyWiersz(){//zamienić na Tworzenie Człowieczka
+        val daneDoBazy= ContentValues().apply { put(InfoTabeli.KOLUMNA_IMIE, "nowyWiersz")}
+        //val id=arrayOf("1")
+        //bd.update(InfoTabeli.NAZWA_TABELI, daneDoBazy, "_id = ?", arrayOf("1"))
+        val nowyWiersz=bd.insert(InfoTabeli.NAZWA_TABELI, null, daneDoBazy)
     }
+
     public fun zapiszWszystkieDane(imie:String, img:Bitmap){
+
 
         val byteArray=ByteArrayOutputStream()
         img.compress(Bitmap.CompressFormat.PNG, 100, byteArray)
@@ -68,8 +82,9 @@ class BDManager(val bdHelper: BDHelper){
         val daneDoBazy= ContentValues().apply { put(InfoTabeli.KOLUMNA_IMIE, imie)
                                                 put(InfoTabeli.KOLUMNA_OST_KARMIENIE, System.currentTimeMillis())
                                                 put(InfoTabeli.KOLUMNA_OBRAZ, imgDoBazy)}
-
-        val nowyWiersz=bd.insert(InfoTabeli.NAZWA_TABELI, null, daneDoBazy)
+        val id=arrayOf("1")
+        bd.update(InfoTabeli.NAZWA_TABELI, daneDoBazy, "_id = ?", id)
+        //val nowyWiersz=bd.insert(InfoTabeli.NAZWA_TABELI, null, daneDoBazy)
         println(imie)
     }
     public fun zapiszKarmienie(){
@@ -93,7 +108,6 @@ class BDManager(val bdHelper: BDHelper){
         return czasKarmienia
 
     }
-
 
 
     @SuppressLint("Recycle", "Range")
