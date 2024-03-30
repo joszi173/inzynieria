@@ -13,7 +13,6 @@ import java.io.ByteArrayOutputStream
 
 object InfoTabeli:BaseColumns{
     const val NAZWA_TABELI = "Tamagotchi"
-    //const val KOLUMNA_ID = "ID"
     const val KOLUMNA_OST_KARMIENIE = "OstatnieKarmienie"
     const val KOLUMNA_IMIE = "Imie"
     const val KOLUMNA_OBRAZ = "Obraz"
@@ -40,40 +39,20 @@ class BDHelper(context: Context):SQLiteOpenHelper(context, InfoTabeli.NAZWA_TABE
 }
 
 class BDManager(val bdHelper: BDHelper){
-    //al bdHelper: BDHelper=BDHelper(applicationContext)
 
     val bd:SQLiteDatabase=bdHelper.writableDatabase
 
-    /*
-    val bd:SQLiteDatabase = mbd.writableDatabase
-    val daneDoBazy=ContentValues().apply { put(InfoTabeli.KOLUMNA_IMIE, imie) }
-    val nowyWiersz=bd.insert(InfoTabeli.NAZWA_TABELI, null, daneDoBazy)
-    val projection = arrayOf(InfoTabeli.KOLUMNA_IMIE)
-    val selection = "${InfoTabeli.KOLUMNA_IMIE} = ?"
-    val selectionArgs = arrayOf("Sliwka")
-    val cursor = bd.query(InfoTabeli.NAZWA_TABELI,projection, selection, selectionArgs, null, null, null)
-    cursor.moveToNext()
-    val imieZBazy = cursor.getString(0)
-    val imieCzlowieczka = findViewById<TextView>(R.id.imieCzlowieczka)
-    imieCzlowieczka.setText(imieZBazy);
-    */
 
      public fun onCreate(){
-
-
-             //stworzPustyWiersz()
 
      }
 
     public fun stworzPustyWiersz(){//zamienić na Tworzenie Człowieczka
         val daneDoBazy= ContentValues().apply { put(InfoTabeli.KOLUMNA_IMIE, "nowyWiersz")}
-        //val id=arrayOf("1")
-        //bd.update(InfoTabeli.NAZWA_TABELI, daneDoBazy, "_id = ?", arrayOf("1"))
         val nowyWiersz=bd.insert(InfoTabeli.NAZWA_TABELI, null, daneDoBazy)
     }
 
     public fun zapiszWszystkieDane(imie:String, img:Bitmap){
-
 
         val byteArray=ByteArrayOutputStream()
         img.compress(Bitmap.CompressFormat.PNG, 100, byteArray)
@@ -88,13 +67,9 @@ class BDManager(val bdHelper: BDHelper){
         println(imie)
     }
     public fun zapiszKarmienie(){
-        //System.currentTimeMillis();
-        //mapOf<String, Long> = Map(InfoTabeli.KOLUMNA_OST_KARMIENIE, System.currentTimeMillis())
         val curTime= ContentValues().apply { put(InfoTabeli.KOLUMNA_OST_KARMIENIE, System.currentTimeMillis())}
-        //val map = mapOf(InfoTabeli.KOLUMNA_OST_KARMIENIE to System.currentTimeMillis())
         val id=arrayOf("1")
         bd.update(InfoTabeli.NAZWA_TABELI, curTime, "_id = ?", id)
-        //UPDATE table_name SET column1 = value1, column2 = value2 WHERE condition;
     }
 
     @SuppressLint("Range")
@@ -114,17 +89,9 @@ class BDManager(val bdHelper: BDHelper){
     public fun odczytajImie(): String? {
 
             val projection = arrayOf(InfoTabeli.KOLUMNA_IMIE)
-            //val selection = "${BaseColumns._ID} = ?"
-        //val selectionArgs = arrayOf("0")
         val cursor:Cursor = bd.query(InfoTabeli.NAZWA_TABELI,projection, null, null/*selection, selectionArgs*/, null, null, null)
-        //cursor.moveToNext()
         cursor.moveToFirst()
         val imieZBazy = cursor.getString(cursor.getColumnIndex(projection[0]));
-        //if( cursor != null && cursor.moveToFirst() ){
-        //    num = cursor.getString(cursor.getColumnIndex("ContactNumber"));
-         //   cursor.close();
-        //}
-        //val imieZBazy = cursor.getString(0)
         cursor.close();
         println(imieZBazy)
         return imieZBazy
@@ -133,17 +100,9 @@ class BDManager(val bdHelper: BDHelper){
     @SuppressLint("Recycle", "Range")
     public fun odczytajObraz(): Bitmap? {
         val projection = arrayOf(InfoTabeli.KOLUMNA_OBRAZ)
-        //val selection = "${BaseColumns._ID} = ?"
-        //val selectionArgs = arrayOf("0")
         val cursor:Cursor = bd.query(InfoTabeli.NAZWA_TABELI,projection, null, null/*selection, selectionArgs*/, null, null, null)
-        //cursor.moveToNext()
         cursor.moveToFirst()
         val bitmap = cursor.getBlob(cursor.getColumnIndex(projection[0]));
-        //if( cursor != null && cursor.moveToFirst() ){
-        //    num = cursor.getString(cursor.getColumnIndex("ContactNumber"));
-        //   cursor.close();
-        //}
-        //val imieZBazy = cursor.getString(0)
         val obraz = BitmapFactory.decodeByteArray(bitmap, 0, bitmap.size)
         cursor.close();
         return obraz

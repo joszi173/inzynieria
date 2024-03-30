@@ -43,8 +43,7 @@ class Gra : AppCompatActivity() {
 
         //otworzenie/stworzenie bazy danych
         val mbd = BDManager(BDHelper(applicationContext))
-        //pusty wiersz
-        //mbd.stworzPustyWiersz()
+
         //stworzenie człowieczka (klasa do wyrzucenia?)
         val czlowieczek = Czlowieczek(this, "Kitkat", mbd)
 
@@ -55,21 +54,16 @@ class Gra : AppCompatActivity() {
 
         //stworzenie paska głodu
         val pasekGlod=PasekGlod()
+
         //otwarcie obrazu człowieczka
         val czlowieczekImg = BitmapFactory.decodeResource(getResources(), R.drawable.czlowieczek1)
 
         //aktualizowanie danych człowieczka w bazie
-        //try {
-         //   mbd.zapiszWszystkieDane(czlowieczek.imie, czlowieczekImg)
-        //}catch (e: RuntimeException){
-         //   mbd.stworzPustyWiersz()
-         //   mbd.zapiszWszystkieDane(czlowieczek.imie, czlowieczekImg)
-       // }
+        //mbd.zapiszWszystkieDane(czlowieczek.imie, czlowieczekImg)
+
         //odczytanie imienia z bazy i wyświetlenie na ekran
         val imie = mbd.odczytajImie()
         val imieCzlowieczka = findViewById<TextView>(R.id.imieCzlowieczka)
-        //println(imie)
-        //println(czlowieczek.imie)
         imieCzlowieczka.setText(imie.toString());
 
         //odczytanie obrazu z bazy i wyświetlenie na ekran
