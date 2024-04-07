@@ -23,10 +23,6 @@ class Gra : AppCompatActivity() {
 
     /*
     System.currentTimeMillis() - aktualny czas w milisekundach
-    BDManager.odczytajOstatnieKarmienie() - czas ostatnego karmienia w milisekundach
-
-
-
      */
 
     @SuppressLint("MissingInflatedId")
@@ -42,7 +38,9 @@ class Gra : AppCompatActivity() {
         }
 
         //otworzenie/stworzenie bazy danych
-        val mbd = BDManager(BDHelper(applicationContext))
+        val mbd:BDManager = BDManager(BDHelper(applicationContext))
+
+
 
         //stworzenie człowieczka (klasa do wyrzucenia?)
         val czlowieczek = Czlowieczek(this, "Kitkat", mbd)
@@ -58,9 +56,11 @@ class Gra : AppCompatActivity() {
         //otwarcie obrazu człowieczka
         val czlowieczekImg = BitmapFactory.decodeResource(getResources(), R.drawable.czlowieczek1)
 
-        //aktualizowanie danych człowieczka w bazie
-        //mbd.zapiszWszystkieDane(czlowieczek.imie, czlowieczekImg)
 
+        if(!mbd.SprawdzCzyIstnieje()) {
+            //aktualizowanie danych człowieczka w bazie
+            mbd.zapiszWszystkieDane(czlowieczek.imie, czlowieczekImg)
+        }
         //odczytanie imienia z bazy i wyświetlenie na ekran
         val imie = mbd.odczytajImie()
         val imieCzlowieczka = findViewById<TextView>(R.id.imieCzlowieczka)

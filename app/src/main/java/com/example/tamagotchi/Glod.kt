@@ -17,6 +17,7 @@ class Glod(var level: Int = 100) {
             level = minOf(100, level + amount) // Zwiększ poziom głodu
 
         }
+
         println("G Witaj, świecie!")
 
     }

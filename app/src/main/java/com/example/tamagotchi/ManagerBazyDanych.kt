@@ -10,6 +10,13 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.provider.BaseColumns
 import java.io.ByteArrayOutputStream
+/*
+BDManager.odczytajOstatnieKarmienie() - czas ostatnego karmienia w milisekundach
+BDManager.SprawdzCzyIstnieje() - sprawdzenie czy czlowieczek istnieje
+
+*/
+
+
 
 object InfoTabeli:BaseColumns{
     const val NAZWA_TABELI = "Tamagotchi"
@@ -82,6 +89,25 @@ class BDManager(val bdHelper: BDHelper){
         cursor.close();
         return czasKarmienia
 
+    }
+
+    public fun SprawdzCzyIstnieje(): Boolean{
+
+        val projection = arrayOf("*")
+        val cursor:Cursor = bd.query(InfoTabeli.NAZWA_TABELI,projection, null, null/*selection, selectionArgs*/, null, null, null)
+        cursor.moveToFirst()
+
+        for(i in 1 .. cursor.columnCount-1){
+            if(cursor.isNull(i)){
+                println(cursor.getColumnName(i)+" NIE istnieje")
+                return false
+            }
+            println(cursor.getColumnName(i)+" istnieje")
+
+        }
+
+
+        return true
     }
 
 
