@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_pink"
     tools:context=".Gra">
 
     <TextView
@@ -14,34 +15,25 @@
         android:layout_marginStart="88dp"
         android:layout_marginTop="228dp"
         android:text="TextView"
+        android:textColor="@color/dark_porpl"
         android:textSize="48sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/czlowieczekUIIMG"
-        android:layout_width="175dp"
-        android:layout_height="232dp"
-        android:layout_marginStart="138dp"
-        android:layout_marginTop="44dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imieCzlowieczka"
-        app:srcCompat="@android:drawable/arrow_up_float" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="@font/meow_font" />
 
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".PasekGlod">
+        tools:context=".PasekGlod"
+        tools:layout_editor_absoluteX="62dp"
+        tools:layout_editor_absoluteY="-16dp">
 
-        <ProgressBar
-            android:id="@+id/progressBar"
+        <ImageView
+            android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:progress="100"
-            android:max="100" />
+            android:src="@drawable/pasek_full10" />
 
         <TextView
             android:id="@+id/textView"
@@ -51,6 +43,14 @@
             android:layout_centerHorizontal="true"
             android:text="Poziom głodu: 100"
             android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/czlowieczekUIIMG"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="138dp"
+            android:layout_marginTop="44dp"
+            app:srcCompat="@android:drawable/arrow_up_float" />
 
     </RelativeLayout>
 
