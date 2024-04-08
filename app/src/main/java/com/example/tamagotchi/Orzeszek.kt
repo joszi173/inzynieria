@@ -6,12 +6,10 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import android.widget.Toast
-import com.example.tamagotchi.Czlowieczek
+import com.example.tamagotchi.GameManager
 import com.example.tamagotchi.R
-import com.example.tamagotchi.Glod
 
-class Orzeszek(context: Context, attrs: AttributeSet?,  private val cz: Czlowieczek) : View(context, attrs) {
+class Orzeszek(context: Context, attrs: AttributeSet?,  private val cz: GameManager) : View(context, attrs) {
     private val normalBitmap: Bitmap
     private val paint = Paint()
     private var offsetX = 0f
@@ -70,7 +68,7 @@ class Orzeszek(context: Context, attrs: AttributeSet?,  private val cz: Czlowiec
                 if (clickTime - lastClickTime < DOUBLE_CLICK_TIME_DELTA) {
                     // Podwójne kliknięcie, wywołaj funkcję Dodaj()
                     //Glod.zmniejszPasek()
-                    cz.karmienie()
+                    //cz.karmienie()
                     println("O Witaj, świecie!")
                 }
                 lastClickTime = clickTime

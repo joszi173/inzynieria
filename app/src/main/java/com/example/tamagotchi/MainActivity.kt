@@ -6,26 +6,24 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.tamagotchi.ui.theme.TamagotchiTheme
-import com.example.tamagotchi.Glod
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             TamagotchiTheme {
-                val hungerLevel = Glod().jakGlodny()
+                //val hungerLevel = Glod().jakGlodny()
 
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
 
-                    Greeting(name = "Android", hungerLevel = hungerLevel)
+                    //Greeting(name = "Android", hungerLevel = hungerLevel)
                 }
             }
         }
@@ -34,6 +32,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, hungerLevel: Int) {
+
     val imageResource = when (hungerLevel) {
         in 90..100 -> R.drawable.pasek_full10
         in 80..89 -> R.drawable.pasek_9
