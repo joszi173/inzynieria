@@ -1,6 +1,8 @@
 package com.example.tamagotchi
 
 import Orzeszek
+import Orange
+import showNoti
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.TextView
@@ -39,10 +41,14 @@ class Gra : AppCompatActivity() {
         //stworzenie człowieczka (klasa do wyrzucenia?)
         val czlowieczek = GameManager()
 
-        //tworzenie orzeszka
-        val orzeszekView = Orzeszek(this, null, czlowieczek)
-        val parentLayout = findViewById<ConstraintLayout>(R.id.main) // lub inne odpowiednie id rodzica
-        parentLayout.addView(orzeszekView)
+//tworzenie orzeszka/pomaranczy - narazie mozna jeden obiekt przesuwać
+        val orangeView = Orange(this, null)
+        orangeView.ustaw(500f,1000f)
+        val parentLayoutOrange = findViewById<ConstraintLayout>(R.id.main)
+        parentLayoutOrange.addView(orangeView)
+
+        //powiadomienie
+        showNoti(this, "Test tytuł", "Treść")
 
         val glod=Glod(findViewById<ImageView>(R.id.pasekGlod), BitmapFactory.decodeResource(getResources(), R.drawable.pasek_full10), BitmapFactory.decodeResource(getResources(), R.drawable.pasek_1))
 
