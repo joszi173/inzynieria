@@ -33,12 +33,12 @@ class Gra : AppCompatActivity() {
         }
 
         //otworzenie/stworzenie bazy danych
-        val mbd:BDManager = BDManager(BDHelper(applicationContext))
+        val mbd:BDManager = BDManager(BDHelper(applicationContext), this)
 
 
 
         //stworzenie człowieczka (klasa do wyrzucenia?)
-        val czlowieczek = GameManager()
+        //val czlowieczek = GameManager()
 
 //tworzenie orzeszka/pomaranczy - narazie mozna jeden obiekt przesuwać
         val orangeView = Orange(this, null)

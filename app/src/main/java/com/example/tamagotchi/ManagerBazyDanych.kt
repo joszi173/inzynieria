@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.provider.BaseColumns
 import java.io.ByteArrayOutputStream
 /*
@@ -46,7 +47,7 @@ class BDHelper(context: Context):SQLiteOpenHelper(context, InfoTabeli.NAZWA_TABE
 
 }
 
-class BDManager(val bdHelper: BDHelper){
+class BDManager(val bdHelper: BDHelper, val context: Context){
 
     val bd:SQLiteDatabase=bdHelper.writableDatabase
 
@@ -78,6 +79,26 @@ class BDManager(val bdHelper: BDHelper){
         val curTime= ContentValues().apply { put(InfoTabeli.KOLUMNA_OST_KARMIENIE, System.currentTimeMillis())}
         val id=arrayOf("1")
         bd.update(InfoTabeli.NAZWA_TABELI, curTime, "_id = ?", id)
+    }
+
+    public fun zapiszImie(noweImie:String){
+        val imie= ContentValues().apply { put(InfoTabeli.KOLUMNA_IMIE, noweImie)}
+        val id=arrayOf("1")
+        bd.update(InfoTabeli.NAZWA_TABELI, imie, "_id = ?", id)
+    }
+    public fun zapiszObraz(img:Bitmap){
+        val byteArray=ByteArrayOutputStream()
+        img.compress(Bitmap.CompressFormat.PNG, 100, byteArray)
+        val imgDoBazy = byteArray.toByteArray()
+        val obraz= ContentValues().apply { put(InfoTabeli.KOLUMNA_IMIE, imgDoBazy)}
+        val id=arrayOf("1")
+        bd.update(InfoTabeli.NAZWA_TABELI, obraz, "_id = ?", id)
+    }
+
+    public fun zapiszObrazZPliku(img:Int) {
+        //R.drawable.czlowieczek1
+        val czlowieczekImg = BitmapFactory.decodeResource(context.resources, img)
+        zapiszObraz(czlowieczekImg)
     }
 
     @SuppressLint("Range")
