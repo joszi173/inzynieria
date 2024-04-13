@@ -13,6 +13,7 @@ import java.io.ByteArrayOutputStream
 /*
 BDManager.odczytajOstatnieKarmienie() - czas ostatnego karmienia w milisekundach
 BDManager.SprawdzCzyIstnieje() - sprawdzenie czy czlowieczek istnieje
+BDManager.zapiszKarmienie() - zapisanie czasu karmienia
 
 */
 

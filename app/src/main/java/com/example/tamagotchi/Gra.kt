@@ -18,7 +18,6 @@ class Gra : AppCompatActivity() {
     System.currentTimeMillis() - aktualny czas w milisekundach
      */
 
-
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
 
