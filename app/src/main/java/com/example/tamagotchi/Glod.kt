@@ -32,9 +32,9 @@ class Glod(val pasekGlod: ImageView,val pasekGlodFull: Bitmap,val pasekGlodEmpty
             if(level<50){
                 pasekGlod.setImageBitmap(pasekGlodEmpty)
             }
-            if(level<=0)
-                showNoti(this, "Tamagotchi is hungry!", "Feed me :((")
-
+            if(level<=0) {
+                //showNoti(this, "Tamagotchi is hungry!", "Feed me :((")
+            }
             println(level)
 
         }

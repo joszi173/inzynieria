@@ -15,21 +15,21 @@ import java.util.concurrent.TimeUnit
 class MyWorkManager(private val context: Context) {
 
     fun scheduleOneTimeWork() {
-        val workRequest = OneTimeWorkRequest.Builder(MyWorker::class.java)
+        /*val workRequest = OneTimeWorkRequest.Builder(MyWorker::class.java)
             .build()
 
-        WorkManager.getInstance(context).enqueue(workRequest)
+        WorkManager.getInstance(context).enqueue(workRequest)*/
     }
 
     fun schedulePeriodicWork() {
-        val periodicWorkRequest = PeriodicWorkRequest.Builder(MyWorker::class.java, 1, TimeUnit.HOURS)
+       /* val periodicWorkRequest = PeriodicWorkRequest.Builder(MyWorker::class.java, 1, TimeUnit.HOURS)
             .build()
 
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(
             "my_periodic_work",
             ExistingPeriodicWorkPolicy.KEEP,
             periodicWorkRequest
-        )
+        )*/
     }
 
     fun cancelWork(tag: String) {
