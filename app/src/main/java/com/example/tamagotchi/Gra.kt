@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.tamagotchi.Glod
+
 
 class Gra : AppCompatActivity() {
 
@@ -56,9 +58,11 @@ class Gra : AppCompatActivity() {
         val parentLayoutOrange = findViewById<ConstraintLayout>(R.id.main)
         parentLayoutOrange.addView(orangeView)
         */
-        //powiadomienie
-        showNoti(this, "Test tytuł", "Treść")
 
+
+        //powiadomienie jesli glod jest niski
+        if(glod.jakGlodny()<=10)
+            showNoti(this, "Tamagotchi jest glodny", "Nakarm mnie!")
 
 
         //otwarcie obrazu człowieczka

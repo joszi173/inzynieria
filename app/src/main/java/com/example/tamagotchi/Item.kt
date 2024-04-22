@@ -6,6 +6,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import com.example.tamagotchi.Glod
 // com.example.tamagotchi.Czlowieczek
 import com.example.tamagotchi.R
 
@@ -57,10 +58,9 @@ abstract class Item(context: Context, attrs: AttributeSet?) : View(context, attr
 
 
     //Interakcja, domyslnie nic nie robi
-    //open fun onInteract(czlowieczek: Czlowieczek) {
+    //open fun onInteract(glod: Glod) {
         // tutaj nadpisywana przez klasy poch
     //}
-
 
 
 
@@ -119,12 +119,10 @@ open class Food(context: Context, attrs: AttributeSet?, bitmap: Bitmap) : Item(c
 
 
 
-
-    // Metoda interakcji, przeciążająca metodę z klasy bazowej
-    //override fun onInteract(czlowieczek: Czlowieczek) {
-        //czlowieczek.karmienie() //wszystkie klasy Food maja karmienie
+    //metoda przeciazajaca metode z item
+    //override fun onInteract(glod: Glod) {
+        //glod.zwiekszGlod(30)
     //}
-
 
 }
 

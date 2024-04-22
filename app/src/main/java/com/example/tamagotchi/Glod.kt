@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.widget.ImageView
 import kotlin.concurrent.thread
-
+import showNoti
 
 class Glod(val pasekGlod: ImageView,val pasekGlodFull: Bitmap,val pasekGlodEmpty: Bitmap, var level: Int = 100) {
 
@@ -32,9 +32,7 @@ class Glod(val pasekGlod: ImageView,val pasekGlodFull: Bitmap,val pasekGlodEmpty
             if(level<50){
                 pasekGlod.setImageBitmap(pasekGlodEmpty)
             }
-            if(level<=0) {
-                //showNoti(this, "Tamagotchi is hungry!", "Feed me :((")
-            }
+
             println(level)
 
         }
