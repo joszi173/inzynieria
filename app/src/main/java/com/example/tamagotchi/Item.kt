@@ -11,7 +11,7 @@ import com.example.tamagotchi.Glod
 import com.example.tamagotchi.R
 
 // Abstrakcyjna klasa bazowa reprezentująca przedmiot w grze
-abstract class Item(context: Context, attrs: AttributeSet?) : View(context, attrs) {
+abstract class Item(context: Context, attrs: AttributeSet?, var wartosc: Int) : View(context, attrs, wartosc) {
     protected val paint = Paint()
 
 
@@ -58,19 +58,23 @@ abstract class Item(context: Context, attrs: AttributeSet?) : View(context, attr
 
 
     //Interakcja, domyslnie nic nie robi
-    //open fun onInteract(glod: Glod) {
+    open fun onInteract(glod: Glod) {
         // tutaj nadpisywana przez klasy poch
-    //}
+    }
 
 
 
 }
 
 // Klasa reprezentująca jedzenie, dziedzicząca po Item
-open class Food(context: Context, attrs: AttributeSet?, bitmap: Bitmap) : Item(context, attrs)
+open class Food(context: Context, attrs: AttributeSet?, bitmap: Bitmap, wartosc: Int) : Item(context, attrs, wartosc)
 {
     override val itemBitmap: Bitmap = bitmap
 
+    fun getBitmap() : Bitmap
+    {
+        return itemBitmap
+    }
 
     // Poruszanie za pomoca kursora
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -120,18 +124,19 @@ open class Food(context: Context, attrs: AttributeSet?, bitmap: Bitmap) : Item(c
 
 
     //metoda przeciazajaca metode z item
-    //override fun onInteract(glod: Glod) {
-        //glod.zwiekszGlod(30)
-    //}
+    override fun onInteract(glod: Glod) {
+        glod.zwiekszGlod(wartosc)
+    }
 
 }
 
-
-
 // klasY dziedziczona po jedzeniu + dodanie grafiki
-class Orzeszek(context: Context, attrs: AttributeSet?) : Food(context, attrs, BitmapFactory.decodeResource(context.resources,
-    R.drawable.orzeszek
-))
-class Orange(context: Context, attrs: AttributeSet?) : Food(context, attrs, BitmapFactory.decodeResource(context.resources,
-    R.drawable.orange
-))
+//class Orzeszek(context: Context, attrs: AttributeSet?) : Food(context, attrs, BitmapFactory.decodeResource(context.resources,
+   // R.drawable.orzeszek
+//))
+// class Orange(context: Context, attrs: AttributeSet?) : Food(context, attrs, BitmapFactory.decodeResource(context.resources,
+   // R.drawable.orange
+//))
+
+
+

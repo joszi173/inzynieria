@@ -1,12 +1,12 @@
 package com.example.tamagotchi
 
-import Orzeszek
-import Orange
+import Food
 import showNoti
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.TextView
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -43,9 +43,12 @@ class Gra : AppCompatActivity() {
 
         ////////
         //tablica itemów, po dodaniu domku do przeniesienia do pokoju
-        var listaItemow = arrayOf(20, 10, 13, 5)//zmienić na Itemy
+        var listaItemow = arrayOf(
+            Food(this,null,BitmapFactory.decodeResource(getResources(), R.drawable.orange), 30),
+            Food(this,null,BitmapFactory.decodeResource(getResources(), R.drawable.orzeszek), 10)
+            )//zmienić na Itemy
         //index aktualnie wybranego itemu z tablicy
-        var aktualnyItem = 2
+        var aktualnyItem = 1
 
         //stworzenie człowieczka (klasa do wyrzucenia?)
         //val czlowieczek = GameManager()
@@ -85,19 +88,22 @@ class Gra : AppCompatActivity() {
 
         //przycisk wołający interakcję (do przeniesienia do pokoju? wtedy można w każdym pokoju ustawić inną funkcję dla przycisku??)
         val przyciskKarmienia = findViewById<Button>(R.id.UzyjItemu)
-        przyciskKarmienia.background=getResources().getDrawable(R.drawable.orange)
+        przyciskKarmienia.background=BitmapDrawable(getResources(), listaItemow[aktualnyItem].getBitmap())
+
         przyciskKarmienia.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                glod.zwiekszGlod(listaItemow[aktualnyItem])
+               // glod.zwiekszGlod(listaItemow[aktualnyItem])
+                listaItemow[aktualnyItem].onInteract(glod)
                 mbd.zapiszKarmienie()
                 println("Karmienie " + listaItemow[aktualnyItem])
                 println("Nowy czas karmienia " + mbd.odczytajOstatnieKarmienie())
                 //tymczasowa zmiana indeksu do testu
                 aktualnyItem++
-                if (aktualnyItem >= 4) {
+                if (aktualnyItem >= 2) {
                     aktualnyItem = 0
 
                 }
+                przyciskKarmienia.background=BitmapDrawable(getResources(), listaItemow[aktualnyItem].getBitmap())
             }
         })
 

@@ -29,7 +29,7 @@ class Glod(val pasekGlod: ImageView,val pasekGlodFull: Bitmap,val pasekGlodEmpty
     fun zmniejszPasek() {
         if (level > 0) {
             level -= 1
-            if(level<50){
+            if(level<10){
                 pasekGlod.setImageBitmap(pasekGlodEmpty)
             }
 
