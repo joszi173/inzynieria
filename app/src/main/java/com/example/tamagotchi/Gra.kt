@@ -24,6 +24,8 @@ class Gra : AppCompatActivity() {
     System.currentTimeMillis() - aktualny czas w milisekundach
      */
 
+
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -74,7 +76,7 @@ class Gra : AppCompatActivity() {
 
         if(!mbd.SprawdzCzyIstnieje()) {
             //aktualizowanie danych człowieczka w bazie
-            mbd.zapiszWszystkieDane("Sliwka", czlowieczekImg)
+            mbd.zapiszWszystkieDane("Sliwka", czlowieczekImg, 0)
         }
         //odczytanie imienia z bazy i wyświetlenie na ekran
         val imie = mbd.odczytajImie()

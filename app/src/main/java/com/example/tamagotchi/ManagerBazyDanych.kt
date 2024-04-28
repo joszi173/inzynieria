@@ -12,10 +12,14 @@ import android.graphics.drawable.Drawable
 import android.provider.BaseColumns
 import java.io.ByteArrayOutputStream
 /*
+BDManager.apiszWszystkieDane(imie:String, obraz:Bitmap, monenty:Int) - wpisanie wszystkich danych do tablicy (część wewnątrz fcji, nie jest podawana jako argumenty)
 BDManager.odczytajOstatnieKarmienie() - czas ostatnego karmienia w milisekundach
+BDManager.odczytajMonety() - zwraca obecną liczbę monet
+BDManager.odczytajImie() - zwraca obecną imię czlowieczka
+BDManager.odczytajObraz() - zwraca obecną obraz z czlowieczkiem
 BDManager.SprawdzCzyIstnieje() - sprawdzenie czy czlowieczek istnieje
 BDManager.zapiszKarmienie() - zapisanie czasu karmienia
-
+BDManager.zmienMonety(int):Boolean - dodanie monet do obecnej liczby, żeby odjąć przekazać ujemną wartość. Zwraca false jeśli liczba monet po zmianie byłaby ujemna
 */
 
 
@@ -25,10 +29,11 @@ object InfoTabeli:BaseColumns{
     const val KOLUMNA_OST_KARMIENIE = "OstatnieKarmienie"
     const val KOLUMNA_IMIE = "Imie"
     const val KOLUMNA_OBRAZ = "Obraz"
+    const val KOLUMNA_MONETY = "Monety"
 }
 
 object PodstawoweKomendy{
-    const val SQL_STWORZ_TABELE = "CREATE TABLE ${InfoTabeli.NAZWA_TABELI} (${BaseColumns._ID} INTEGER PRIMARY KEY, ${InfoTabeli.KOLUMNA_IMIE} VARCHAR(255),${InfoTabeli.KOLUMNA_OST_KARMIENIE} REAL, ${InfoTabeli.KOLUMNA_OBRAZ} BLOB)"
+    const val SQL_STWORZ_TABELE = "CREATE TABLE ${InfoTabeli.NAZWA_TABELI} (${BaseColumns._ID} INTEGER PRIMARY KEY, ${InfoTabeli.KOLUMNA_IMIE} VARCHAR(255),${InfoTabeli.KOLUMNA_OST_KARMIENIE} REAL, ${InfoTabeli.KOLUMNA_MONETY} INTEGER, ${InfoTabeli.KOLUMNA_OBRAZ} BLOB)"
     const val SQL_DODAJ_WIERSZ = "INSERT INTO ${InfoTabeli.NAZWA_TABELI} (${InfoTabeli.KOLUMNA_IMIE})VALUES( \"stworzonyWiersz\");"
 
     const val SQL_USUN_TABELE = "DROP TABLE IF EXISTS ${InfoTabeli.NAZWA_TABELI}"
@@ -61,7 +66,7 @@ class BDManager(val bdHelper: BDHelper, val context: Context){
         val nowyWiersz=bd.insert(InfoTabeli.NAZWA_TABELI, null, daneDoBazy)
     }
 
-    public fun zapiszWszystkieDane(imie:String, img:Bitmap){
+    public fun zapiszWszystkieDane(imie:String, img:Bitmap, mon:Int){
 
         val byteArray=ByteArrayOutputStream()
         img.compress(Bitmap.CompressFormat.PNG, 100, byteArray)
@@ -69,7 +74,8 @@ class BDManager(val bdHelper: BDHelper, val context: Context){
 
         val daneDoBazy= ContentValues().apply { put(InfoTabeli.KOLUMNA_IMIE, imie)
                                                 put(InfoTabeli.KOLUMNA_OST_KARMIENIE, System.currentTimeMillis())
-                                                put(InfoTabeli.KOLUMNA_OBRAZ, imgDoBazy)}
+                                                put(InfoTabeli.KOLUMNA_OBRAZ, imgDoBazy)
+                                                put(InfoTabeli.KOLUMNA_MONETY, mon)}
         val id=arrayOf("1")
         bd.update(InfoTabeli.NAZWA_TABELI, daneDoBazy, "_id = ?", id)
         //val nowyWiersz=bd.insert(InfoTabeli.NAZWA_TABELI, null, daneDoBazy)
@@ -100,6 +106,20 @@ class BDManager(val bdHelper: BDHelper, val context: Context){
         val czlowieczekImg = BitmapFactory.decodeResource(context.resources, img)
         zapiszObraz(czlowieczekImg)
     }
+
+    public fun zmienMonety(monety:Int): Boolean {
+        val obecneMonety = odczytajMonety()
+        val noweMonety = obecneMonety?.plus(monety)
+        if (noweMonety != null) {
+            if(noweMonety<0){return false}
+        val mon= ContentValues().apply { put(InfoTabeli.KOLUMNA_MONETY, noweMonety)}
+        val id=arrayOf("1")
+        bd.update(InfoTabeli.NAZWA_TABELI, mon, "_id = ?", id)
+        return true
+        }
+        return false
+    }
+
 
     @SuppressLint("Range")
     public fun odczytajOstatnieKarmienie(): Long {
@@ -156,5 +176,15 @@ class BDManager(val bdHelper: BDHelper, val context: Context){
         return obraz
     }
 
+    @SuppressLint("Recycle", "Range")
+    public fun odczytajMonety(): Int? {
+        val projection = arrayOf(InfoTabeli.KOLUMNA_MONETY)
+        val cursor:Cursor = bd.query(InfoTabeli.NAZWA_TABELI,projection, null, null/*selection, selectionArgs*/, null, null, null)
+        cursor.moveToFirst()
+        val monety = cursor.getInt(cursor.getColumnIndex(projection[0]));
+        cursor.close();
+        return monety
+    }
 
 }
+
