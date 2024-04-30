@@ -15,10 +15,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.tamagotchi.Glod
 
 
-class Gra : AppCompatActivity() {
+class Gra : AppCompatActivity(), Glod.PasekGloduListener {
 
     /*
     System.currentTimeMillis() - aktualny czas w milisekundach
@@ -26,9 +25,10 @@ class Gra : AppCompatActivity() {
 
 
 
+    private lateinit var glod: Glod
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_gra)
@@ -38,7 +38,17 @@ class Gra : AppCompatActivity() {
             insets
         }
 
-        val glod=Glod(findViewById<ImageView>(R.id.pasekGlod), BitmapFactory.decodeResource(getResources(), R.drawable.pasek_full10), BitmapFactory.decodeResource(getResources(), R.drawable.pasek_1))
+
+        //Pasek glodu
+        //val glod=Glod(100)
+        // Inicjalizacja paska głodu
+        glod = Glod(100)
+        glod.setPasekGloduListener(this)
+
+
+
+
+
 
         //otworzenie/stworzenie bazy danych
         val mbd:BDManager = BDManager(BDHelper(applicationContext), this)
@@ -111,6 +121,12 @@ class Gra : AppCompatActivity() {
 
     }
 
-
+    override fun onPasekGloduChange(bitmapResource: Int) {
+        runOnUiThread {
+            // Tutaj ustaw obraz paska głodu na interfejsie użytkownika
+            val pasekGloduImageView = findViewById<ImageView>(R.id.pasekGlod)
+            pasekGloduImageView.setImageResource(bitmapResource)
+        }
+    }
 
 }
