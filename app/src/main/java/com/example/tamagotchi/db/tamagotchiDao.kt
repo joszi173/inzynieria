@@ -14,6 +14,9 @@ interface tamagotchiDao {
     @Query("SELECT * FROM czlowieczek")
     fun getAll(): List<czlowieczek>
 
+    @Query("UPDATE czlowieczek SET czasOstatniegokarmienia = :czasKarmienia WHERE id = 1")
+    fun update(czasKarmienia: Long)
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAll(czlowieczek: List<czlowieczek>)
 

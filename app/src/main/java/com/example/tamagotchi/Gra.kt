@@ -119,6 +119,9 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
             override fun onClick(v: View?) {
                // glod.zwiekszGlod(listaItemow[aktualnyItem])
                 listaItemow[aktualnyItem].onInteract(glod)
+                println("Stary czas karmienia "+dao.getAll().first().czasOstatniegokarmienia)
+                dao.update(System.currentTimeMillis())
+                println("Nowy czas karmienia "+dao.getAll().first().czasOstatniegokarmienia)
                // mbd.zapiszKarmienie()
                 println("Karmienie " + listaItemow[aktualnyItem])
                 println("Nowy czas karmienia " )//+ mbd.odczytajOstatnieKarmienie())
