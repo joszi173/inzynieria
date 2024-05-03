@@ -43,9 +43,7 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
 
         val dao = tamagotchiDatabase.getInstance(this).tamagotchiDao
 
-        val czlowieczki = listOf( czlowieczek(1, "mandarynka"))
 
-            dao.insertAll(czlowieczki)
 
 
         //Pasek glodu
@@ -91,7 +89,9 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
 
         //otwarcie obrazu człowieczka
         val czlowieczekImg = BitmapFactory.decodeResource(getResources(), R.drawable.czlowieczek1)
+        val czlowieczki = listOf( czlowieczek(1, "mandarynka", 12, System.currentTimeMillis(), czlowieczekImg))
 
+        dao.insertAll(czlowieczki)
 
        // if(!mbd.SprawdzCzyIstnieje()) {
             //aktualizowanie danych człowieczka w bazie
