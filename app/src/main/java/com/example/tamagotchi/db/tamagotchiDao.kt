@@ -12,7 +12,7 @@ import androidx.room.Query
 interface tamagotchiDao {
 
     @Query("SELECT * FROM czlowieczek")
-    fun getAll(): LiveData<List<czlowieczek>>
+    fun getAll(): List<czlowieczek>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAll(czlowieczek: List<czlowieczek>)

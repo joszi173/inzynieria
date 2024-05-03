@@ -17,36 +17,7 @@ import java.io.ByteArrayOutputStream
     entities = [
         czlowieczek::class
     ],
-    version = 1
-)
-abstract class tamagotchiDatabase:RoomDatabase(){
-    //abstract val tamagotchidaoImpl
-    abstract val tamagotchiDao:tamagotchiDao
-
-    companion object {
-
-        @Volatile
-        private var INSTANCE: tamagotchiDatabase? = null
-
-        fun getInstance(context:Context):tamagotchiDatabase{
-            synchronized(this){
-            return INSTANCE?: Room.databaseBuilder(context.applicationContext, tamagotchiDatabase::class.java, "tamaDB").allowMainThreadQueries().build().also{ INSTANCE=it}
-            }
-        }
-
-
-    }
-
-}
-
-@Database(
-    entities = [
-        czlowieczek::class
-    ],
-    version = 2 ,
-            autoMigrations = [
-        AutoMigration (from = 1, to = 2)
-    ]
+    version = 1 ,
 
 )
 @TypeConverters(Converters::class)

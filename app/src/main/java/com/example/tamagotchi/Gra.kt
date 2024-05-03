@@ -3,6 +3,7 @@ package com.example.tamagotchi
 import Food
 import showNoti
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.widget.TextView
 import android.graphics.BitmapFactory
@@ -99,13 +100,16 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
        // }
         //odczytanie imienia z bazy i wyświetlenie na ekran
         //val imie = mbd.odczytajImie()
-        //val imieCzlowieczka = findViewById<TextView>(R.id.imieCzlowieczka)
-        //imieCzlowieczka.setText(imie.toString());
+        val imie = dao.getAll().first().imie
+        val imieCzlowieczka = findViewById<TextView>(R.id.imieCzlowieczka)
+        imieCzlowieczka.setText(imie);
+        println(imie)
 
         //odczytanie obrazu z bazy i wyświetlenie na ekran
+        val img = dao.getAll().first().wyglad
         //val img = mbd.odczytajObraz()
-        //val czlowieczekUIIMG = findViewById<ImageView>(R.id.czlowieczekUIIMG)
-        //czlowieczekUIIMG.setImageBitmap(img)
+        val czlowieczekUIIMG = findViewById<ImageView>(R.id.czlowieczekUIIMG)
+        czlowieczekUIIMG.setImageBitmap(img)
 
         //przycisk wołający interakcję (do przeniesienia do pokoju? wtedy można w każdym pokoju ustawić inną funkcję dla przycisku??)
         val przyciskKarmienia = findViewById<Button>(R.id.UzyjItemu)
