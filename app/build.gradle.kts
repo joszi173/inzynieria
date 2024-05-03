@@ -1,8 +1,9 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-
+    id("kotlin-kapt")
 }
+
 
 android {
     namespace = "com.example.tamagotchi"
@@ -72,6 +73,26 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation("androidx.work:work-runtime-ktx:2.7.0")
+
+
+    implementation("androidx.room:room-runtime:2.5.0")
+    kapt("androidx.room:room-compiler:2.5.0")
+    implementation ("androidx.room:room-ktx:2.5.0")
+    implementation ("androidx.room:room-testing:2.5.1")
+
+    //implementation "androidx.room:room-runtime:2.2.5"
+    //kapt "androidx.room:room-compiler:2.2.5"
+
+    // Kotlin Extensions and Coroutines support for Room
+    //implementation "androidx.room:room-ktx:2.2.5"
+
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
+
+    // Coroutine Lifecycle Scopes
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.2.0")
 
 }
 

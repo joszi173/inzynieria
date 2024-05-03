@@ -15,6 +15,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import com.example.tamagotchi.db.czlowieczek
+import kotlinx.coroutines.launch
 
 
 class Gra : AppCompatActivity(), Glod.PasekGloduListener {
@@ -38,6 +41,12 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
             insets
         }
 
+        val dao = tamagotchiDatabase.getInstance(this).tamagotchiDao
+
+        val czlowieczki = listOf( czlowieczek(1, "mandarynka"))
+
+            dao.insertAll(czlowieczki)
+
 
         //Pasek glodu
         //val glod=Glod(100)
@@ -51,7 +60,7 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
 
 
         //otworzenie/stworzenie bazy danych
-        val mbd:BDManager = BDManager(BDHelper(applicationContext), this)
+       // val mbd:BDManager = BDManager(BDHelper(applicationContext), this)
 
         ////////
         //tablica itemów, po dodaniu domku do przeniesienia do pokoju
@@ -84,19 +93,19 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
         val czlowieczekImg = BitmapFactory.decodeResource(getResources(), R.drawable.czlowieczek1)
 
 
-        if(!mbd.SprawdzCzyIstnieje()) {
+       // if(!mbd.SprawdzCzyIstnieje()) {
             //aktualizowanie danych człowieczka w bazie
-            mbd.zapiszWszystkieDane("Sliwka", czlowieczekImg, 0)
-        }
+        //    mbd.zapiszWszystkieDane("Sliwka", czlowieczekImg, 0)
+       // }
         //odczytanie imienia z bazy i wyświetlenie na ekran
-        val imie = mbd.odczytajImie()
-        val imieCzlowieczka = findViewById<TextView>(R.id.imieCzlowieczka)
-        imieCzlowieczka.setText(imie.toString());
+        //val imie = mbd.odczytajImie()
+        //val imieCzlowieczka = findViewById<TextView>(R.id.imieCzlowieczka)
+        //imieCzlowieczka.setText(imie.toString());
 
         //odczytanie obrazu z bazy i wyświetlenie na ekran
-        val img = mbd.odczytajObraz()
-        val czlowieczekUIIMG = findViewById<ImageView>(R.id.czlowieczekUIIMG)
-        czlowieczekUIIMG.setImageBitmap(img)
+        //val img = mbd.odczytajObraz()
+        //val czlowieczekUIIMG = findViewById<ImageView>(R.id.czlowieczekUIIMG)
+        //czlowieczekUIIMG.setImageBitmap(img)
 
         //przycisk wołający interakcję (do przeniesienia do pokoju? wtedy można w każdym pokoju ustawić inną funkcję dla przycisku??)
         val przyciskKarmienia = findViewById<Button>(R.id.UzyjItemu)
@@ -106,9 +115,9 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
             override fun onClick(v: View?) {
                // glod.zwiekszGlod(listaItemow[aktualnyItem])
                 listaItemow[aktualnyItem].onInteract(glod)
-                mbd.zapiszKarmienie()
+               // mbd.zapiszKarmienie()
                 println("Karmienie " + listaItemow[aktualnyItem])
-                println("Nowy czas karmienia " + mbd.odczytajOstatnieKarmienie())
+                println("Nowy czas karmienia " )//+ mbd.odczytajOstatnieKarmienie())
                 //tymczasowa zmiana indeksu do testu
                 aktualnyItem++
                 if (aktualnyItem >= 2) {
