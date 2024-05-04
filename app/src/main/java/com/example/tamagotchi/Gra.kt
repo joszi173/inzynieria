@@ -1,9 +1,7 @@
 package com.example.tamagotchi
 
-import Food
 import showNoti
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.widget.TextView
 import android.graphics.BitmapFactory
@@ -13,12 +11,9 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.lifecycleScope
 import com.example.tamagotchi.db.czlowieczek
-import kotlinx.coroutines.launch
 
 
 class Gra : AppCompatActivity(), Glod.PasekGloduListener {
@@ -63,10 +58,13 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
 
         ////////
         //tablica itemów, po dodaniu domku do przeniesienia do pokoju
-        var listaItemow = arrayOf(
-            Food(this,null,BitmapFactory.decodeResource(getResources(), R.drawable.orange), 30),
-            Food(this,null,BitmapFactory.decodeResource(getResources(), R.drawable.orzeszek), 10)
+        var listaItemow = listOf(
+            //Food(this,null,BitmapFactory.decodeResource(getResources(), R.drawable.orange), 30),
+            Food(1,13, 30,BitmapFactory.decodeResource(getResources(), R.drawable.orange), 3),
+            //Food(this,null,BitmapFactory.decodeResource(getResources(), R.drawable.orzeszek), 10)
+            Food(2,5,10,BitmapFactory.decodeResource(getResources(), R.drawable.orzeszek), 1)
             )//zmienić na Itemy
+        dao.insertAll(listaItemow)
         //index aktualnie wybranego itemu z tablicy
         var aktualnyItem = 1
 
@@ -89,10 +87,10 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
 
 
         //otwarcie obrazu człowieczka
-        val czlowieczekImg = BitmapFactory.decodeResource(getResources(), R.drawable.czlowieczek1)
+        val czlowieczekImg = BitmapFactory.decodeResource(getResources(), R.drawable.czlow3)
         val czlowieczki = listOf( czlowieczek(1, "mandarynka", 12, System.currentTimeMillis(), czlowieczekImg))
 
-        dao.insertAll(czlowieczki)
+        dao.insertAllCz(czlowieczki)
 
        // if(!mbd.SprawdzCzyIstnieje()) {
             //aktualizowanie danych człowieczka w bazie
@@ -100,38 +98,58 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
        // }
         //odczytanie imienia z bazy i wyświetlenie na ekran
         //val imie = mbd.odczytajImie()
-        val imie = dao.getAll().first().imie
+        val imie = dao.getAllCz().first().imie
         val imieCzlowieczka = findViewById<TextView>(R.id.imieCzlowieczka)
         imieCzlowieczka.setText(imie);
         println(imie)
 
         //odczytanie obrazu z bazy i wyświetlenie na ekran
-        val img = dao.getAll().first().wyglad
+        val img = dao.getAllCz().first().wyglad
         //val img = mbd.odczytajObraz()
         val czlowieczekUIIMG = findViewById<ImageView>(R.id.czlowieczekUIIMG)
         czlowieczekUIIMG.setImageBitmap(img)
 
+        val listaJedzenia = dao.getAllGdzieWiecejNiz0().toMutableList()
+
         //przycisk wołający interakcję (do przeniesienia do pokoju? wtedy można w każdym pokoju ustawić inną funkcję dla przycisku??)
         val przyciskKarmienia = findViewById<Button>(R.id.UzyjItemu)
-        przyciskKarmienia.background=BitmapDrawable(getResources(), listaItemow[aktualnyItem].getBitmap())
-
+        przyciskKarmienia.background=BitmapDrawable(getResources(), listaJedzenia[aktualnyItem].bitmap)
+        przyciskKarmienia.text = listaJedzenia[aktualnyItem].ilosc.toString()
         przyciskKarmienia.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
+
                // glod.zwiekszGlod(listaItemow[aktualnyItem])
                 listaItemow[aktualnyItem].onInteract(glod)
-                println("Stary czas karmienia "+dao.getAll().first().czasOstatniegokarmienia)
-                dao.update(System.currentTimeMillis())
-                println("Nowy czas karmienia "+dao.getAll().first().czasOstatniegokarmienia)
+                println("Stary czas karmienia "+dao.getAllCz().first().czasOstatniegokarmienia)
+                dao.updateCz(System.currentTimeMillis())
+                println("Nowy czas karmienia "+dao.getAllCz().first().czasOstatniegokarmienia)
                // mbd.zapiszKarmienie()
                 println("Karmienie " + listaItemow[aktualnyItem])
                 println("Nowy czas karmienia " )//+ mbd.odczytajOstatnieKarmienie())
+
+                listaJedzenia[aktualnyItem].ilosc--
+                dao.insertAll(listaJedzenia.toList())
+                if(listaJedzenia[aktualnyItem].ilosc<=0){
+                    if(listaJedzenia.count()>0) {
+                        listaJedzenia.removeAt(aktualnyItem)
+                    }
+                    if(listaJedzenia.count()<=0){
+                        println("brak jedzenia")
+                        przyciskKarmienia.text = "X"
+                        przyciskKarmienia.background=BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.button))
+                        przyciskKarmienia.isClickable=false
+                        return
+                    }
+                }
+
                 //tymczasowa zmiana indeksu do testu
                 aktualnyItem++
-                if (aktualnyItem >= 2) {
+                if (aktualnyItem >= listaJedzenia.count()) {
                     aktualnyItem = 0
 
                 }
-                przyciskKarmienia.background=BitmapDrawable(getResources(), listaItemow[aktualnyItem].getBitmap())
+                przyciskKarmienia.text = listaJedzenia[aktualnyItem].ilosc.toString()
+                przyciskKarmienia.background=BitmapDrawable(getResources(), listaJedzenia[aktualnyItem].bitmap)
             }
         })
 

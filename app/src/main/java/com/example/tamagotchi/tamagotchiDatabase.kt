@@ -15,7 +15,8 @@ import java.io.ByteArrayOutputStream
 
 @Database(
     entities = [
-        czlowieczek::class
+        czlowieczek::class,
+        Item::class
     ],
     version = 1 ,
 
@@ -54,5 +55,8 @@ class Converters{
     fun ByteArrayToBitmap(btarr: ByteArray): Bitmap? {
             return BitmapFactory.decodeByteArray(btarr, 0, btarr.size)
     }
+
+    //@TypeConverter
+    //fun ItemListToFoodList(itemy:List<Item>):List<Food>
 
 }

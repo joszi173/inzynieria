@@ -1,3 +1,5 @@
+package com.example.tamagotchi
+
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -6,57 +8,63 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.example.tamagotchi.Glod
 // com.example.tamagotchi.Czlowieczek
 import com.example.tamagotchi.R
 
 // Abstrakcyjna klasa bazowa reprezentująca przedmiot w grze
-abstract class Item(context: Context, attrs: AttributeSet?, var wartosc: Int) : View(context, attrs, wartosc) {
-    protected val paint = Paint()
+@Entity
+abstract class Item(/*context: Context, attrs: AttributeSet?, */@PrimaryKey val id:Int, var ilosc:Int, val wartosc: Int, val bitmap: Bitmap, val koszt:Int)/* : View(context, attrs, wartosc) */{
 
 
-    //koordynaty poczatkowe - środek
-    // Przesunięcie przedmiotu w osi X
-    protected var offsetX = 0f
-    // Przesunięcie przedmiotu w osi Y
-    protected var offsetY = 0f
-    // Ostatnia pozycja dotknięcia na osi X
-    protected var lastTouchX = 0f
-    // Ostatnia pozycja dotknięcia na osi Y
-    protected var lastTouchY = 0f
-
-    //ustawianie nowych wspolrzednych - domyslnie: środek ekranu
-    fun ustaw(x: Float, y: Float) {
-        offsetX = x
-        offsetY = y
-        invalidate()
-    }
+    /*
+        protected val paint = Paint()
 
 
+        //koordynaty poczatkowe - środek
+        // Przesunięcie przedmiotu w osi X
+        protected var offsetX = 0f
+        // Przesunięcie przedmiotu w osi Y
+        protected var offsetY = 0f
+        // Ostatnia pozycja dotknięcia na osi X
+        protected var lastTouchX = 0f
+        // Ostatnia pozycja dotknięcia na osi Y
+        protected var lastTouchY = 0f
 
-
-    protected var isMoving = false
-    protected abstract val itemBitmap: Bitmap
+        //ustawianie nowych wspolrzednych - domyslnie: środek ekranu
+        fun ustaw(x: Float, y: Float) {
+            offsetX = x
+            offsetY = y
+            invalidate()
+        }
 
 
 
-    // rysowanie
-    override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
 
-        // Obliczenie pozycji przedmiotu na płótnie
-        val x = (width - itemBitmap.width) / 2f + offsetX
-        val y = (height - itemBitmap.height) / 2f + offsetY
-
-        // Narysowanie bitmapy przedmiotu na płótnie
-        canvas.drawBitmap(itemBitmap, x, y, paint)
-    }
+        protected var isMoving = false
+        protected abstract val itemBitmap: Bitmap
 
 
-    // Metoda abstrakcyjna sprawdzająca, czy dotknięcie znajduje się wewnątrz przedmiotu
-    protected abstract fun isInsideItem(x: Float, y: Float): Boolean
+
+        // rysowanie
+        override fun onDraw(canvas: Canvas) {
+            super.onDraw(canvas)
+
+            // Obliczenie pozycji przedmiotu na płótnie
+            val x = (width - itemBitmap.width) / 2f + offsetX
+            val y = (height - itemBitmap.height) / 2f + offsetY
+
+            // Narysowanie bitmapy przedmiotu na płótnie
+            canvas.drawBitmap(itemBitmap, x, y, paint)
+        }
 
 
+        // Metoda abstrakcyjna sprawdzająca, czy dotknięcie znajduje się wewnątrz przedmiotu
+        protected abstract fun isInsideItem(x: Float, y: Float): Boolean
+
+        */
     //Interakcja, domyslnie nic nie robi
     open fun onInteract(glod: Glod) {
         // tutaj nadpisywana przez klasy poch
@@ -67,9 +75,10 @@ abstract class Item(context: Context, attrs: AttributeSet?, var wartosc: Int) : 
 }
 
 // Klasa reprezentująca jedzenie, dziedzicząca po Item
-open class Food(context: Context, attrs: AttributeSet?, bitmap: Bitmap, wartosc: Int) : Item(context, attrs, wartosc)
+open class Food(/*context: Context, attrs: AttributeSet?,*/  id:Int, ilosc:Int, wartosc: Int, bitmap: Bitmap, koszt:Int) :
+    Item(id,ilosc, wartosc, bitmap, koszt)/*(context, attrs, wartosc)*/
 {
-    override val itemBitmap: Bitmap = bitmap
+   /* override val itemBitmap: Bitmap = bitmap
 
     fun getBitmap() : Bitmap
     {
@@ -121,7 +130,7 @@ open class Food(context: Context, attrs: AttributeSet?, bitmap: Bitmap, wartosc:
         return x >= left && x <= right && y >= top && y <= bottom
     }
 
-
+*/
 
     //metoda przeciazajaca metode z item
     override fun onInteract(glod: Glod) {
