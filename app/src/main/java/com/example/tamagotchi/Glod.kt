@@ -1,5 +1,7 @@
 package com.example.tamagotchi
 
+import showNoti
+
 class Glod(var level: Int = 100) {
 
     private var pasekGloduListener: PasekGloduListener? = null
@@ -32,8 +34,10 @@ class Glod(var level: Int = 100) {
             if (level % 10 == 0) {
                 // Wywołujemy metodę zmieniającą obraz paska głodu co 10 poziomów
                 pasekGloduListener?.onPasekGloduChange(getObrazDlaPoziomu(level))
+
             }
             println(level)
+
         }
     }
 

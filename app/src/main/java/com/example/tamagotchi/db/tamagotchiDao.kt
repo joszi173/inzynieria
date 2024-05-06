@@ -16,7 +16,10 @@ interface tamagotchiDao {
     fun getAllCz(): List<czlowieczek>
 
     @Query("UPDATE czlowieczek SET czasOstatniegokarmienia = :czasKarmienia WHERE id = 1")
-    fun updateCz(czasKarmienia: Long)
+    fun updateCzasKarmienia(czasKarmienia: Long)
+
+    @Query("UPDATE czlowieczek SET monety = monety+:roznicaMonet WHERE id = 1")
+    fun dodajMonety(roznicaMonet: Int)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAllCz(czlowieczek: List<czlowieczek>)
@@ -30,8 +33,11 @@ interface tamagotchiDao {
     @Query("SELECT * FROM item WHERE ilosc>0")
     fun getAllGdzieWiecejNiz0(): List<Food>
 
+    @Query("UPDATE item SET ilosc = ilosc+:dodanaIlosc WHERE id = :zmienianeId")
+    fun dodajIloscItem(dodanaIlosc: Int, zmienianeId: Int)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAll(itemy: List<Item>)
 
     @Delete

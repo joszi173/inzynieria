@@ -13,6 +13,13 @@ import com.example.tamagotchi.db.czlowieczek
 import com.example.tamagotchi.db.tamagotchiDao
 import java.io.ByteArrayOutputStream
 
+/*
+dao.updateCzasKarmienia(System.currentTimeMillis()) - zapisanie nowego czasu karmienia
+dao.dodajMonety(listaJedzenia[aktualnyItem].koszt) - DODANIE monet do obecnie posiadanych (podać liczbę ujemną do odjęcia)
+
+ */
+
+
 @Database(
     entities = [
         czlowieczek::class,

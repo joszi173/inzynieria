@@ -82,8 +82,8 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
 
 
         //powiadomienie jesli glod jest niski
-        if(glod.jakGlodny()<=10)
-            showNoti(this, "Tamagotchi jest glodny", "Nakarm mnie!")
+        //if(glod.jakGlodny()<=10)
+//            showNoti(this, "Tamagotchi jest glodny", "Nakarm mnie!")
 
 
         //otwarcie obrazu człowieczka
@@ -109,7 +109,21 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
         val czlowieczekUIIMG = findViewById<ImageView>(R.id.czlowieczekUIIMG)
         czlowieczekUIIMG.setImageBitmap(img)
 
-        val listaJedzenia = dao.getAllGdzieWiecejNiz0().toMutableList()
+        var listaJedzenia = dao.getAllGdzieWiecejNiz0().toMutableList()
+
+        val przyciskKupowania= findViewById<Button>(R.id.kupItem)
+        przyciskKupowania.background=BitmapDrawable(getResources(), listaJedzenia[0].bitmap)
+        przyciskKupowania.text = listaJedzenia[0].koszt.toString()
+        przyciskKupowania.setOnClickListener {
+            if(dao.getAllCz().first().monety>=listaJedzenia[0].koszt) {
+                dao.dodajIloscItem(1, listaJedzenia[0].id)
+                dao.dodajMonety(-listaJedzenia[0].koszt)
+                listaJedzenia = dao.getAllGdzieWiecejNiz0().toMutableList()
+            }else{
+                println("za malo monet")
+            }
+        }
+
 
         //przycisk wołający interakcję (do przeniesienia do pokoju? wtedy można w każdym pokoju ustawić inną funkcję dla przycisku??)
         val przyciskKarmienia = findViewById<Button>(R.id.UzyjItemu)
@@ -121,7 +135,7 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
                // glod.zwiekszGlod(listaItemow[aktualnyItem])
                 listaItemow[aktualnyItem].onInteract(glod)
                 println("Stary czas karmienia "+dao.getAllCz().first().czasOstatniegokarmienia)
-                dao.updateCz(System.currentTimeMillis())
+                dao.updateCzasKarmienia(System.currentTimeMillis())
                 println("Nowy czas karmienia "+dao.getAllCz().first().czasOstatniegokarmienia)
                // mbd.zapiszKarmienie()
                 println("Karmienie " + listaItemow[aktualnyItem])
@@ -160,6 +174,7 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
             // Tutaj ustaw obraz paska głodu na interfejsie użytkownika
             val pasekGloduImageView = findViewById<ImageView>(R.id.pasekGlod)
             pasekGloduImageView.setImageResource(bitmapResource)
+
         }
     }
 
