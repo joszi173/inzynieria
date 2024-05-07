@@ -81,6 +81,8 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
         */
 
 
+
+        showNoti(this, "Tamagotchi", "UgaBuga")
         //powiadomienie jesli glod jest niski
         //if(glod.jakGlodny()<=10)
 //            showNoti(this, "Tamagotchi jest glodny", "Nakarm mnie!")

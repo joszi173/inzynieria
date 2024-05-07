@@ -30,7 +30,7 @@ class Glod(var level: Int = 100) {
     @Synchronized
     private fun zmniejszPasek() {
         if (level > 0) {
-            level -= 1
+            level -= 5
             if (level % 10 == 0) {
                 // Wywołujemy metodę zmieniającą obraz paska głodu co 10 poziomów
                 pasekGloduListener?.onPasekGloduChange(getObrazDlaPoziomu(level))
@@ -49,14 +49,19 @@ class Glod(var level: Int = 100) {
         if (level < 100) {
             level = minOf(100, level + amount) // Zwiększ poziom głodu
         }
+        if (level % 10 == 0) {
+            // Wywołujemy metodę zmieniającą obraz paska głodu co 10 poziomów
+            pasekGloduListener?.onPasekGloduChange(getObrazDlaPoziomu(level))
+
+        }
         //println("G Witaj, świecie!")
     }
 
     // Metoda do mapowania poziomu na odpowiedni obraz paska głodu
     private fun getObrazDlaPoziomu(level: Int): Int {
         return when (level) {
-            in 90..100 -> R.drawable.pasek_full10
-            in 80..89 -> R.drawable.pasek_9
+            in 99..100 -> R.drawable.pasek_full10
+            in 80..98 -> R.drawable.pasek_9
             in 70..79 -> R.drawable.pasek_8
             in 60..69 -> R.drawable.pasek_7
             in 50..59 -> R.drawable.pasek_6
