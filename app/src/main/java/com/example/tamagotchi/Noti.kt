@@ -33,5 +33,5 @@ fun showNoti(context: Context, title: String, message: String) {
         setAutoCancel(true)
     }
 
-    //notificationManager.notify(System.currentTimeMillis().toInt(), builder.build())
+    notificationManager.notify(System.currentTimeMillis().toInt(), builder.build())
 }

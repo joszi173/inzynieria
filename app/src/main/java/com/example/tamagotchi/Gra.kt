@@ -45,7 +45,7 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
         //Pasek glodu
         //val glod=Glod(100)
         // Inicjalizacja paska głodu
-        glod = Glod(100)
+        glod = Glod(this, 100)
         glod.setPasekGloduListener(this)
 
 
@@ -82,10 +82,10 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
 
 
 
-        showNoti(this, "Tamagotchi", "UgaBuga")
+        //showNoti(this, "Test powiadomienia Tamagotchi", "Nic ważnego ;)")
         //powiadomienie jesli glod jest niski
-        //if(glod.jakGlodny()<=10)
-//            showNoti(this, "Tamagotchi jest glodny", "Nakarm mnie!")
+        if(glod.jakGlodny()<100)
+            showNoti(this, "Tamagotchi jest glodny", "Nakarm mnie!")
 
 
         //otwarcie obrazu człowieczka

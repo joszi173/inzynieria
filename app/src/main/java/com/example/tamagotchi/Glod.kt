@@ -1,13 +1,16 @@
 package com.example.tamagotchi
 
+import android.content.Context
 import showNoti
 
-class Glod(var level: Int = 100) {
+class Glod(var context:Context, var level: Int = 100) {
 
     private var pasekGloduListener: PasekGloduListener? = null
+    var czy_noti: Boolean = true
 
     init {
         startDecreaseThread()
+
     }
 
     interface PasekGloduListener {
@@ -36,6 +39,14 @@ class Glod(var level: Int = 100) {
                 pasekGloduListener?.onPasekGloduChange(getObrazDlaPoziomu(level))
 
             }
+
+            if(level<50 && czy_noti)
+            {
+                showNoti(context.applicationContext, "Tamagotchi jest glodny", "Nakarm mnie!")
+                czy_noti=false
+            }
+
+
             println(level)
 
         }
@@ -54,6 +65,9 @@ class Glod(var level: Int = 100) {
             pasekGloduListener?.onPasekGloduChange(getObrazDlaPoziomu(level))
 
         }
+
+        if(level>50)
+            czy_noti=true
         //println("G Witaj, świecie!")
     }
 
