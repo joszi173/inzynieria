@@ -36,6 +36,9 @@ interface tamagotchiDao {
     @Query("UPDATE item SET ilosc = ilosc+:dodanaIlosc WHERE id = :zmienianeId")
     fun dodajIloscItem(dodanaIlosc: Int, zmienianeId: Int)
 
+    @Query("UPDATE item SET ilosc = ilosc-:odejmowanaIlosc WHERE id = :zmienianeId")
+    fun odejmijIloscItem(odejmowanaIlosc: Int, zmienianeId: Int)
+
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAll(itemy: List<Item>)

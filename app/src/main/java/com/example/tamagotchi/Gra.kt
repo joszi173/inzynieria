@@ -49,8 +49,8 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
         val glod = Glod(this, 100)
         glod.setPasekGloduListener(this)
 
-        val domek = Domek(glod)
-        val sklepik = Sklepik()
+        val domek = Domek(dao, glod)
+        val sklepik = Sklepik(dao)
 
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.frameLayout, domek)

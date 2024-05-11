@@ -10,18 +10,19 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.tamagotchi.db.tamagotchiDao
 
 
-class Domek(var glod: Glod) : Fragment(R.layout.fragment_domek) {
+class Domek(val dao: tamagotchiDao, var glod: Glod) : Fragment(R.layout.fragment_domek) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         //odczytanie obrazu z bazy i wyświetlenie na ekran
 
-        val dao = context?.let { tamagotchiDatabase.getInstance(it.applicationContext).tamagotchiDao }
+        //val dao = context?.let { tamagotchiDatabase.getInstance(it.applicationContext).tamagotchiDao }
 
-        val img = dao?.getAllCz()?.first()?.wyglad
+        val img = dao.getAllCz().first().wyglad
 
         //val img = mbd.odczytajObraz()
         val czlowieczekUIIMG = getView()?.findViewById<ImageView>(R.id.czlowieczekUIIMG)
@@ -30,37 +31,38 @@ class Domek(var glod: Glod) : Fragment(R.layout.fragment_domek) {
         }
 
 
-        var listaJedzenia = dao?.getAllGdzieWiecejNiz0()?.toMutableList()
-        var aktualnyItem = 1
+        val listaJedzenia = dao.getAllGdzieWiecejNiz0().toMutableList()
+        var aktualnyItem = 0
 
 
         val przyciskKarmienia = getView()?.findViewById<Button>(R.id.UzyjItemu)
         if (przyciskKarmienia != null) {
-            przyciskKarmienia.background=BitmapDrawable(getResources(), listaJedzenia?.get(aktualnyItem)?.bitmap)
+            przyciskKarmienia.background=BitmapDrawable(getResources(),
+                listaJedzenia.get(aktualnyItem).bitmap
+            )
 
-        przyciskKarmienia.text = listaJedzenia?.get(aktualnyItem)?.ilosc.toString()
+        przyciskKarmienia.text = listaJedzenia.get(aktualnyItem).ilosc.toString()
         przyciskKarmienia.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
 
-                listaJedzenia?.get(aktualnyItem)?.let { glod.zwiekszGlod(it.wartosc) }
+                listaJedzenia.get(aktualnyItem).let { glod.zwiekszGlod(it.wartosc) }
                 //listaJedzenia?.get(aktualnyItem)?.onInteract(glod)
-                if (dao != null) {
                     println("Stary czas karmienia "+dao.getAllCz().first().czasOstatniegokarmienia)
 
                 dao.updateCzasKarmienia(System.currentTimeMillis())
                 println("Nowy czas karmienia "+dao.getAllCz().first().czasOstatniegokarmienia)
                 // mbd.zapiszKarmienie()
-                println("Karmienie " + (listaJedzenia?.get(aktualnyItem)))
+                println("Karmienie " + (listaJedzenia[aktualnyItem]))
                 println("Nowy czas karmienia " )//+ mbd.odczytajOstatnieKarmienie())
-                }
 
-                listaJedzenia?.get(aktualnyItem)?.ilosc = listaJedzenia?.get(aktualnyItem)?.ilosc!! - 1
-                if (dao != null) {
-                    dao.insertAll(listaJedzenia.toList())
-                }
+
+                listaJedzenia.get(aktualnyItem).ilosc = listaJedzenia.get(aktualnyItem).ilosc - 1
+                dao.dodajIloscItem(-1, listaJedzenia[aktualnyItem].id)
+                dao.insertAll(listaJedzenia.toList())
                 if(listaJedzenia[aktualnyItem].ilosc<=0){
                     if(listaJedzenia.count()>0) {
                         listaJedzenia.removeAt(aktualnyItem)
+
                     }
                     if(listaJedzenia.count()<=0){
                         println("brak jedzenia")
