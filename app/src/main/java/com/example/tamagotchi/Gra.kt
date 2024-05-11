@@ -39,8 +39,7 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
 
         val dao = tamagotchiDatabase.getInstance(this).tamagotchiDao
 
-        val domek = Domek()
-        val sklepik = Sklepik()
+
 
 
 
@@ -49,6 +48,9 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
         // Inicjalizacja paska głodu
         val glod = Glod(this, 100)
         glod.setPasekGloduListener(this)
+
+        val domek = Domek(glod)
+        val sklepik = Sklepik()
 
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.frameLayout, domek)

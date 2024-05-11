@@ -12,7 +12,7 @@ import android.widget.ImageView
 import android.widget.TextView
 
 
-class Domek : Fragment(R.layout.fragment_domek) {
+class Domek(var glod: Glod) : Fragment(R.layout.fragment_domek) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,7 +42,7 @@ class Domek : Fragment(R.layout.fragment_domek) {
         przyciskKarmienia.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
 
-                // glod.zwiekszGlod(listaItemow[aktualnyItem])
+                listaJedzenia?.get(aktualnyItem)?.let { glod.zwiekszGlod(it.wartosc) }
                 //listaJedzenia?.get(aktualnyItem)?.onInteract(glod)
                 if (dao != null) {
                     println("Stary czas karmienia "+dao.getAllCz().first().czasOstatniegokarmienia)
