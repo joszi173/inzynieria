@@ -39,15 +39,24 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
 
         val dao = tamagotchiDatabase.getInstance(this).tamagotchiDao
 
+        val domek = Domek()
+        val sklepik = Sklepik()
 
 
 
         //Pasek glodu
         //val glod=Glod(100)
         // Inicjalizacja paska głodu
-        glod = Glod(this, 100)
+        val glod = Glod(this, 100)
         glod.setPasekGloduListener(this)
 
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.frameLayout, domek)
+                commit()
+        }
+
+        val przyciskDomek = findViewById<Button>(R.id.domekBtn)
+        val przyciskSklepik = findViewById<Button>(R.id.sklepikBtn)
 
 
 
@@ -66,7 +75,7 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
             )//zmienić na Itemy
         dao.insertAll(listaItemow)
         //index aktualnie wybranego itemu z tablicy
-        var aktualnyItem = 1
+
 
         //stworzenie człowieczka (klasa do wyrzucenia?)
         //val czlowieczek = GameManager()
@@ -80,12 +89,6 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
         parentLayoutOrange.addView(orangeView)
         */
 
-
-
-        //showNoti(this, "Test powiadomienia Tamagotchi", "Nic ważnego ;)")
-        //powiadomienie jesli glod jest niski
-        if(glod.jakGlodny()<100)
-            showNoti(this, "Tamagotchi jest glodny", "Nakarm mnie!")
 
 
         //otwarcie obrazu człowieczka
@@ -105,15 +108,9 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
         imieCzlowieczka.setText(imie);
         println(imie)
 
-        //odczytanie obrazu z bazy i wyświetlenie na ekran
-        val img = dao.getAllCz().first().wyglad
-        //val img = mbd.odczytajObraz()
-        val czlowieczekUIIMG = findViewById<ImageView>(R.id.czlowieczekUIIMG)
-        czlowieczekUIIMG.setImageBitmap(img)
 
-        var listaJedzenia = dao.getAllGdzieWiecejNiz0().toMutableList()
-
-        val przyciskKupowania= findViewById<Button>(R.id.kupItem)
+        /*
+        val przyciskKupowania= findViewById<Button>(R.id.sklepikBtn)
         przyciskKupowania.background=BitmapDrawable(getResources(), listaJedzenia[0].bitmap)
         przyciskKupowania.text = listaJedzenia[0].koszt.toString()
         przyciskKupowania.setOnClickListener {
@@ -125,49 +122,30 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
                 println("za malo monet")
             }
         }
+        */
 
 
         //przycisk wołający interakcję (do przeniesienia do pokoju? wtedy można w każdym pokoju ustawić inną funkcję dla przycisku??)
-        val przyciskKarmienia = findViewById<Button>(R.id.UzyjItemu)
-        przyciskKarmienia.background=BitmapDrawable(getResources(), listaJedzenia[aktualnyItem].bitmap)
-        przyciskKarmienia.text = listaJedzenia[aktualnyItem].ilosc.toString()
-        przyciskKarmienia.setOnClickListener(object : View.OnClickListener {
+
+        przyciskDomek.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-
-               // glod.zwiekszGlod(listaItemow[aktualnyItem])
-                listaItemow[aktualnyItem].onInteract(glod)
-                println("Stary czas karmienia "+dao.getAllCz().first().czasOstatniegokarmienia)
-                dao.updateCzasKarmienia(System.currentTimeMillis())
-                println("Nowy czas karmienia "+dao.getAllCz().first().czasOstatniegokarmienia)
-               // mbd.zapiszKarmienie()
-                println("Karmienie " + listaItemow[aktualnyItem])
-                println("Nowy czas karmienia " )//+ mbd.odczytajOstatnieKarmienie())
-
-                listaJedzenia[aktualnyItem].ilosc--
-                dao.insertAll(listaJedzenia.toList())
-                if(listaJedzenia[aktualnyItem].ilosc<=0){
-                    if(listaJedzenia.count()>0) {
-                        listaJedzenia.removeAt(aktualnyItem)
-                    }
-                    if(listaJedzenia.count()<=0){
-                        println("brak jedzenia")
-                        przyciskKarmienia.text = "X"
-                        przyciskKarmienia.background=BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.button))
-                        przyciskKarmienia.isClickable=false
-                        return
-                    }
+                supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.frameLayout, domek)
+                    commit()
                 }
 
-                //tymczasowa zmiana indeksu do testu
-                aktualnyItem++
-                if (aktualnyItem >= listaJedzenia.count()) {
-                    aktualnyItem = 0
-
-                }
-                przyciskKarmienia.text = listaJedzenia[aktualnyItem].ilosc.toString()
-                przyciskKarmienia.background=BitmapDrawable(getResources(), listaJedzenia[aktualnyItem].bitmap)
             }
         })
+
+        przyciskSklepik.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.frameLayout, sklepik)
+                    commit()
+                }
+            }
+        })
+
 
     }
 
@@ -179,5 +157,7 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
 
         }
     }
+
+
 
 }

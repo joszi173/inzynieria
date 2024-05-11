@@ -8,60 +8,55 @@
     android:background="@color/light_pink"
     tools:context=".Gra">
 
-    <TextView
-        android:id="@+id/imieCzlowieczka"
-        android:layout_width="424dp"
-        android:layout_height="176dp"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="228dp"
-        android:text="TextView"
-        android:textColor="@color/dark_porpl"
-        android:textSize="48sp"
+
+
+    <Button
+        android:id="@+id/sklepikBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="300dp"
+        android:background="@drawable/sklepik1"
+        android:text="sklepik"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:fontFamily="@font/meow_font" />
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/domekBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/domek1"
+        android:text="Domek"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <RelativeLayout
+    <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="62dp"
-        tools:layout_editor_absoluteY="-16dp">
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="#F4C8E2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/pasekGlod"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/pasek_full10" />
 
-        <ImageView
-            android:id="@+id/czlowieczekUIIMG"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="138dp"
-            android:layout_marginTop="44dp"
-            app:srcCompat="@android:drawable/arrow_up_float" />
+        <TextView
+            android:id="@+id/imieCzlowieczka"
+            android:layout_width="424dp"
+            android:layout_height="176dp"
+            android:layout_marginStart="88dp"
+            android:layout_marginTop="228dp"
+            android:background="#FBC9E6"
+            android:fontFamily="@font/meow_font"
+            android:text="TextView"
+            android:textColor="@color/dark_porpl"
+            android:textSize="48sp" />
+    </FrameLayout>
 
-        <Button
-            android:id="@+id/UzyjItemu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="166dp"
-            android:layout_marginBottom="108dp"
-            android:text="item" />
-
-        <Button
-            android:id="@+id/kupItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="26dp"
-            android:layout_marginTop="96dp"
-            android:text="Button" />
-
-    </RelativeLayout>
+    <ImageView
+        android:id="@+id/pasekGlod"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/pasek_full10" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

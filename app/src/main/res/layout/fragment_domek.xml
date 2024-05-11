@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#3F51B5"
+    tools:context=".Domek">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="669dp"
+        android:text="domek" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#03A9F4">
+
+
+
+        <ImageView
+            android:id="@+id/czlowieczekUIIMG"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="138dp"
+            android:layout_marginTop="44dp"
+            app:srcCompat="@android:drawable/arrow_up_float"
+            tools:src="@drawable/clouds_loading2" />
+
+        <Button
+            android:id="@+id/UzyjItemu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="166dp"
+            android:layout_marginBottom="108dp"
+            android:text="item" />
+
+    </RelativeLayout>
+
+</FrameLayout>
