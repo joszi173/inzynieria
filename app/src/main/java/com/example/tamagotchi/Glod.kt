@@ -24,7 +24,7 @@ class Glod(var context: Context, var level: Int = 100) {
     private fun startDecreaseThread() {
         Thread {
             while (true) {
-                Thread.sleep(1000) // czekaj 1 sekundę
+                Thread.sleep(500) // czekaj 0.5 sek
                 zmniejszPasek()
             }
         }.start()
@@ -33,7 +33,7 @@ class Glod(var context: Context, var level: Int = 100) {
     @Synchronized
     private fun zmniejszPasek() {
         if (level > 0) {
-            level -= 5
+            level -= 2
             if (level % 10 == 0) {
                 // Wywołujemy metodę zmieniającą obraz paska głodu co 10 poziomów
                 pasekGloduListener?.onPasekGloduChange(getObrazDlaPoziomu(level))
@@ -82,7 +82,8 @@ class Glod(var context: Context, var level: Int = 100) {
             in 30..39 -> R.drawable.pasek_4
             in 20..29 -> R.drawable.pasek_3
             in 10..19 -> R.drawable.pasek_2
-            else -> R.drawable.pasek_1
+            in 9..1 -> R.drawable.pasek_1
+            else -> R.drawable.pasek_0
         }
     }
 }

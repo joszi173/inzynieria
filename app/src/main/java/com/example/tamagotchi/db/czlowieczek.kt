@@ -10,7 +10,16 @@ import com.example.tamagotchi.Glod
 class czlowieczek(
     @PrimaryKey val id: Int,
     val imie: String,
-    val monety: Int,
+    var monety: Int,
     val czasOstatniegokarmienia: Long,
     val wyglad: Bitmap
 )
+{
+
+    //dodawanie monet
+    fun addMoney(amount: Int) {
+        monety += amount
+    }
+
+
+}

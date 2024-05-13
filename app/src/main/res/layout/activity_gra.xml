@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:background="#F4C8E2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -58,5 +58,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/pasek_full10" />
+
+
+    <ImageView
+        android:id="@+id/czlowieczekImg"
+        android:layout_width="218dp"
+        android:layout_height="442dp"
+        android:layout_marginStart="123dp"
+        android:layout_marginTop="141dp"
+        android:layout_marginBottom="324dp"
+        android:src="@drawable/czlow3"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/frameLayout"
+        app:layout_constraintStart_toStartOf="@+id/frameLayout"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

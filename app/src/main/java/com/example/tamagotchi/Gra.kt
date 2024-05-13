@@ -16,7 +16,8 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.tamagotchi.db.czlowieczek
 
 
-class Gra : AppCompatActivity(), Glod.PasekGloduListener {
+class Gra : AppCompatActivity(), Glod.PasekGloduListener
+{
 
     /*
     System.currentTimeMillis() - aktualny czas w milisekundach
@@ -27,7 +28,8 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
     private lateinit var glod: Glod
 
     @SuppressLint("MissingInflatedId")
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_gra)
@@ -94,10 +96,11 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
 
 
         //otwarcie obrazu człowieczka
-        val czlowieczekImg = BitmapFactory.decodeResource(getResources(), R.drawable.czlow3)
-        val czlowieczki = listOf( czlowieczek(1, "mandarynka", 12, System.currentTimeMillis(), czlowieczekImg))
+        val czlowieczki = listOf( czlowieczek(1, "mandarynka", 12, System.currentTimeMillis(), BitmapFactory.decodeResource(getResources(), R.drawable.czlow3)))
 
         dao.insertAllCz(czlowieczki)
+
+
 
        // if(!mbd.SprawdzCzyIstnieje()) {
             //aktualizowanie danych człowieczka w bazie
@@ -109,6 +112,10 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
         val imieCzlowieczka = findViewById<TextView>(R.id.imieCzlowieczka)
         imieCzlowieczka.setText(imie);
         println(imie)
+
+
+
+
 
 
         /*
@@ -125,6 +132,17 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
             }
         }
         */
+
+
+        val CzlowImageView = findViewById<ImageView>(R.id.czlowieczekImg)
+        CzlowImageView.setOnClickListener()
+        {
+            czlowieczki[0].addMoney(50) // You can pass any desired amount here
+            println("Monety: ")
+            println(czlowieczki[0].monety)
+            // Add money to the czlowieczek instance when the button is clicked
+
+        }
 
 
         //przycisk wołający interakcję (do przeniesienia do pokoju? wtedy można w każdym pokoju ustawić inną funkcję dla przycisku??)
@@ -149,7 +167,12 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener {
         })
 
 
+
+
+
     }
+
+
 
     override fun onPasekGloduChange(bitmapResource: Int) {
         runOnUiThread {
