@@ -30,20 +30,42 @@ class Domek(val dao: tamagotchiDao, var glod: Glod) : Fragment(R.layout.fragment
             czlowieczekUIIMG.setImageBitmap(img)
         }
 
+        if (czlowieczekUIIMG != null) {
+            czlowieczekUIIMG.setOnClickListener()
+            {
+                dao.dodajMonety(50)
+                //czlowieczki[0].addMoney(50) // You can pass any desired amount here
+                println("Monety: "+dao.getAllCz().first().monety)
+                //println(czlowieczki[0].monety)
+                // Add money to the czlowieczek instance when the button is clicked
+
+            }
+        }
+
 
         val listaJedzenia = dao.getAllGdzieWiecejNiz0().toMutableList()
         var aktualnyItem = 0
 
 
-        val przyciskKarmienia = getView()?.findViewById<Button>(R.id.UzyjItemu)
-        if (przyciskKarmienia != null) {
-            przyciskKarmienia.background=BitmapDrawable(getResources(),
-                listaJedzenia.get(aktualnyItem).bitmap
-            )
-
-        przyciskKarmienia.text = listaJedzenia.get(aktualnyItem).ilosc.toString()
+        val przyciskKarmienia = getView()?.findViewById<Button>(R.id.UzyjItemu) ///
+        if(listaJedzenia.count()>0){                                            //
+            if (przyciskKarmienia != null) {                                        //
+                //
+                przyciskKarmienia.background=BitmapDrawable(getResources(),         //
+                    listaJedzenia.get(aktualnyItem).bitmap                           //
+                )                                                                     //
+                //
+                //
+                przyciskKarmienia.text = listaJedzenia.get(aktualnyItem).ilosc.toString()}}  //
+        if (przyciskKarmienia != null) {                                             ///
         przyciskKarmienia.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
+
+                if(listaJedzenia.count()<=0){   //
+                    println("ni ma jedzenia")   //
+                    return                      //
+                }                               //
+                ////////
 
                 listaJedzenia.get(aktualnyItem).let { glod.zwiekszGlod(it.wartosc) }
                 //listaJedzenia?.get(aktualnyItem)?.onInteract(glod)
