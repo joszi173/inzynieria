@@ -21,7 +21,7 @@ abstract class Item(/*context: Context, attrs: AttributeSet?, */@PrimaryKey val 
 
     /*
         protected val paint = Paint()
-
+        //MEOW!!!!
 
         //koordynaty poczatkowe - środek
         // Przesunięcie przedmiotu w osi X
