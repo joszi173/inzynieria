@@ -134,7 +134,7 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener
         */
 
 
-        val CzlowImageView = findViewById<ImageView>(R.id.czlowieczekImg)
+        /*val CzlowImageView = findViewById<ImageView>(R.id.czlowieczekImg)
         CzlowImageView.setOnClickListener()
         {
             czlowieczki[0].addMoney(50) // You can pass any desired amount here
@@ -142,7 +142,7 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener
             println(czlowieczki[0].monety)
             // Add money to the czlowieczek instance when the button is clicked
 
-        }
+        }*/
 
 
         //przycisk wołający interakcję (do przeniesienia do pokoju? wtedy można w każdym pokoju ustawić inną funkcję dla przycisku??)
