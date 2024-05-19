@@ -76,6 +76,8 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener
             Food(1,13, 30,BitmapFactory.decodeResource(getResources(), R.drawable.orange), 3),
             //Food(this,null,BitmapFactory.decodeResource(getResources(), R.drawable.orzeszek), 10)
             Food(2,5,10,BitmapFactory.decodeResource(getResources(), R.drawable.orzeszek), 1)
+            //Food(this,null,BitmapFactory.decodeResource(getResources(), R.drawable.orzeszek), 10)
+
             )//zmienić na Itemy
         dao.insertAll(listaItemow)
         //index aktualnie wybranego itemu z tablicy

@@ -41,7 +41,7 @@ class Domek(val dao: tamagotchiDao, var glod: Glod) : Fragment(R.layout.fragment
 
             }
         }
-        val CzlowImageView = findViewById<ImageView>(R.id.czlowieczekImg)
+        /*val CzlowImageView = findViewById<ImageView>(R.id.czlowieczekImg)
              CzlowImageView.setOnClickListener()
              {
                  dao.dodajMonety(50) // You can pass any desired amount here
@@ -49,7 +49,7 @@ class Domek(val dao: tamagotchiDao, var glod: Glod) : Fragment(R.layout.fragment
                  println(czlowieczki[0].monety)
                  // Add money to the czlowieczek instance when the button is clicked
 
-             }
+             }*/
 
         val listaJedzenia = dao.getAllGdzieWiecejNiz0().toMutableList()
         var aktualnyItem = 0
