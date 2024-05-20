@@ -39,6 +39,26 @@
             android:layout_marginBottom="108dp"
             android:text="item" />
 
+        <Button
+            android:id="@+id/buttonItemL"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/UzyjItemu"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="2dp"
+            android:layout_toStartOf="@+id/UzyjItemu"
+            android:background="@android:drawable/ic_media_rew" />
+
+        <Button
+            android:id="@+id/buttonItemR"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/UzyjItemu"
+            android:layout_marginStart="-160dp"
+            android:layout_marginTop="-160dp"
+            android:layout_toEndOf="@+id/UzyjItemu"
+            android:background="@android:drawable/ic_media_ff" />
+
     </RelativeLayout>
 
 </FrameLayout>

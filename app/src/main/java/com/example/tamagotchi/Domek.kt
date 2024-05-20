@@ -56,7 +56,8 @@ class Domek(val dao: tamagotchiDao, var glod: Glod, val gra:Gra) : Fragment(R.la
         val listaJedzenia = dao.getAllGdzieWiecejNiz0().toMutableList()
         var aktualnyItem = 0
 
-
+        val przyciskL= getView()?.findViewById<Button>(R.id.buttonItemL)
+        val przyciskR= getView()?.findViewById<Button>(R.id.buttonItemR)
         val przyciskKarmienia = getView()?.findViewById<Button>(R.id.UzyjItemu) ///
         if(listaJedzenia.count()>0){                                            //
             if (przyciskKarmienia != null) {                                        //
@@ -101,26 +102,55 @@ class Domek(val dao: tamagotchiDao, var glod: Glod, val gra:Gra) : Fragment(R.la
                         przyciskKarmienia.text = "X"
                         przyciskKarmienia.background=BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.button))
                         przyciskKarmienia.isClickable=false
+                        przyciskL?.isClickable=false
+                        przyciskR?.isClickable=false
                         return
                     }
                 }
 
                 //tymczasowa zmiana indeksu do testu
-                aktualnyItem++
-                if (aktualnyItem >= listaJedzenia.count()) {
-                    aktualnyItem = 0
-
                 }
-                przyciskKarmienia.text = listaJedzenia[aktualnyItem].ilosc.toString()
-                przyciskKarmienia.background=BitmapDrawable(getResources(), listaJedzenia[aktualnyItem].bitmap)
-            }
         })
         }
 
-    }
+
+        if (przyciskL != null) {
+            przyciskL.setOnClickListener(object : View.OnClickListener {
+                override fun onClick(v: View?) {
+                    aktualnyItem--
+                    if (aktualnyItem < 0) {
+                        aktualnyItem = listaJedzenia.count()-1
+
+                    }
+                    if (przyciskKarmienia != null) {
+                        przyciskKarmienia.text = listaJedzenia[aktualnyItem].ilosc.toString()
+
+                    przyciskKarmienia.background=BitmapDrawable(getResources(), listaJedzenia[aktualnyItem].bitmap)
+                    }
+                }
+
+            })
+            }
+        if (przyciskR != null) {
+            przyciskR.setOnClickListener(object : View.OnClickListener {
+                override fun onClick(v: View?) {
+                    aktualnyItem++
+                    if (aktualnyItem >= listaJedzenia.count()) {
+                        aktualnyItem = 0
+
+                    }
+                    if (przyciskKarmienia != null) {
+                        przyciskKarmienia.text = listaJedzenia[aktualnyItem].ilosc.toString()
+
+                        przyciskKarmienia.background=BitmapDrawable(getResources(), listaJedzenia[aktualnyItem].bitmap)
+                    }
+                }
+
+            })
+        }
 
 
-}
+        }}
 
 /*
 
