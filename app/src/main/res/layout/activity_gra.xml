@@ -33,8 +33,6 @@
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
         android:background="#F4C8E2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -51,16 +49,28 @@
             android:text="TextView"
             android:textColor="@color/dark_porpl"
             android:textSize="48sp" />
+
     </FrameLayout>
 
     <ImageView
         android:id="@+id/pasekGlod"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/pasek_full10" />
+        android:src="@drawable/pasek_full10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-
-
+    <TextView
+        android:id="@+id/iloscMonet"
+        android:layout_width="137dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="64dp"
+        android:text="TextView"
+        android:textColor="#330C0C"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

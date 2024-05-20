@@ -13,7 +13,7 @@ import android.widget.TextView
 import com.example.tamagotchi.db.tamagotchiDao
 
 
-class Domek(val dao: tamagotchiDao, var glod: Glod) : Fragment(R.layout.fragment_domek) {
+class Domek(val dao: tamagotchiDao, var glod: Glod, val gra:Gra) : Fragment(R.layout.fragment_domek) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,6 +36,8 @@ class Domek(val dao: tamagotchiDao, var glod: Glod) : Fragment(R.layout.fragment
                 dao.dodajMonety(50)
                 //czlowieczki[0].addMoney(50) // You can pass any desired amount here
                 println("Monety: "+dao.getAllCz().first().monety)
+                gra.ZmienWyswietlaneMonety(dao.getAllCz().first().monety)
+
                 //println(czlowieczki[0].monety)
                 // Add money to the czlowieczek instance when the button is clicked
 

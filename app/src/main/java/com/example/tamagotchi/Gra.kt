@@ -51,8 +51,8 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener
         val glod = Glod(this, 100)
         glod.setPasekGloduListener(this)
 
-        val domek = Domek(dao, glod)
-        val sklepik = Sklepik(dao)
+        val domek = Domek(dao, glod, this)
+        val sklepik = Sklepik(dao, this)
 
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.frameLayout, domek)
@@ -168,13 +168,16 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener
             }
         })
 
+        ZmienWyswietlaneMonety(czlowieczki.first().monety)
 
 
 
 
     }
 
-
+    fun ZmienWyswietlaneMonety(monetki:Int){
+        findViewById<TextView>(R.id.iloscMonet).setText(monetki.toString())
+    }
 
     override fun onPasekGloduChange(bitmapResource: Int) {
         runOnUiThread {
