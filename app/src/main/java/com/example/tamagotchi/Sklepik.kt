@@ -2,14 +2,11 @@ package com.example.tamagotchi
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.WindowManager
 import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TableRow
 import androidx.core.graphics.drawable.toDrawable
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.example.tamagotchi.db.tamagotchiDao
 
@@ -24,7 +21,7 @@ class Sklepik(val dao: tamagotchiDao, val gra:Gra) : Fragment(R.layout.fragment_
         val layout = view.findViewById<TableLayout>(R.id.tabelaZItememi)
         val polka = layout.findViewById<TableRow>(R.id.polkaZJedzeniem)
         //val tmpButton = layout.findViewById<Button>(R.id.plcHldrButton)
-        val listaItemow = dao.getAll()
+        val listaItemow = dao.getAllFood()
         val newRow = TableRow(context)
 
         for(i in listaItemow.listIterator()){

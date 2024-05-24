@@ -16,7 +16,7 @@ import com.example.tamagotchi.R
 
 // Abstrakcyjna klasa bazowa reprezentująca przedmiot w grze
 @Entity
-abstract class Item(/*context: Context, attrs: AttributeSet?, */@PrimaryKey val id:Int, var ilosc:Int, val wartosc: Int, val bitmap: Bitmap, val koszt:Int)/* : View(context, attrs, wartosc) */{
+abstract class Item(/*context: Context, attrs: AttributeSet?, */@PrimaryKey val id:Int, var ilosc:Int, val wartosc: Int, val bitmap: Bitmap, val koszt:Int, val klasa:Char)/* : View(context, attrs, wartosc) */{
 
 
     /*
@@ -75,8 +75,8 @@ abstract class Item(/*context: Context, attrs: AttributeSet?, */@PrimaryKey val 
 }
 
 // Klasa reprezentująca jedzenie, dziedzicząca po Item
-open class Food(/*context: Context, attrs: AttributeSet?,*/  id:Int, ilosc:Int, wartosc: Int, bitmap: Bitmap, koszt:Int) :
-    Item(id,ilosc, wartosc, bitmap, koszt)/*(context, attrs, wartosc)*/
+open class Food(/*context: Context, attrs: AttributeSet?,*/  id:Int, ilosc:Int, wartosc: Int, bitmap: Bitmap, koszt:Int, klasa:Char='J') :
+    Item(id,ilosc, wartosc, bitmap, koszt, klasa)/*(context, attrs, wartosc)*/
 {
    /* override val itemBitmap: Bitmap = bitmap
 

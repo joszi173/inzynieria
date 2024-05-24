@@ -1,11 +1,9 @@
 package com.example.tamagotchi
 
-import showNoti
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.TextView
 import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -21,6 +19,13 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener
 
     /*
     System.currentTimeMillis() - aktualny czas w milisekundach
+
+    klasy itemów- na razie w Charach, miło by było to później zmienić na np. enumy, ale chary powinny dać radę
+        'J'-jedzenie
+        'Z'-zabawa
+        'H'-higiena
+        'S'-sen
+
      */
 
 
@@ -41,7 +46,14 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener
 
         val dao = tamagotchiDatabase.getInstance(this).tamagotchiDao
 
+        var listaPokoi = listOf(
+            //Food(this,null,BitmapFactory.decodeResource(getResources(), R.drawable.orange), 30),
+            Pokoj(1,"kuchnia", 'J',BitmapFactory.decodeResource(getResources(), R.drawable.roomp)),
+            Pokoj(2,"salon", 'Z',BitmapFactory.decodeResource(getResources(), R.drawable.shop))
+            //Food(this,null,BitmapFactory.decodeResource(getResources(), R.drawable.orzeszek), 10)
 
+        )//zmienić na Itemy
+        dao.insertAllRooms(listaPokoi)
 
 
 
@@ -51,7 +63,7 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener
         val glod = Glod(this, 100)
         glod.setPasekGloduListener(this)
 
-        val domek = Domek(dao, glod, this)
+        val domek = Domek(dao, glod, this, dao.getAllRooms())
         val sklepik = Sklepik(dao, this)
 
         supportFragmentManager.beginTransaction().apply {
@@ -73,13 +85,13 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener
         //tablica itemów, po dodaniu domku do przeniesienia do pokoju
         var listaItemow = listOf(
             //Food(this,null,BitmapFactory.decodeResource(getResources(), R.drawable.orange), 30),
-            Food(1,13, 30,BitmapFactory.decodeResource(getResources(), R.drawable.orange), 3),
+            Food(1,13, 30,BitmapFactory.decodeResource(getResources(), R.drawable.orange),3),
             //Food(this,null,BitmapFactory.decodeResource(getResources(), R.drawable.orzeszek), 10)
             Food(2,5,10,BitmapFactory.decodeResource(getResources(), R.drawable.orzeszek), 1)
             //Food(this,null,BitmapFactory.decodeResource(getResources(), R.drawable.orzeszek), 10)
 
             )//zmienić na Itemy
-        dao.insertAll(listaItemow)
+        dao.insertAllItems(listaItemow)
         //index aktualnie wybranego itemu z tablicy
 
 

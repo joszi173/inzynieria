@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.tamagotchi.Food
 import com.example.tamagotchi.Item
+import com.example.tamagotchi.Pokoj
 
 
 @Dao
@@ -27,11 +28,17 @@ interface tamagotchiDao {
     @Delete
     fun deleteCz(czlowieczek: czlowieczek)
 
-    @Query("SELECT * FROM item")
-    fun getAll(): List<Food>
+    @Query("SELECT * FROM item WHERE klasa=74")
+    fun getAllFood(): List<Food>
 
-    @Query("SELECT * FROM item WHERE ilosc>0")
-    fun getAllGdzieWiecejNiz0(): List<Food>
+    @Query("SELECT * FROM item WHERE ilosc>0 AND klasa=74")
+    fun getAllFoodMoreThan0(): List<Food>
+
+//    @Query("SELECT * FROM item WHERE ilosc>0")
+//    fun getAllItemsMoreThan0(): List<Item>
+//
+//    @Query("SELECT * FROM item")
+//    fun getAllItems(): List<Item>
 
     @Query("UPDATE item SET ilosc = ilosc+:dodanaIlosc WHERE id = :zmienianeId")
     fun dodajIloscItem(dodanaIlosc: Int, zmienianeId: Int)
@@ -41,10 +48,13 @@ interface tamagotchiDao {
 
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAll(itemy: List<Item>)
+    fun insertAllItems(itemy: List<Item>)
 
-    @Delete
-    fun delete(item: Item)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertAllRooms(pokoj: List<Pokoj>)
+    @Query("SELECT * FROM pokoj")
+    fun getAllRooms(): List<Pokoj>
+
 
 }
 

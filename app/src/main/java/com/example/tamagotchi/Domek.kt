@@ -4,27 +4,59 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.TextView
+import android.widget.RelativeLayout
 import com.example.tamagotchi.db.tamagotchiDao
 
 
-class Domek(val dao: tamagotchiDao, var glod: Glod, val gra:Gra) : Fragment(R.layout.fragment_domek) {
+class Domek(val dao: tamagotchiDao, var glod: Glod, val gra:Gra, val pokoje:List<Pokoj>, var aktualnyPokoj:Int=0) : Fragment(R.layout.fragment_domek) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //odczytanie obrazu z bazy i wyświetlenie na ekran
+        val tlo=getView()?.findViewById<RelativeLayout>(R.id.tloPokojuWDomku)
+        if (tlo != null) {
+            tlo.background=BitmapDrawable(getResources(), pokoje[aktualnyPokoj].tlo)
+        }
 
-        //val dao = context?.let { tamagotchiDatabase.getInstance(it.applicationContext).tamagotchiDao }
+        val przyciskPokojL = getView()?.findViewById<Button>(R.id.buttonPokojL)
+        val przyciskPokojR = getView()?.findViewById<Button>(R.id.buttonPokojR)
+
+        if (przyciskPokojL != null) {
+            przyciskPokojL.setOnClickListener(object : View.OnClickListener {
+                override fun onClick(v: View?) {
+                aktualnyPokoj--
+                    if(aktualnyPokoj<0){
+                        aktualnyPokoj=pokoje.size-1
+                    }
+                    if (tlo != null) {
+                        tlo.background=BitmapDrawable(getResources(), pokoje[aktualnyPokoj].tlo)
+                    }
+
+                }
+            })
+        }
+
+        if (przyciskPokojR != null) {
+            przyciskPokojR.setOnClickListener(object : View.OnClickListener {
+                override fun onClick(v: View?) {
+                    aktualnyPokoj++
+                    if(aktualnyPokoj>=pokoje.size){
+                        aktualnyPokoj=0
+                    }
+                    if (tlo != null) {
+                        tlo.background=BitmapDrawable(getResources(), pokoje[aktualnyPokoj].tlo)
+                    }
+
+                }
+            })
+        }
+
 
         val img = dao.getAllCz().first().wyglad
 
-        //val img = mbd.odczytajObraz()
         val czlowieczekUIIMG = getView()?.findViewById<ImageView>(R.id.czlowieczekUIIMG)
         if (czlowieczekUIIMG != null) {
             czlowieczekUIIMG.setImageBitmap(img)
@@ -34,64 +66,48 @@ class Domek(val dao: tamagotchiDao, var glod: Glod, val gra:Gra) : Fragment(R.la
             czlowieczekUIIMG.setOnClickListener()
             {
                 dao.dodajMonety(50)
-                //czlowieczki[0].addMoney(50) // You can pass any desired amount here
                 println("Monety: "+dao.getAllCz().first().monety)
                 gra.ZmienWyswietlaneMonety(dao.getAllCz().first().monety)
-
-                //println(czlowieczki[0].monety)
-                // Add money to the czlowieczek instance when the button is clicked
-
             }
         }
-        /*val CzlowImageView = findViewById<ImageView>(R.id.czlowieczekImg)
-             CzlowImageView.setOnClickListener()
-             {
-                 dao.dodajMonety(50) // You can pass any desired amount here
-                 println("Monety: ")
-                 println(czlowieczki[0].monety)
-                 // Add money to the czlowieczek instance when the button is clicked
-
-             }*/
-
-        val listaJedzenia = dao.getAllGdzieWiecejNiz0().toMutableList()
+        println("pokoj "+pokoje[aktualnyPokoj].nazwa)
+        val listaJedzenia = dao.getAllFoodMoreThan0().toMutableList()
+        for(f:Food in listaJedzenia){
+            println("jedzenie "+f.id.toString()+", ilosc: "+f.ilosc.toString()+", klasa: "+f.klasa.toString())
+        }
         var aktualnyItem = 0
 
-        val przyciskL= getView()?.findViewById<Button>(R.id.buttonItemL)
-        val przyciskR= getView()?.findViewById<Button>(R.id.buttonItemR)
-        val przyciskKarmienia = getView()?.findViewById<Button>(R.id.UzyjItemu) ///
-        if(listaJedzenia.count()>0){                                            //
-            if (przyciskKarmienia != null) {                                        //
+        val przyciskJedzenieL= getView()?.findViewById<Button>(R.id.buttonItemL)
+        val przyciskJedzenieR= getView()?.findViewById<Button>(R.id.buttonItemR)
+        val przyciskKarmienia = getView()?.findViewById<Button>(R.id.UzyjItemu)
+        if(listaJedzenia.count()>0){
+            if (przyciskKarmienia != null) {
                 //
-                przyciskKarmienia.background=BitmapDrawable(getResources(),         //
-                    listaJedzenia.get(aktualnyItem).bitmap                           //
-                )                                                                     //
-                //
-                //
-                przyciskKarmienia.text = listaJedzenia.get(aktualnyItem).ilosc.toString()}}  //
-        if (przyciskKarmienia != null) {                                             ///
+                przyciskKarmienia.background=BitmapDrawable(getResources(),
+                    listaJedzenia.get(aktualnyItem).bitmap
+                )
+                przyciskKarmienia.text = listaJedzenia.get(aktualnyItem).ilosc.toString()}}
+        if (przyciskKarmienia != null) {
         przyciskKarmienia.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-
-                if(listaJedzenia.count()<=0){   //
-                    println("ni ma jedzenia")   //
-                    return                      //
-                }                               //
-                ////////
+                if(listaJedzenia.size<=0){
+                    println("ni ma jedzenia")
+                    return
+                }
 
                 listaJedzenia.get(aktualnyItem).let { glod.zwiekszGlod(it.wartosc) }
-                //listaJedzenia?.get(aktualnyItem)?.onInteract(glod)
                     println("Stary czas karmienia "+dao.getAllCz().first().czasOstatniegokarmienia)
 
                 dao.updateCzasKarmienia(System.currentTimeMillis())
                 println("Nowy czas karmienia "+dao.getAllCz().first().czasOstatniegokarmienia)
-                // mbd.zapiszKarmienie()
                 println("Karmienie " + (listaJedzenia[aktualnyItem]))
-                println("Nowy czas karmienia " )//+ mbd.odczytajOstatnieKarmienie())
+                println("Nowy czas karmienia " )
 
 
                 listaJedzenia.get(aktualnyItem).ilosc = listaJedzenia.get(aktualnyItem).ilosc - 1
                 dao.dodajIloscItem(-1, listaJedzenia[aktualnyItem].id)
-                dao.insertAll(listaJedzenia.toList())
+                dao.insertAllItems(listaJedzenia.toList())
+                przyciskKarmienia.text = listaJedzenia.get(aktualnyItem).ilosc.toString()
                 if(listaJedzenia[aktualnyItem].ilosc<=0){
                     if(listaJedzenia.count()>0) {
                         listaJedzenia.removeAt(aktualnyItem)
@@ -102,21 +118,21 @@ class Domek(val dao: tamagotchiDao, var glod: Glod, val gra:Gra) : Fragment(R.la
                         przyciskKarmienia.text = "X"
                         przyciskKarmienia.background=BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.button))
                         przyciskKarmienia.isClickable=false
-                        przyciskL?.isClickable=false
-                        przyciskR?.isClickable=false
+                        przyciskJedzenieL?.isClickable=false
+                        przyciskJedzenieR?.isClickable=false
                         return
                     }
                 }
 
-                //tymczasowa zmiana indeksu do testu
                 }
         })
         }
 
 
-        if (przyciskL != null) {
-            przyciskL.setOnClickListener(object : View.OnClickListener {
+        if (przyciskJedzenieL != null) {
+            przyciskJedzenieL.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
+                    //if(listaJedzenia.size<=0) {
                     aktualnyItem--
                     if (aktualnyItem < 0) {
                         aktualnyItem = listaJedzenia.count()-1
@@ -127,23 +143,32 @@ class Domek(val dao: tamagotchiDao, var glod: Glod, val gra:Gra) : Fragment(R.la
 
                     przyciskKarmienia.background=BitmapDrawable(getResources(), listaJedzenia[aktualnyItem].bitmap)
                     }
+                //}else{
+                 //   println("nie ma innego jedzenia")
+
+                //}
                 }
 
             })
             }
-        if (przyciskR != null) {
-            przyciskR.setOnClickListener(object : View.OnClickListener {
+        if (przyciskJedzenieR != null) {
+            przyciskJedzenieR.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
-                    aktualnyItem++
-                    if (aktualnyItem >= listaJedzenia.count()) {
-                        aktualnyItem = 0
+                    //if(listaJedzenia.size<=0) {
+                        aktualnyItem++
+                        if (aktualnyItem >= listaJedzenia.count()) {
+                            aktualnyItem = 0
 
-                    }
-                    if (przyciskKarmienia != null) {
-                        przyciskKarmienia.text = listaJedzenia[aktualnyItem].ilosc.toString()
+                        }
+                        if (przyciskKarmienia!=null) {
+                            przyciskKarmienia.text = listaJedzenia[aktualnyItem].ilosc.toString()
+                            przyciskKarmienia.background =
+                                BitmapDrawable(getResources(), listaJedzenia[aktualnyItem].bitmap)
+                        }
+                    //}else{
+                        //println("nie ma innego jedzenia")
 
-                        przyciskKarmienia.background=BitmapDrawable(getResources(), listaJedzenia[aktualnyItem].bitmap)
-                    }
+                    //}
                 }
 
             })
