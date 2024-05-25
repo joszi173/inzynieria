@@ -64,6 +64,20 @@ class Converters{
         return BitmapFactory.decodeByteArray(btarr, 0, btarr.size)
     }
 
+    @TypeConverter
+    fun ItemToFood(item: Item): Food {
+        return Food(item.id, item.ilosc, item.wartosc, item.bitmap, item.koszt)
+    }
+
+    @TypeConverter
+    fun ItemListToFoodList(listaItemow: List<Item>): List<Food> {
+        val listaJedzenia = mutableListOf<Food>()
+        for(item:Item in listaItemow){
+            listaJedzenia.add(Food(item.id, item.ilosc, item.wartosc, item.bitmap, item.koszt))
+        }
+        return listaJedzenia.toList()
+    }
+
     //@TypeConverter
     //fun ItemListToFoodList(itemy:List<Item>):List<Food>
 

@@ -13,55 +13,44 @@ import com.example.tamagotchi.db.tamagotchiDao
 
 class Domek(val dao: tamagotchiDao, var glod: Glod, val gra:Gra, val pokoje:List<Pokoj>, var aktualnyPokoj:Int=0) : Fragment(R.layout.fragment_domek) {
 
+    var tlo: RelativeLayout? =null
+    var przyciskPokojL:Button? =null
+    var przyciskPokojR:Button? =null
+    var przyciskItemL:Button?= null
+    var przyciskItemR:Button?= null
+    var przyciskItemu:Button? = null
+    var listaItemow= mutableListOf<Item>()
+    var aktualnyItem = 0
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val tlo=getView()?.findViewById<RelativeLayout>(R.id.tloPokojuWDomku)
-        if (tlo != null) {
-            tlo.background=BitmapDrawable(getResources(), pokoje[aktualnyPokoj].tlo)
-        }
+        tlo=getView()?.findViewById<RelativeLayout>(R.id.tloPokojuWDomku)
+        UstawTloNaAktualnegoPokoju()
 
-        val przyciskPokojL = getView()?.findViewById<Button>(R.id.buttonPokojL)
-        val przyciskPokojR = getView()?.findViewById<Button>(R.id.buttonPokojR)
-
-        if (przyciskPokojL != null) {
-            przyciskPokojL.setOnClickListener(object : View.OnClickListener {
-                override fun onClick(v: View?) {
-                aktualnyPokoj--
-                    if(aktualnyPokoj<0){
-                        aktualnyPokoj=pokoje.size-1
-                    }
-                    if (tlo != null) {
-                        tlo.background=BitmapDrawable(getResources(), pokoje[aktualnyPokoj].tlo)
-                    }
-
-                }
-            })
-        }
-
-        if (przyciskPokojR != null) {
-            przyciskPokojR.setOnClickListener(object : View.OnClickListener {
-                override fun onClick(v: View?) {
-                    aktualnyPokoj++
-                    if(aktualnyPokoj>=pokoje.size){
-                        aktualnyPokoj=0
-                    }
-                    if (tlo != null) {
-                        tlo.background=BitmapDrawable(getResources(), pokoje[aktualnyPokoj].tlo)
-                    }
-
-                }
-            })
-        }
+        //ustawianie przycisków do zmiany pokoju
+        ///////////////////////////
+        przyciskPokojL = getView()?.findViewById<Button>(R.id.buttonPokojL)
+        przyciskPokojR = getView()?.findViewById<Button>(R.id.buttonPokojR)
+        przyciskPokojL?.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                ZmienPokoj(-1)
+            }
+        })
+        przyciskPokojR?.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                ZmienPokoj(1)
+            }
+        })
+        /////////////////////////////////
 
 
+        //ustawianie czlowieczka
+        //////////////////////////////////
         val img = dao.getAllCz().first().wyglad
-
         val czlowieczekUIIMG = getView()?.findViewById<ImageView>(R.id.czlowieczekUIIMG)
         if (czlowieczekUIIMG != null) {
             czlowieczekUIIMG.setImageBitmap(img)
         }
-
         if (czlowieczekUIIMG != null) {
             czlowieczekUIIMG.setOnClickListener()
             {
@@ -70,33 +59,51 @@ class Domek(val dao: tamagotchiDao, var glod: Glod, val gra:Gra, val pokoje:List
                 gra.ZmienWyswietlaneMonety(dao.getAllCz().first().monety)
             }
         }
-        println("pokoj "+pokoje[aktualnyPokoj].nazwa)
-        val listaJedzenia = dao.getAllFoodMoreThan0().toMutableList()
-        for(f:Food in listaJedzenia){
-            println("jedzenie "+f.id.toString()+", ilosc: "+f.ilosc.toString()+", klasa: "+f.klasa.toString())
-        }
-        var aktualnyItem = 0
+        /////////////////////////
 
-        val przyciskJedzenieL= getView()?.findViewById<Button>(R.id.buttonItemL)
-        val przyciskJedzenieR= getView()?.findViewById<Button>(R.id.buttonItemR)
-        val przyciskKarmienia = getView()?.findViewById<Button>(R.id.UzyjItemu)
+
+
+
+
+
+        //ustawianie Itemów
+        /////////////////////////////////////
+        println("pokoj "+pokoje[aktualnyPokoj].nazwa)
+        //val listaJedzenia = dao.getAllFoodMoreThan0().toMutableList()
+        //for(f:Food in listaJedzenia){
+        //   println("jedzenie "+f.id.toString()+", ilosc: "+f.ilosc.toString()+", klasa: "+f.klasa.toString())
+        //}
+
+
+        /////////////////////////////////////
+         przyciskItemL= getView()?.findViewById<Button>(R.id.buttonItemL)
+         przyciskItemR= getView()?.findViewById<Button>(R.id.buttonItemR)
+         przyciskItemu = getView()?.findViewById<Button>(R.id.UzyjItemu)
+        ///////////////////////////
+
+
+        /*
         if(listaJedzenia.count()>0){
-            if (przyciskKarmienia != null) {
+            if (przyciskItemu != null) {
                 //
-                przyciskKarmienia.background=BitmapDrawable(getResources(),
+                przyciskItemu!!.background=BitmapDrawable(getResources(),
                     listaJedzenia.get(aktualnyItem).bitmap
                 )
-                przyciskKarmienia.text = listaJedzenia.get(aktualnyItem).ilosc.toString()}}
-        if (przyciskKarmienia != null) {
-        przyciskKarmienia.setOnClickListener(object : View.OnClickListener {
+                przyciskItemu!!.text = listaJedzenia.get(aktualnyItem).ilosc.toString()}}
+        */
+        WczytajItemyDoSlotu()
+
+        przyciskItemu?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
+                UzyjItemu()
+                /*
                 if(listaJedzenia.size<=0){
                     println("ni ma jedzenia")
                     return
                 }
 
                 listaJedzenia.get(aktualnyItem).let { glod.zwiekszGlod(it.wartosc) }
-                    println("Stary czas karmienia "+dao.getAllCz().first().czasOstatniegokarmienia)
+                println("Stary czas karmienia "+dao.getAllCz().first().czasOstatniegokarmienia)
 
                 dao.updateCzasKarmienia(System.currentTimeMillis())
                 println("Nowy czas karmienia "+dao.getAllCz().first().czasOstatniegokarmienia)
@@ -107,7 +114,7 @@ class Domek(val dao: tamagotchiDao, var glod: Glod, val gra:Gra, val pokoje:List
                 listaJedzenia.get(aktualnyItem).ilosc = listaJedzenia.get(aktualnyItem).ilosc - 1
                 dao.dodajIloscItem(-1, listaJedzenia[aktualnyItem].id)
                 dao.insertAllItems(listaJedzenia.toList())
-                przyciskKarmienia.text = listaJedzenia.get(aktualnyItem).ilosc.toString()
+                przyciskItemu!!.text = listaJedzenia.get(aktualnyItem).ilosc.toString()
                 if(listaJedzenia[aktualnyItem].ilosc<=0){
                     if(listaJedzenia.count()>0) {
                         listaJedzenia.removeAt(aktualnyItem)
@@ -115,67 +122,116 @@ class Domek(val dao: tamagotchiDao, var glod: Glod, val gra:Gra, val pokoje:List
                     }
                     if(listaJedzenia.count()<=0){
                         println("brak jedzenia")
-                        przyciskKarmienia.text = "X"
-                        przyciskKarmienia.background=BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.button))
-                        przyciskKarmienia.isClickable=false
-                        przyciskJedzenieL?.isClickable=false
-                        przyciskJedzenieR?.isClickable=false
+                        przyciskItemu!!.text = "X"
+                        przyciskItemu!!.background=BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.button))
+                        przyciskItemu!!.isClickable=false
+                        przyciskItemL?.isClickable=false
+                        przyciskItemR?.isClickable=false
                         return
                     }
-                }
+                }*/
 
-                }
-        })
-        }
-
-
-        if (przyciskJedzenieL != null) {
-            przyciskJedzenieL.setOnClickListener(object : View.OnClickListener {
-                override fun onClick(v: View?) {
-                    //if(listaJedzenia.size<=0) {
-                    aktualnyItem--
-                    if (aktualnyItem < 0) {
-                        aktualnyItem = listaJedzenia.count()-1
-
-                    }
-                    if (przyciskKarmienia != null) {
-                        przyciskKarmienia.text = listaJedzenia[aktualnyItem].ilosc.toString()
-
-                    przyciskKarmienia.background=BitmapDrawable(getResources(), listaJedzenia[aktualnyItem].bitmap)
-                    }
-                //}else{
-                 //   println("nie ma innego jedzenia")
-
-                //}
-                }
-
-            })
             }
-        if (przyciskJedzenieR != null) {
-            przyciskJedzenieR.setOnClickListener(object : View.OnClickListener {
-                override fun onClick(v: View?) {
-                    //if(listaJedzenia.size<=0) {
-                        aktualnyItem++
-                        if (aktualnyItem >= listaJedzenia.count()) {
-                            aktualnyItem = 0
+        })
+////////////////////////////////////////////////
 
-                        }
-                        if (przyciskKarmienia!=null) {
-                            przyciskKarmienia.text = listaJedzenia[aktualnyItem].ilosc.toString()
-                            przyciskKarmienia.background =
-                                BitmapDrawable(getResources(), listaJedzenia[aktualnyItem].bitmap)
-                        }
-                    //}else{
-                        //println("nie ma innego jedzenia")
 
-                    //}
-                }
 
-            })
+            //ustawianie przyciskow do zmiany jedzenia
+////////////////////////////////////////////////
+        przyciskItemL?.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                PrzełączItem(-1)
+            }
+        })
+        przyciskItemR?.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                PrzełączItem(1)
+            }
+
+        })
+///////////////////////////////////////////////
+
+
+
         }
 
+    fun UstawTloNaAktualnegoPokoju(){
+        if (tlo != null) {
+            tlo!!.background=BitmapDrawable(getResources(), pokoje[aktualnyPokoj].tlo)
+        }
+    }
 
-        }}
+    fun ZmienPokoj(numer:Int){
+        aktualnyPokoj+=numer
+        if(aktualnyPokoj<0){
+            aktualnyPokoj=pokoje.size-1
+        }else if(aktualnyPokoj>=pokoje.size){
+            aktualnyPokoj=0
+        }
+        UstawTloNaAktualnegoPokoju()
+    }
+
+    ////item handling
+
+    fun UstawWygladPrzyciskuItemu(){
+        przyciskItemu?.background=BitmapDrawable(getResources(), listaItemow[aktualnyItem].bitmap)
+        przyciskItemu?.text=listaItemow[aktualnyItem].ilosc.toString()
+    }
+
+    fun WczytajItemyDoSlotu(){
+        when(pokoje[aktualnyPokoj].klasaItemu){
+            'J'->listaItemow=dao.getAllFoodMoreThan0().toMutableList()
+            //dodać następne dla kolejnych klas itemów
+        }
+        if(listaItemow.size<=0){
+            przyciskItemu?.isClickable=false
+            przyciskItemL?.isClickable=false
+            przyciskItemL?.isClickable=false
+            return
+        }
+        UstawWygladPrzyciskuItemu()
+    }
+
+    fun PrzełączItem(numer:Int){
+
+        aktualnyItem+=numer
+        if(aktualnyItem<0){
+            aktualnyItem=listaItemow.size-1
+        }else if(aktualnyItem>=listaItemow.size){
+            aktualnyItem=0
+        }
+        UstawWygladPrzyciskuItemu()
+    }
+
+    fun UzyjItemu(){
+        listaItemow[aktualnyItem].onInteract(glod)
+        dao.updateCzasKarmienia(System.currentTimeMillis())
+
+        listaItemow[aktualnyItem].ilosc--
+        dao.dodajIloscItem(-1, listaItemow[aktualnyItem].id)
+        if(listaItemow[aktualnyItem].ilosc<=0){
+            listaItemow.removeAt(aktualnyItem)
+            if(!WylaczPrzyciskJesliBrakItemow()){
+                PrzełączItem(1)
+            }
+        }
+        przyciskItemu?.text= listaItemow[aktualnyItem].ilosc.toString()
+
+    }
+
+    fun WylaczPrzyciskJesliBrakItemow():Boolean{
+        if(listaItemow.size<=0){
+            przyciskItemu!!.background=BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.button))
+            przyciskItemu?.isClickable=false
+            przyciskItemL?.isClickable=false
+            przyciskItemR?.isClickable=false
+            return true
+        }
+        return false
+    }
+
+}
 
 /*
 

@@ -180,7 +180,7 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener
             }
         })
 
-        ZmienWyswietlaneMonety(czlowieczki.first().monety)
+        ZmienWyswietlaneMonety(dao.getAllCz().first().monety)
 
 
 
