@@ -10,7 +10,7 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.tamagotchi.Glod
+import com.example.tamagotchi.Potrzeba
 // com.example.tamagotchi.Czlowieczek
 import com.example.tamagotchi.R
 
@@ -66,7 +66,7 @@ abstract class Item(/*context: Context, attrs: AttributeSet?, */@PrimaryKey val 
 
         */
     //Interakcja, domyslnie nic nie robi
-    open fun onInteract(glod: Glod) {
+    open fun onInteract(glod: Potrzeba) {
         // tutaj nadpisywana przez klasy poch
     }
 
@@ -133,8 +133,8 @@ open class Food(/*context: Context, attrs: AttributeSet?,*/  id:Int, ilosc:Int, 
 */
 
     //metoda przeciazajaca metode z item
-    override fun onInteract(glod: Glod) {
-        glod.zwiekszGlod(wartosc)
+    override fun onInteract(glod: Potrzeba) {
+        glod.zwiekszPotrzebe(wartosc)
     }
 
 }

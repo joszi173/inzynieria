@@ -14,7 +14,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.tamagotchi.db.czlowieczek
 
 
-class Gra : AppCompatActivity(), Glod.PasekGloduListener
+class Gra : AppCompatActivity(), Potrzeba.PasekPotrzebyListener
 {
 
     /*
@@ -30,7 +30,7 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener
 
 
 
-    private lateinit var glod: Glod
+    private lateinit var glod: Potrzeba
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?)
@@ -60,8 +60,8 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener
         //Pasek glodu
         //val glod=Glod(100)
         // Inicjalizacja paska głodu
-        val glod = Glod(this, 100)
-        glod.setPasekGloduListener(this)
+        val glod = Potrzeba(this, 100)
+        glod.setPasekPotrzebyListener(this)
 
         val domek = Domek(dao, glod, this, dao.getAllRooms())
         val sklepik = Sklepik(dao, this)
@@ -191,7 +191,7 @@ class Gra : AppCompatActivity(), Glod.PasekGloduListener
         findViewById<TextView>(R.id.iloscMonet).setText(monetki.toString())
     }
 
-    override fun onPasekGloduChange(bitmapResource: Int) {
+    override fun onPasekPotrzebyChange(bitmapResource: Int) {
         runOnUiThread {
             // Tutaj ustaw obraz paska głodu na interfejsie użytkownika
             val pasekGloduImageView = findViewById<ImageView>(R.id.pasekGlod)

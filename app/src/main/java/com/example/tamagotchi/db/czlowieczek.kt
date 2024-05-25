@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.example.tamagotchi.Glod
+import com.example.tamagotchi.Potrzeba
 
 @Entity
 class czlowieczek(

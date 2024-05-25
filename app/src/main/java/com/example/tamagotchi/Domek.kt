@@ -11,7 +11,7 @@ import android.widget.RelativeLayout
 import com.example.tamagotchi.db.tamagotchiDao
 
 
-class Domek(val dao: tamagotchiDao, var glod: Glod, val gra:Gra, val pokoje:List<Pokoj>, var aktualnyPokoj:Int=0) : Fragment(R.layout.fragment_domek) {
+class Domek(val dao: tamagotchiDao, var glod: Potrzeba, val gra:Gra, val pokoje:List<Pokoj>, var aktualnyPokoj:Int=0) : Fragment(R.layout.fragment_domek) {
 
     var tlo: RelativeLayout? =null
     var przyciskPokojL:Button? =null
