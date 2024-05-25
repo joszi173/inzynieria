@@ -3,9 +3,9 @@ package com.example.tamagotchi
 import android.content.Context
 import showNoti
 
-class Glod(var context: Context, var level: Int = 100) {
+class Potrzeba(var context: Context, var level: Int = 100) {
 
-    private var pasekGloduListener: PasekGloduListener? = null
+    private var pasekPotrzebyListener: PasekPotrzebyListener? = null
     var czy_noti: Boolean = true
 
     init {
@@ -13,12 +13,12 @@ class Glod(var context: Context, var level: Int = 100) {
 
     }
 
-    interface PasekGloduListener {
-        fun onPasekGloduChange(bitmapResource: Int)
+    interface PasekPotrzebyListener {
+        fun onPasekPotrzebyChange(bitmapResource: Int)
     }
 
-    fun setPasekGloduListener(listener: PasekGloduListener) {
-        this.pasekGloduListener = listener
+    fun setPasekPotrzebyListener(listener: PasekPotrzebyListener) {
+        this.pasekPotrzebyListener = listener
     }
 
     private fun startDecreaseThread() {
@@ -36,12 +36,12 @@ class Glod(var context: Context, var level: Int = 100) {
             level -= 2
             if (level % 10 == 0) {
                 // Wywołujemy metodę zmieniającą obraz paska głodu co 10 poziomów
-                pasekGloduListener?.onPasekGloduChange(getObrazDlaPoziomu(level))
+                pasekPotrzebyListener?.onPasekPotrzebyChange(getObrazDlaPoziomu(level))
 
             }
 
             if (level < 50 && czy_noti) {
-                showNoti(context.applicationContext, "Tamagotchi jest glodny", "Nakarm mnie!")
+                showNoti(context.applicationContext, "niski poziom potrzeby", "Niski poziom potrzeby")
                 czy_noti = false
             }
 
@@ -51,17 +51,17 @@ class Glod(var context: Context, var level: Int = 100) {
         }
     }
 
-    fun jakGlodny(): Int {
+    fun jakBardzo(): Int {
         return level
     }
 
-    fun zwiekszGlod(amount: Int) {
+    fun zwiekszPotrzebe(amount: Int) {
         if (level < 100) {
             level = minOf(100, level + amount) // Zwiększ poziom głodu
         }
         if (level % 10 == 0) {
             // Wywołujemy metodę zmieniającą obraz paska głodu co 10 poziomów
-            pasekGloduListener?.onPasekGloduChange(getObrazDlaPoziomu(level))
+            pasekPotrzebyListener?.onPasekPotrzebyChange(getObrazDlaPoziomu(level))
 
         }
 
