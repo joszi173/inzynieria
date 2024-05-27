@@ -150,9 +150,6 @@ class Domek(val dao: tamagotchiDao, var glod: Potrzeba, val gra:Gra, val pokoje:
             }
 
         })
-///////////////////////////////////////////////
-
-
 
         }
 
@@ -184,11 +181,8 @@ class Domek(val dao: tamagotchiDao, var glod: Potrzeba, val gra:Gra, val pokoje:
             'J'->listaItemow=dao.getAllFoodMoreThan0().toMutableList()
             //dodać następne dla kolejnych klas itemów
         }
-        if(listaItemow.size<=0){
-            przyciskItemu?.isClickable=false
-            przyciskItemL?.isClickable=false
-            przyciskItemL?.isClickable=false
-            return
+        if(WylaczPrzyciskJesliBrakItemow()){
+            return;
         }
         UstawWygladPrzyciskuItemu()
     }
@@ -212,10 +206,12 @@ class Domek(val dao: tamagotchiDao, var glod: Potrzeba, val gra:Gra, val pokoje:
         dao.dodajIloscItem(-1, listaItemow[aktualnyItem].id)
         if(listaItemow[aktualnyItem].ilosc<=0){
             listaItemow.removeAt(aktualnyItem)
-            if(!WylaczPrzyciskJesliBrakItemow()){
-                PrzełączItem(1)
+            if(WylaczPrzyciskJesliBrakItemow()){
+                return
             }
+            PrzełączItem(1)
         }
+
         przyciskItemu?.text= listaItemow[aktualnyItem].ilosc.toString()
 
     }
@@ -223,9 +219,9 @@ class Domek(val dao: tamagotchiDao, var glod: Potrzeba, val gra:Gra, val pokoje:
     fun WylaczPrzyciskJesliBrakItemow():Boolean{
         if(listaItemow.size<=0){
             przyciskItemu!!.background=BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.button))
-            przyciskItemu?.isClickable=false
-            przyciskItemL?.isClickable=false
-            przyciskItemR?.isClickable=false
+            przyciskItemu?.setEnabled(false);
+            przyciskItemL?.setEnabled(false);
+            przyciskItemR?.setEnabled(false);
             return true
         }
         return false
