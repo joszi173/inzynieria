@@ -85,12 +85,14 @@ class Gra : AppCompatActivity(), Potrzeba.PasekPotrzebyListener
         //tablica itemów, po dodaniu domku do przeniesienia do pokoju
         var listaItemow = listOf(
             //Food(this,null,BitmapFactory.decodeResource(getResources(), R.drawable.orange), 30),
-            Food(1,13, 30,BitmapFactory.decodeResource(getResources(), R.drawable.orange_),3),
+            Food(1,13, 30,BitmapFactory.decodeResource(getResources(), R.drawable.orange0),3),
             //Food(this,null,BitmapFactory.decodeResource(getResources(), R.drawable.orzeszek), 10)
-            Food(2,5,10,BitmapFactory.decodeResource(getResources(), R.drawable.peanut_), 1)
+            Food(2,5,10,BitmapFactory.decodeResource(getResources(), R.drawable.peanut0), 1)
             //Food(this,null,BitmapFactory.decodeResource(getResources(), R.drawable.orzeszek), 10)
 
-            )//zmienić na Itemy
+            )//zmienić na Itemy]]
+
+
         dao.insertAllItems(listaItemow)
         //index aktualnie wybranego itemu z tablicy
 
