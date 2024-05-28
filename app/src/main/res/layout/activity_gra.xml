@@ -50,6 +50,7 @@
             android:textColor="@color/dark_porpl"
             android:textSize="48sp" />
 
+
     </FrameLayout>
 
     <ImageView
@@ -66,11 +67,28 @@
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="64dp"
-        android:text="TextView"
         android:textColor="#330C0C"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/iloscMonetD"
+        android:drawableLeft="@drawable/money"
+        android:layout_width="137dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="64dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="MMM"
+        android:textAlignment="textStart"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="40dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

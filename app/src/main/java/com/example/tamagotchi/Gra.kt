@@ -190,7 +190,7 @@ class Gra : AppCompatActivity(), Potrzeba.PasekPotrzebyListener
     }
 
     fun ZmienWyswietlaneMonety(monetki:Int){
-        findViewById<TextView>(R.id.iloscMonet).setText(monetki.toString())
+        findViewById<TextView>(R.id.iloscMonetD).setText(monetki.toString())
     }
 
     override fun onPasekPotrzebyChange(bitmapResource: Int) {
