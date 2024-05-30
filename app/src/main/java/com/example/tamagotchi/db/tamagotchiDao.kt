@@ -35,10 +35,10 @@ interface tamagotchiDao {
     fun getAllFood(): List<Food>
 
     //J-74, S-83, H-72, Z-90
-
+/*
     @Query("SELECT * FROM item WHERE ilosc>0 AND klasa=:itemClass")//przekonwertować char na int jeśli nie działa
     fun getAllRoomItemMoreThan0(itemClass:Char): AbstractList<Item>
-
+*/
 
 ///////
     @Query("SELECT * FROM item WHERE ilosc>0 AND klasa=74")

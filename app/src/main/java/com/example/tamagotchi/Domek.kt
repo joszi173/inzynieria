@@ -116,6 +116,7 @@ class Domek(val dao: tamagotchiDao, var listaPotrzeb: MutableList<Potrzeba>, val
         }else if(aktualnyPokoj>=pokoje.size){
             aktualnyPokoj=0
         }
+        WczytajItemyDoSlotu()
         UstawTloNaAktualnegoPokoju()
     }
 
@@ -126,12 +127,20 @@ class Domek(val dao: tamagotchiDao, var listaPotrzeb: MutableList<Potrzeba>, val
         przyciskItemu?.text=listaItemow[aktualnyItem].ilosc.toString()
     }
 
+    fun WyczyscListeItemow(){
+        listaItemow.clear()
+    }
+
+
     fun WczytajItemyDoSlotu(){
-        //when(pokoje[aktualnyPokoj].klasaItemu){
-         //   'J'->listaItemow=dao.getAllFoodMoreThan0().toMutableList()
+        when(pokoje[aktualnyPokoj].klasaItemu){
+            'J'->listaItemow=dao.getAllFoodMoreThan0().toMutableList()
+            'H'->listaItemow=dao.getAllHigeneMoreThan0().toMutableList()
+            'Z'->listaItemow=dao.getAllFunMoreThan0().toMutableList()
+            'S'->listaItemow=dao.getAllSleepMoreThan0().toMutableList()
             //dodać następne dla kolejnych klas itemów
-        //}
-        listaItemow=dao.getAllRoomItemMoreThan0(pokoje[aktualnyPokoj].klasaItemu).toMutableList()
+        }
+        //listaItemow=dao.getAllRoomItemMoreThan0(pokoje[aktualnyPokoj].klasaItemu).toMutableList()
         if(WylaczPrzyciskJesliBrakItemow()){
             return;
         }
@@ -150,7 +159,7 @@ class Domek(val dao: tamagotchiDao, var listaPotrzeb: MutableList<Potrzeba>, val
     }
 
     fun UzyjItemu(){
-        listaItemow[aktualnyItem].onInteract(listaPotrzeb[kolejnoscPotrzeb.GLOD.ordinal])
+        listaItemow[aktualnyItem].onInteract(listaPotrzeb[aktualnyPokoj])
         dao.updateCzasKarmienia(System.currentTimeMillis())
 
         listaItemow[aktualnyItem].ilosc--

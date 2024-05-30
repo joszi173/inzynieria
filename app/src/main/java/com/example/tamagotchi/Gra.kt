@@ -56,7 +56,7 @@ class Gra : AppCompatActivity(), Potrzeba.PasekPotrzebyListener
             Pokoj(4,"salon", 'Z',BitmapFactory.decodeResource(getResources(), R.drawable.shop))
         )
         dao.insertAllRooms(listaPokoi)
-
+        //kolejność pokoi względem kolejności potrzeb w listach jest ważna!!!!
         val potrzeby = mutableListOf(Potrzeba(this), Potrzeba(this), Potrzeba(this), Potrzeba(this))
         potrzeby[kolejnoscPotrzeb.GLOD.ordinal].setPasekPotrzebyListener(this)
 
@@ -75,7 +75,10 @@ class Gra : AppCompatActivity(), Potrzeba.PasekPotrzebyListener
         //tablica itemów, po dodaniu domku do przeniesienia do pokoju
         var listaItemow = listOf(
             Food(1,13, 30,BitmapFactory.decodeResource(getResources(), R.drawable.orange0),3),
-            Food(2,5,10,BitmapFactory.decodeResource(getResources(), R.drawable.peanut0), 1)
+            Food(2,5,10,BitmapFactory.decodeResource(getResources(), R.drawable.peanut0), 1),
+            Higene(3,1,1,BitmapFactory.decodeResource(getResources(), R.drawable.bajablast), 1),
+            Fun(4,2,2,BitmapFactory.decodeResource(getResources(), R.drawable.clouds_loading2), 1),
+            Sleep(5,2,3,BitmapFactory.decodeResource(getResources(), R.drawable.sklepik1), 1),
 
             )//zmienić na Itemy]]
 

@@ -151,7 +151,7 @@ open class Higene(/*context: Context, attrs: AttributeSet?,*/  id:Int, ilosc:Int
 
 }
 
-open class Sleep(/*context: Context, attrs: AttributeSet?,*/  id:Int, ilosc:Int, wartosc: Int, bitmap: Bitmap, koszt:Int, klasa:Char='H') :
+open class Sleep(/*context: Context, attrs: AttributeSet?,*/  id:Int, ilosc:Int, wartosc: Int, bitmap: Bitmap, koszt:Int, klasa:Char='S') :
     Item(id,ilosc, wartosc, bitmap, koszt, klasa)/*(context, attrs, wartosc)*/
 {
 
@@ -163,7 +163,7 @@ open class Sleep(/*context: Context, attrs: AttributeSet?,*/  id:Int, ilosc:Int,
 
 }
 
-open class Fun(/*context: Context, attrs: AttributeSet?,*/  id:Int, ilosc:Int, wartosc: Int, bitmap: Bitmap, koszt:Int, klasa:Char='H') :
+open class Fun(/*context: Context, attrs: AttributeSet?,*/  id:Int, ilosc:Int, wartosc: Int, bitmap: Bitmap, koszt:Int, klasa:Char='Z') :
     Item(id,ilosc, wartosc, bitmap, koszt, klasa)/*(context, attrs, wartosc)*/
 {
 
