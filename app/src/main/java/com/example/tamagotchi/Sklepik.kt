@@ -47,7 +47,7 @@ class Sklepik(val dao: tamagotchiDao, val gra:Gra) : Fragment(R.layout.fragment_
                 override fun onClick(v: View?) {
 
                     if(dao.getAllCz().first().monety>=i.koszt) {
-                        dao.dodajIloscItem(1, nowyPrzycisk.id)
+                        dao.dodajIloscItem( nowyPrzycisk.id, 1)
                         dao.dodajMonety(-i.koszt)
                         println("dodaje item " + nowyPrzycisk.id.toString() + " o koszcie "+i.koszt)
                         gra.ZmienWyswietlaneMonety(dao.getAllCz().first().monety)

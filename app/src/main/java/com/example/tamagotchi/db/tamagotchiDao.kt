@@ -9,8 +9,12 @@ import com.example.tamagotchi.Food
 import com.example.tamagotchi.Fun
 import com.example.tamagotchi.Higene
 import com.example.tamagotchi.Item
+import com.example.tamagotchi.Kuchnia
+import com.example.tamagotchi.Lazienka
 import com.example.tamagotchi.Pokoj
+import com.example.tamagotchi.Salon
 import com.example.tamagotchi.Sleep
+import com.example.tamagotchi.Sypialnia
 
 
 @Dao
@@ -45,10 +49,10 @@ interface tamagotchiDao {
     fun getAllFood(): List<Food>
 
     //J-74, S-83, H-72, Z-90
-/*
+
     @Query("SELECT * FROM item WHERE ilosc>0 AND klasa=:itemClass")//przekonwertować char na int jeśli nie działa
-    fun getAllRoomItemMoreThan0(itemClass:Char): AbstractList<Item>
-*/
+    fun getAllRoomItemMoreThan0(itemClass:Char): List<Item>
+
 
 ///////
     @Query("SELECT * FROM item WHERE ilosc>0 AND klasa=74")
@@ -70,7 +74,7 @@ interface tamagotchiDao {
 //    fun getAllItems(): List<Item>
 
     @Query("UPDATE item SET ilosc = ilosc+:dodanaIlosc WHERE id = :zmienianeId")
-    fun dodajIloscItem(dodanaIlosc: Int, zmienianeId: Int)
+    fun dodajIloscItem(zmienianeId: Int, dodanaIlosc: Int)
 
     @Query("UPDATE item SET ilosc = ilosc-:odejmowanaIlosc WHERE id = :zmienianeId")
     fun odejmijIloscItem(odejmowanaIlosc: Int, zmienianeId: Int)
@@ -81,8 +85,20 @@ interface tamagotchiDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAllRooms(pokoj: List<Pokoj>)
-    @Query("SELECT * FROM pokoj")
-    fun getAllRooms(): List<Pokoj>
+
+    //@Query("SELECT * FROM pokoj")
+    //fun getAllRooms(): List<Pokoj>
+
+
+    //J-74, S-83, H-72, Z-90
+    @Query("SELECT * FROM pokoj WHERE klasaItemu=74")
+    fun getKitchen(): Kuchnia
+    @Query("SELECT * FROM pokoj WHERE klasaItemu=83")
+    fun getSleepinRoom(): Sypialnia
+    @Query("SELECT * FROM pokoj WHERE klasaItemu=72")
+    fun getBathRoom():Lazienka
+    @Query("SELECT * FROM pokoj WHERE klasaItemu=90")
+    fun getLivinRoom(): Salon
 
 
 }

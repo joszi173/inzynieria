@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import androidx.core.view.isVisible
 import com.example.tamagotchi.db.tamagotchiDao
 
 
@@ -19,7 +20,7 @@ class Domek(val dao: tamagotchiDao, var listaPotrzeb: MutableList<Potrzeba>, val
     var przyciskItemL:Button?= null
     var przyciskItemR:Button?= null
     var przyciskItemu:Button? = null
-    var listaItemow= mutableListOf<Item>()
+    //var listaItemow= mutableListOf<Item>()
     var aktualnyItem = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,14 +63,17 @@ class Domek(val dao: tamagotchiDao, var listaPotrzeb: MutableList<Potrzeba>, val
         }
         /////////////////////////
 
-
+        for(pokoj:Pokoj in pokoje){
+            pokoj.itemy=dao.getAllRoomItemMoreThan0(pokoj.klasaItemu).toMutableList()
+            pokoj.potrzeba=listaPotrzeb[pokoj.id-1]
+        }
 
 
 
 
         //ustawianie Itemów
         /////////////////////////////////////
-        println("pokoj "+pokoje[aktualnyPokoj].nazwa)
+        //println("pokoj "+pokoje[aktualnyPokoj].nazwa)
         ////////////////////////////////////
          przyciskItemL= getView()?.findViewById<Button>(R.id.buttonItemL)
          przyciskItemR= getView()?.findViewById<Button>(R.id.buttonItemR)
@@ -116,6 +120,7 @@ class Domek(val dao: tamagotchiDao, var listaPotrzeb: MutableList<Potrzeba>, val
         }else if(aktualnyPokoj>=pokoje.size){
             aktualnyPokoj=0
         }
+        aktualnyItem=0;
         WczytajItemyDoSlotu()
         UstawTloNaAktualnegoPokoju()
     }
@@ -123,72 +128,88 @@ class Domek(val dao: tamagotchiDao, var listaPotrzeb: MutableList<Potrzeba>, val
     ////item handling
 
     fun UstawWygladPrzyciskuItemu(){
-        przyciskItemu?.background=BitmapDrawable(getResources(), listaItemow[aktualnyItem].bitmap)
-        przyciskItemu?.text=listaItemow[aktualnyItem].ilosc.toString()
+        przyciskItemu?.background=BitmapDrawable(getResources(), pokoje[aktualnyPokoj].itemy[aktualnyItem].bitmap)
+        przyciskItemu?.text=pokoje[aktualnyPokoj].itemy[aktualnyItem].ilosc.toString()
     }
 
-    fun WyczyscListeItemow(){
+    /*fun WyczyscListeItemow(){
         listaItemow.clear()
-    }
+    }*/
 
 
     fun WczytajItemyDoSlotu(){
-        when(pokoje[aktualnyPokoj].klasaItemu){
+       /* when(pokoje[aktualnyPokoj].klasaItemu){
             'J'->listaItemow=dao.getAllFoodMoreThan0().toMutableList()
             'H'->listaItemow=dao.getAllHigeneMoreThan0().toMutableList()
             'Z'->listaItemow=dao.getAllFunMoreThan0().toMutableList()
             'S'->listaItemow=dao.getAllSleepMoreThan0().toMutableList()
             //dodać następne dla kolejnych klas itemów
-        }
+        }*/
         //listaItemow=dao.getAllRoomItemMoreThan0(pokoje[aktualnyPokoj].klasaItemu).toMutableList()
         if(WylaczPrzyciskJesliBrakItemow()){
             return;
         }
+
         UstawWygladPrzyciskuItemu()
+        PrzelaczPrzelaczanieItemow()
     }
 
     fun PrzełączItem(numer:Int){
 
         aktualnyItem+=numer
         if(aktualnyItem<0){
-            aktualnyItem=listaItemow.size-1
-        }else if(aktualnyItem>=listaItemow.size){
+            aktualnyItem=pokoje[aktualnyPokoj].itemy.size-1
+        }else if(aktualnyItem>=pokoje[aktualnyPokoj].itemy.size){
             aktualnyItem=0
         }
         UstawWygladPrzyciskuItemu()
     }
 
     fun UzyjItemu(){
-        listaItemow[aktualnyItem].onInteract(listaPotrzeb[aktualnyPokoj])
+        //pokoje[aktualnyPokoj].itemy[aktualnyItem].onInteract(listaPotrzeb[aktualnyPokoj])
 
-        when(pokoje[aktualnyPokoj].klasaItemu){
+        /*when(pokoje[aktualnyPokoj].klasaItemu){
             'J'->dao.updateCzasKarmienia(System.currentTimeMillis())
             'H'->dao.updateCzasMycia(System.currentTimeMillis())
             'Z'->dao.updateCzasZabawy(System.currentTimeMillis())
             'S'->dao.updateCzasSpania(System.currentTimeMillis())
             //dodać następne dla kolejnych klas itemów
-        }
+        }*/
 
-        listaItemow[aktualnyItem].ilosc--
-        dao.dodajIloscItem(-1, listaItemow[aktualnyItem].id)
-        if(listaItemow[aktualnyItem].ilosc<=0){
-            listaItemow.removeAt(aktualnyItem)
+        //listaItemow[aktualnyItem].ilosc--
+        //dao.dodajIloscItem(-1, listaItemow[aktualnyItem].id)
+        //if(listaItemow[aktualnyItem].ilosc<=0){
+        //    listaItemow.removeAt(aktualnyItem)
+
+        dao.dodajIloscItem(pokoje[aktualnyPokoj].itemy[aktualnyItem].id, -(pokoje[aktualnyPokoj].onInteract(aktualnyItem)))
             if(WylaczPrzyciskJesliBrakItemow()){
                 return
             }
-            PrzełączItem(1)
+            PrzełączItem(0)
+        PrzelaczPrzelaczanieItemow();
+
+        przyciskItemu?.text=pokoje[aktualnyPokoj].itemy[aktualnyItem].ilosc.toString()
+    }
+
+    fun PrzelaczPrzelaczanieItemow() {
+        if (pokoje[aktualnyPokoj].itemy.size <= 1) {
+            przyciskItemL?.setEnabled(false);
+            przyciskItemR?.setEnabled(false);
+            przyciskItemL?.isVisible = false;
+            przyciskItemR?.isVisible = false;
+        }else{
+            przyciskItemL?.setEnabled(true);
+            przyciskItemR?.setEnabled(true);
+            przyciskItemL?.isVisible = true;
+            przyciskItemR?.isVisible = true;
         }
-
-        przyciskItemu?.text= listaItemow[aktualnyItem].ilosc.toString()
-
     }
 
     fun WylaczPrzyciskJesliBrakItemow():Boolean{
-        if(listaItemow.size<=0){
+        if(pokoje[aktualnyPokoj].itemy.size<=0){
             przyciskItemu!!.background=BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.button))
             przyciskItemu?.setEnabled(false);
-            przyciskItemL?.setEnabled(false);
-            przyciskItemR?.setEnabled(false);
+            PrzelaczPrzelaczanieItemow();
             return true
         }
         return false

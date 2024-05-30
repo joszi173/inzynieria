@@ -49,18 +49,27 @@ class Gra : AppCompatActivity(), Potrzeba.PasekPotrzebyListener
 
         val dao = tamagotchiDatabase.getInstance(this).tamagotchiDao
 
-        var listaPokoi = listOf(
-            Pokoj(1,"kuchnia", 'J',BitmapFactory.decodeResource(getResources(), R.drawable.roomp)),
-            Pokoj(2,"lazienka", 'H',BitmapFactory.decodeResource(getResources(), R.drawable.roomp)),
-            Pokoj(3,"sypialnia", 'S',BitmapFactory.decodeResource(getResources(), R.drawable.shop)),
-            Pokoj(4,"salon", 'Z',BitmapFactory.decodeResource(getResources(), R.drawable.shop))
-        )
-        dao.insertAllRooms(listaPokoi)
+
         //kolejność pokoi względem kolejności potrzeb w listach jest ważna!!!!
         val potrzeby = mutableListOf(Potrzeba(this), Potrzeba(this), Potrzeba(this), Potrzeba(this))
         potrzeby[kolejnoscPotrzeb.GLOD.ordinal].setPasekPotrzebyListener(this)
 
-        val domek = Domek(dao, potrzeby, this, dao.getAllRooms())
+        var listaPokoi = listOf(
+            Kuchnia(1,"kuchnia", 'J',BitmapFactory.decodeResource(getResources(), R.drawable.roomp)),
+            Lazienka(2,"lazienka", 'H',BitmapFactory.decodeResource(getResources(), R.drawable.roomp)),
+            Sypialnia(3,"sypialnia", 'S',BitmapFactory.decodeResource(getResources(), R.drawable.shop)),
+            Salon(4,"salon", 'Z',BitmapFactory.decodeResource(getResources(), R.drawable.shop))
+        )
+        dao.insertAllRooms(listaPokoi)
+
+
+        val pokoje= mutableListOf<Pokoj>();
+        pokoje.add(dao.getKitchen())
+        pokoje.add(dao.getBathRoom())
+        pokoje.add(dao.getSleepinRoom())
+        pokoje.add(dao.getLivinRoom())
+
+        val domek = Domek(dao, potrzeby, this, pokoje)
         val sklepik = Sklepik(dao, this)
 
         supportFragmentManager.beginTransaction().apply {
