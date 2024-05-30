@@ -160,7 +160,14 @@ class Domek(val dao: tamagotchiDao, var listaPotrzeb: MutableList<Potrzeba>, val
 
     fun UzyjItemu(){
         listaItemow[aktualnyItem].onInteract(listaPotrzeb[aktualnyPokoj])
-        dao.updateCzasKarmienia(System.currentTimeMillis())
+
+        when(pokoje[aktualnyPokoj].klasaItemu){
+            'J'->dao.updateCzasKarmienia(System.currentTimeMillis())
+            'H'->dao.updateCzasMycia(System.currentTimeMillis())
+            'Z'->dao.updateCzasZabawy(System.currentTimeMillis())
+            'S'->dao.updateCzasSpania(System.currentTimeMillis())
+            //dodać następne dla kolejnych klas itemów
+        }
 
         listaItemow[aktualnyItem].ilosc--
         dao.dodajIloscItem(-1, listaItemow[aktualnyItem].id)

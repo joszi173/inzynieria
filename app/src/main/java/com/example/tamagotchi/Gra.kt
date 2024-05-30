@@ -102,7 +102,7 @@ class Gra : AppCompatActivity(), Potrzeba.PasekPotrzebyListener
 
 
         //otwarcie obrazu człowieczka
-        val czlowieczki = listOf( czlowieczek(1, "mandarynka", 12, System.currentTimeMillis(), BitmapFactory.decodeResource(getResources(), R.drawable.czlow3)))
+        val czlowieczki = listOf( czlowieczek(1, "mandarynka", 12, System.currentTimeMillis(),System.currentTimeMillis(),System.currentTimeMillis(),System.currentTimeMillis(), BitmapFactory.decodeResource(getResources(), R.drawable.czlow3)))
 
         dao.insertAllCz(czlowieczki)
 

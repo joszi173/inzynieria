@@ -11,7 +11,11 @@ class czlowieczek(
     @PrimaryKey val id: Int,
     val imie: String,
     var monety: Int,
+    //val czasPotrzeb:List<Long>,
     val czasOstatniegokarmienia: Long,
+    val czasOstatniegomycia: Long,
+    val czasOstatniegospania: Long,
+    val czasOstatniejzabawy: Long,
     val wyglad: Bitmap
 )
 {

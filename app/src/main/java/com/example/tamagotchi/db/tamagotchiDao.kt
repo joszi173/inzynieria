@@ -22,6 +22,16 @@ interface tamagotchiDao {
     @Query("UPDATE czlowieczek SET czasOstatniegokarmienia = :czasKarmienia WHERE id = 1")
     fun updateCzasKarmienia(czasKarmienia: Long)
 
+    @Query("UPDATE czlowieczek SET czasOstatniegomycia = :czasMycia WHERE id = 1")
+    fun updateCzasMycia(czasMycia: Long)
+
+    @Query("UPDATE czlowieczek SET czasOstatniegospania = :czasSpania WHERE id = 1")
+    fun updateCzasSpania(czasSpania: Long)
+
+    @Query("UPDATE czlowieczek SET czasOstatniejzabawy = :czasZabawy WHERE id = 1")
+    fun updateCzasZabawy(czasZabawy: Long)
+
+
     @Query("UPDATE czlowieczek SET monety = monety+:roznicaMonet WHERE id = 1")
     fun dodajMonety(roznicaMonet: Int)
 
