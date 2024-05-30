@@ -59,8 +59,6 @@ class Sklepik(val dao: tamagotchiDao, val gra:Gra) : Fragment(R.layout.fragment_
 
         }
         layout.addView(newRow)
-
-
     }
 
 

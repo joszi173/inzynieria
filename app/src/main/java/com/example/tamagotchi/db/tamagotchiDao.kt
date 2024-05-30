@@ -6,8 +6,11 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.tamagotchi.Food
+import com.example.tamagotchi.Fun
+import com.example.tamagotchi.Higene
 import com.example.tamagotchi.Item
 import com.example.tamagotchi.Pokoj
+import com.example.tamagotchi.Sleep
 
 
 @Dao
@@ -31,8 +34,24 @@ interface tamagotchiDao {
     @Query("SELECT * FROM item WHERE klasa=74")
     fun getAllFood(): List<Food>
 
+    //J-74, S-83, H-72, Z-90
+
+    @Query("SELECT * FROM item WHERE ilosc>0 AND klasa=:itemClass")//przekonwertować char na int jeśli nie działa
+    fun getAllRoomItemMoreThan0(itemClass:Char): AbstractList<Item>
+
+
+///////
     @Query("SELECT * FROM item WHERE ilosc>0 AND klasa=74")
     fun getAllFoodMoreThan0(): List<Food>
+
+    @Query("SELECT * FROM item WHERE ilosc>0 AND klasa=72")
+    fun getAllHigeneMoreThan0(): List<Higene>
+
+    @Query("SELECT * FROM item WHERE ilosc>0 AND klasa=83")
+    fun getAllSleepMoreThan0(): List<Sleep>
+
+    @Query("SELECT * FROM item WHERE ilosc>0 AND klasa=90")
+    fun getAllFunMoreThan0(): List<Fun>
 
 //    @Query("SELECT * FROM item WHERE ilosc>0")
 //    fun getAllItemsMoreThan0(): List<Item>

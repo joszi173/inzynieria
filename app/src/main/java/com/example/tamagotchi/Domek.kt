@@ -11,7 +11,7 @@ import android.widget.RelativeLayout
 import com.example.tamagotchi.db.tamagotchiDao
 
 
-class Domek(val dao: tamagotchiDao, var glod: Potrzeba, val gra:Gra, val pokoje:List<Pokoj>, var aktualnyPokoj:Int=0) : Fragment(R.layout.fragment_domek) {
+class Domek(val dao: tamagotchiDao, var listaPotrzeb: MutableList<Potrzeba>, val gra:Gra, val pokoje:List<Pokoj>, var aktualnyPokoj:Int=0) : Fragment(R.layout.fragment_domek) {
 
     var tlo: RelativeLayout? =null
     var przyciskPokojL:Button? =null
@@ -21,6 +21,7 @@ class Domek(val dao: tamagotchiDao, var glod: Potrzeba, val gra:Gra, val pokoje:
     var przyciskItemu:Button? = null
     var listaItemow= mutableListOf<Item>()
     var aktualnyItem = 0
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -69,67 +70,16 @@ class Domek(val dao: tamagotchiDao, var glod: Potrzeba, val gra:Gra, val pokoje:
         //ustawianie Itemów
         /////////////////////////////////////
         println("pokoj "+pokoje[aktualnyPokoj].nazwa)
-        //val listaJedzenia = dao.getAllFoodMoreThan0().toMutableList()
-        //for(f:Food in listaJedzenia){
-        //   println("jedzenie "+f.id.toString()+", ilosc: "+f.ilosc.toString()+", klasa: "+f.klasa.toString())
-        //}
-
-
-        /////////////////////////////////////
+        ////////////////////////////////////
          przyciskItemL= getView()?.findViewById<Button>(R.id.buttonItemL)
          przyciskItemR= getView()?.findViewById<Button>(R.id.buttonItemR)
          przyciskItemu = getView()?.findViewById<Button>(R.id.UzyjItemu)
         ///////////////////////////
-
-
-        /*
-        if(listaJedzenia.count()>0){
-            if (przyciskItemu != null) {
-                //
-                przyciskItemu!!.background=BitmapDrawable(getResources(),
-                    listaJedzenia.get(aktualnyItem).bitmap
-                )
-                przyciskItemu!!.text = listaJedzenia.get(aktualnyItem).ilosc.toString()}}
-        */
         WczytajItemyDoSlotu()
 
         przyciskItemu?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 UzyjItemu()
-                /*
-                if(listaJedzenia.size<=0){
-                    println("ni ma jedzenia")
-                    return
-                }
-
-                listaJedzenia.get(aktualnyItem).let { glod.zwiekszGlod(it.wartosc) }
-                println("Stary czas karmienia "+dao.getAllCz().first().czasOstatniegokarmienia)
-
-                dao.updateCzasKarmienia(System.currentTimeMillis())
-                println("Nowy czas karmienia "+dao.getAllCz().first().czasOstatniegokarmienia)
-                println("Karmienie " + (listaJedzenia[aktualnyItem]))
-                println("Nowy czas karmienia " )
-
-
-                listaJedzenia.get(aktualnyItem).ilosc = listaJedzenia.get(aktualnyItem).ilosc - 1
-                dao.dodajIloscItem(-1, listaJedzenia[aktualnyItem].id)
-                dao.insertAllItems(listaJedzenia.toList())
-                przyciskItemu!!.text = listaJedzenia.get(aktualnyItem).ilosc.toString()
-                if(listaJedzenia[aktualnyItem].ilosc<=0){
-                    if(listaJedzenia.count()>0) {
-                        listaJedzenia.removeAt(aktualnyItem)
-
-                    }
-                    if(listaJedzenia.count()<=0){
-                        println("brak jedzenia")
-                        przyciskItemu!!.text = "X"
-                        przyciskItemu!!.background=BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), R.drawable.button))
-                        przyciskItemu!!.isClickable=false
-                        przyciskItemL?.isClickable=false
-                        przyciskItemR?.isClickable=false
-                        return
-                    }
-                }*/
 
             }
         })
@@ -177,10 +127,11 @@ class Domek(val dao: tamagotchiDao, var glod: Potrzeba, val gra:Gra, val pokoje:
     }
 
     fun WczytajItemyDoSlotu(){
-        when(pokoje[aktualnyPokoj].klasaItemu){
-            'J'->listaItemow=dao.getAllFoodMoreThan0().toMutableList()
+        //when(pokoje[aktualnyPokoj].klasaItemu){
+         //   'J'->listaItemow=dao.getAllFoodMoreThan0().toMutableList()
             //dodać następne dla kolejnych klas itemów
-        }
+        //}
+        listaItemow=dao.getAllRoomItemMoreThan0(pokoje[aktualnyPokoj].klasaItemu).toMutableList()
         if(WylaczPrzyciskJesliBrakItemow()){
             return;
         }
@@ -199,7 +150,7 @@ class Domek(val dao: tamagotchiDao, var glod: Potrzeba, val gra:Gra, val pokoje:
     }
 
     fun UzyjItemu(){
-        listaItemow[aktualnyItem].onInteract(glod)
+        listaItemow[aktualnyItem].onInteract(listaPotrzeb[kolejnoscPotrzeb.GLOD.ordinal])
         dao.updateCzasKarmienia(System.currentTimeMillis())
 
         listaItemow[aktualnyItem].ilosc--
@@ -229,6 +180,3 @@ class Domek(val dao: tamagotchiDao, var glod: Potrzeba, val gra:Gra, val pokoje:
 
 }
 
-/*
-
- */

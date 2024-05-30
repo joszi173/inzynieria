@@ -14,6 +14,9 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.tamagotchi.db.czlowieczek
 
 
+enum class kolejnoscPotrzeb{
+    GLOD, HIGIENA, SEN, ZABAWA
+}
 class Gra : AppCompatActivity(), Potrzeba.PasekPotrzebyListener
 {
 
@@ -22,9 +25,9 @@ class Gra : AppCompatActivity(), Potrzeba.PasekPotrzebyListener
 
     klasy itemów- na razie w Charach, miło by było to później zmienić na np. enumy, ale chary powinny dać radę
         'J'-jedzenie
-        'Z'-zabawa
         'H'-higiena
         'S'-sen
+        'Z'-zabawa
 
      */
 
@@ -47,23 +50,17 @@ class Gra : AppCompatActivity(), Potrzeba.PasekPotrzebyListener
         val dao = tamagotchiDatabase.getInstance(this).tamagotchiDao
 
         var listaPokoi = listOf(
-            //Food(this,null,BitmapFactory.decodeResource(getResources(), R.drawable.orange), 30),
             Pokoj(1,"kuchnia", 'J',BitmapFactory.decodeResource(getResources(), R.drawable.roomp)),
-            Pokoj(2,"salon", 'Z',BitmapFactory.decodeResource(getResources(), R.drawable.shop))
-            //Food(this,null,BitmapFactory.decodeResource(getResources(), R.drawable.orzeszek), 10)
-
-        )//zmienić na Itemy
+            Pokoj(2,"lazienka", 'H',BitmapFactory.decodeResource(getResources(), R.drawable.roomp)),
+            Pokoj(3,"sypialnia", 'S',BitmapFactory.decodeResource(getResources(), R.drawable.shop)),
+            Pokoj(4,"salon", 'Z',BitmapFactory.decodeResource(getResources(), R.drawable.shop))
+        )
         dao.insertAllRooms(listaPokoi)
 
+        val potrzeby = mutableListOf(Potrzeba(this), Potrzeba(this), Potrzeba(this), Potrzeba(this))
+        potrzeby[kolejnoscPotrzeb.GLOD.ordinal].setPasekPotrzebyListener(this)
 
-
-        //Pasek glodu
-        //val glod=Glod(100)
-        // Inicjalizacja paska głodu
-        val glod = Potrzeba(this, 100)
-        glod.setPasekPotrzebyListener(this)
-
-        val domek = Domek(dao, glod, this, dao.getAllRooms())
+        val domek = Domek(dao, potrzeby, this, dao.getAllRooms())
         val sklepik = Sklepik(dao, this)
 
         supportFragmentManager.beginTransaction().apply {
@@ -74,21 +71,11 @@ class Gra : AppCompatActivity(), Potrzeba.PasekPotrzebyListener
         val przyciskDomek = findViewById<Button>(R.id.domekBtn)
         val przyciskSklepik = findViewById<Button>(R.id.sklepikBtn)
 
-
-
-
-
-        //otworzenie/stworzenie bazy danych
-       // val mbd:BDManager = BDManager(BDHelper(applicationContext), this)
-
         ////////
         //tablica itemów, po dodaniu domku do przeniesienia do pokoju
         var listaItemow = listOf(
-            //Food(this,null,BitmapFactory.decodeResource(getResources(), R.drawable.orange), 30),
             Food(1,13, 30,BitmapFactory.decodeResource(getResources(), R.drawable.orange0),3),
-            //Food(this,null,BitmapFactory.decodeResource(getResources(), R.drawable.orzeszek), 10)
             Food(2,5,10,BitmapFactory.decodeResource(getResources(), R.drawable.peanut0), 1)
-            //Food(this,null,BitmapFactory.decodeResource(getResources(), R.drawable.orzeszek), 10)
 
             )//zmienić na Itemy]]
 
@@ -129,39 +116,6 @@ class Gra : AppCompatActivity(), Potrzeba.PasekPotrzebyListener
         imieCzlowieczka.setText(imie);
         println(imie)
 
-
-
-
-
-
-        /*
-        val przyciskKupowania= findViewById<Button>(R.id.sklepikBtn)
-        przyciskKupowania.background=BitmapDrawable(getResources(), listaJedzenia[0].bitmap)
-        przyciskKupowania.text = listaJedzenia[0].koszt.toString()
-        przyciskKupowania.setOnClickListener {
-            if(dao.getAllCz().first().monety>=listaJedzenia[0].koszt) {
-                dao.dodajIloscItem(1, listaJedzenia[0].id)
-                dao.dodajMonety(-listaJedzenia[0].koszt)
-                listaJedzenia = dao.getAllGdzieWiecejNiz0().toMutableList()
-            }else{
-                println("za malo monet")
-            }
-        }
-        */
-
-
-        /*val CzlowImageView = findViewById<ImageView>(R.id.czlowieczekImg)
-        CzlowImageView.setOnClickListener()
-        {
-            czlowieczki[0].addMoney(50) // You can pass any desired amount here
-            println("Monety: ")
-            println(czlowieczki[0].monety)
-            // Add money to the czlowieczek instance when the button is clicked
-
-        }*/
-
-
-        //przycisk wołający interakcję (do przeniesienia do pokoju? wtedy można w każdym pokoju ustawić inną funkcję dla przycisku??)
 
         przyciskDomek.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {

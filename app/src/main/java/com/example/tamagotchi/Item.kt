@@ -66,7 +66,7 @@ abstract class Item(/*context: Context, attrs: AttributeSet?, */@PrimaryKey val 
 
         */
     //Interakcja, domyslnie nic nie robi
-    open fun onInteract(glod: Potrzeba) {
+    open fun onInteract(potrzeba: Potrzeba) {
         // tutaj nadpisywana przez klasy poch
     }
 
@@ -133,8 +133,43 @@ open class Food(/*context: Context, attrs: AttributeSet?,*/  id:Int, ilosc:Int, 
 */
 
     //metoda przeciazajaca metode z item
-    override fun onInteract(glod: Potrzeba) {
-        glod.zwiekszPotrzebe(wartosc)
+    override fun onInteract(potrzeba: Potrzeba) {
+        potrzeba.zwiekszPotrzebe(wartosc)
+    }
+
+}
+
+open class Higene(/*context: Context, attrs: AttributeSet?,*/  id:Int, ilosc:Int, wartosc: Int, bitmap: Bitmap, koszt:Int, klasa:Char='H') :
+    Item(id,ilosc, wartosc, bitmap, koszt, klasa)/*(context, attrs, wartosc)*/
+{
+
+
+    //metoda przeciazajaca metode z item
+    override fun onInteract(potrzeba: Potrzeba) {
+        potrzeba.zwiekszPotrzebe(wartosc)
+    }
+
+}
+
+open class Sleep(/*context: Context, attrs: AttributeSet?,*/  id:Int, ilosc:Int, wartosc: Int, bitmap: Bitmap, koszt:Int, klasa:Char='H') :
+    Item(id,ilosc, wartosc, bitmap, koszt, klasa)/*(context, attrs, wartosc)*/
+{
+
+
+    //metoda przeciazajaca metode z item
+    override fun onInteract(potrzeba: Potrzeba) {
+        potrzeba.zwiekszPotrzebe(wartosc)
+    }
+
+}
+
+open class Fun(/*context: Context, attrs: AttributeSet?,*/  id:Int, ilosc:Int, wartosc: Int, bitmap: Bitmap, koszt:Int, klasa:Char='H') :
+    Item(id,ilosc, wartosc, bitmap, koszt, klasa)/*(context, attrs, wartosc)*/
+{
+
+    //metoda przeciazajaca metode z item
+    override fun onInteract(potrzeba: Potrzeba) {
+        potrzeba.zwiekszPotrzebe(wartosc)
     }
 
 }
