@@ -73,17 +73,17 @@ class Potrzeba(var context: Context, var level: Int = 100) {
     // Metoda do mapowania poziomu na odpowiedni obraz paska głodu
     private fun getObrazDlaPoziomu(level: Int): Int {
         return when (level) {
-            in 99..100 -> R.drawable.pasek_full10
-            in 80..98 -> R.drawable.pasek_9
-            in 70..79 -> R.drawable.pasek_8
-            in 60..69 -> R.drawable.pasek_7
-            in 50..59 -> R.drawable.pasek_6
-            in 40..49 -> R.drawable.pasek_5
-            in 30..39 -> R.drawable.pasek_4
-            in 20..29 -> R.drawable.pasek_3
-            in 10..19 -> R.drawable.pasek_2
-            in 9..1 -> R.drawable.pasek_1
-            else -> R.drawable.pasek_0
+            in 99..100 -> R.drawable.pasek_glod_10
+            in 80..98 -> R.drawable.pasek_glod_9
+            in 70..79 -> R.drawable.pasek_glod_8
+            in 60..69 -> R.drawable.pasek_glod_7
+            in 50..59 -> R.drawable.pasek_glod_6
+            in 40..49 -> R.drawable.pasek_glod_5
+            in 30..39 -> R.drawable.pasek_glod_4
+            in 20..29 -> R.drawable.pasek_glod_3
+            in 10..19 -> R.drawable.pasek_glod_2
+            in 9..1 -> R.drawable.pasek_glod_1
+            else -> R.drawable.pasek_glod_0
         }
     }
 }

@@ -57,7 +57,7 @@
         android:id="@+id/pasekGlod"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/pasek_full10"
+        android:src="@drawable/pasek_glod_10"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
