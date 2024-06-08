@@ -24,7 +24,7 @@ class Potrzeba(var context: Context, var level: Int = 100) {
     private fun startDecreaseThread() {
         Thread {
             while (true) {
-                Thread.sleep(500) // czekaj 0.5 sek
+                Thread.sleep(10000) // czekaj 10 sek
                 zmniejszPasek()
             }
         }.start()

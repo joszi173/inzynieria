@@ -7,17 +7,25 @@
     android:background="#3F51B5"
     tools:context=".Domek">
 
+
+
+
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="669dp"
         android:text="domek" />
 
+
     <RelativeLayout
         android:id="@+id/tloPokojuWDomku"
         android:layout_width="match_parent"
+        android:layout_marginTop="120dp"
         android:layout_height="match_parent"
         android:background="@drawable/roomp">
+
+
+
 
 
         <ImageView
@@ -27,18 +35,27 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="78dp"
-            android:layout_marginTop="141dp"
+            android:layout_marginTop="50dp"
             app:srcCompat="@android:drawable/arrow_up_float"
             tools:src="@drawable/clouds_loading2" />
 
+        <ImageView
+            android:id="@+id/Pasekbottom"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="0dp"
+            android:background="#99E0B3CD" />
+
         <Button
             android:id="@+id/UzyjItemu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="166dp"
-            android:layout_marginBottom="108dp"
+            android:layout_marginEnd="150dp"
+            android:layout_marginBottom="20dp"
             android:text="item" />
 
         <Button
@@ -46,18 +63,18 @@
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/UzyjItemu"
-            android:layout_marginTop="1dp"
-            android:layout_marginEnd="2dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="-2dp"
             android:layout_toStartOf="@+id/UzyjItemu"
             android:background="@android:drawable/ic_media_rew" />
 
         <Button
             android:id="@+id/buttonItemR"
-            android:layout_width="40dp"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/UzyjItemu"
-            android:layout_marginStart="-160dp"
-            android:layout_marginTop="-160dp"
+            android:layout_marginStart="-152dp"
+            android:layout_marginTop="-79dp"
             android:layout_toEndOf="@+id/UzyjItemu"
             android:background="@android:drawable/ic_media_ff" />
 
@@ -68,8 +85,9 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="3dp"
-            android:layout_marginTop="363dp"
+            android:layout_marginTop="260dp"
             android:background="@android:drawable/ic_media_previous" />
+
 
         <Button
             android:id="@+id/buttonPokojR"
@@ -77,10 +95,14 @@
             android:layout_height="86dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="332dp"
+            android:layout_marginTop="260dp"
             android:layout_marginEnd="16dp"
             android:background="@android:drawable/ic_media_next" />
 
+
     </RelativeLayout>
+
+
+
 
 </FrameLayout>

@@ -56,7 +56,7 @@ class Domek(val dao: tamagotchiDao, var listaPotrzeb: MutableList<Potrzeba>, val
         if (czlowieczekUIIMG != null) {
             czlowieczekUIIMG.setOnClickListener()
             {
-                dao.dodajMonety(50)
+                dao.dodajMonety(2)
                 println("Monety: "+dao.getAllCz().first().monety)
                 gra.ZmienWyswietlaneMonety(dao.getAllCz().first().monety)
             }
@@ -214,6 +214,8 @@ class Domek(val dao: tamagotchiDao, var listaPotrzeb: MutableList<Potrzeba>, val
         }
         return false
     }
+
+
 
 }
 

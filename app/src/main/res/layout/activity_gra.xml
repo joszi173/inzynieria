@@ -10,24 +10,27 @@
 
 
 
+
     <Button
         android:id="@+id/sklepikBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="300dp"
+        android:layout_width="200px"
+        android:layout_height="200px"
+        android:layout_marginStart="318dp"
         android:background="@drawable/sklepik1"
-        android:text="sklepik"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/domekBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200px"
+        android:layout_height="200px"
+        android:layout_marginStart="10dp"
         android:background="@drawable/domek1"
-        android:text="Domek"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+
 
     <FrameLayout
         android:id="@+id/frameLayout"
@@ -53,11 +56,22 @@
 
     </FrameLayout>
 
+
+    <ImageView
+        android:id="@+id/Pasektop"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="#E0B3CD"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/pasekGlod"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="90dp"
         android:src="@drawable/pasek_glod_10"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -75,20 +89,24 @@
 
     <TextView
         android:id="@+id/iloscMonetD"
-        android:drawableLeft="@drawable/money"
         android:layout_width="137dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="64dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="70dp"
+        android:adjustViewBounds="true"
+        android:drawableLeft="@drawable/money"
         android:fontFamily="sans-serif-medium"
-        android:text="MMM"
-        android:textAlignment="textStart"
-        android:gravity="center"
+        android:maxWidth="40dp"
+        android:maxHeight="40dp"
+        android:scaleType="fitCenter"
+        android:text="1000"
         android:textColor="@android:color/black"
-        android:textStyle="bold"
+        android:textSize="35dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="40dp" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
