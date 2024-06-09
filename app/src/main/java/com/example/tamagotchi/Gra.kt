@@ -56,7 +56,7 @@ class Gra : AppCompatActivity(), Potrzeba.PasekPotrzebyListener
 
         var listaPokoi = listOf(
             Kuchnia(1,"kuchnia", 'J',BitmapFactory.decodeResource(getResources(), R.drawable.roomp)),
-            Lazienka(2,"lazienka", 'H',BitmapFactory.decodeResource(getResources(), R.drawable.roomp)),
+            Lazienka(2,"lazienka", 'H',BitmapFactory.decodeResource(getResources(), R.drawable.lazienka)),
             Sypialnia(3,"sypialnia", 'S',BitmapFactory.decodeResource(getResources(), R.drawable.shop)),
             Salon(4,"salon", 'Z',BitmapFactory.decodeResource(getResources(), R.drawable.shop))
         )
