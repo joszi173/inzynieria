@@ -46,6 +46,7 @@ class Sklepik(val dao: tamagotchiDao, val gra: Gra) : Fragment(R.layout.fragment
                 text = i.koszt.toString()
                 setTextColor(Color.parseColor("black"))
                 textSize = 30f // Zmniejszenie rozmiaru tekstu
+                fontFeatureSettings="@font/meow_font"
                 gravity = Gravity.CENTER
             }
 
