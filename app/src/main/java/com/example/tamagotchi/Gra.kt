@@ -1,6 +1,7 @@
 package com.example.tamagotchi
 
 import android.annotation.SuppressLint
+import android.database.CursorWindow
 import android.os.Bundle
 import android.widget.TextView
 import android.graphics.BitmapFactory
@@ -51,6 +52,13 @@ class Gra : AppCompatActivity(), Potrzeba.PasekPotrzebyListener
 
 
         //kolejność pokoi względem kolejności potrzeb w listach jest ważna!!!!
+        try {
+            val field = CursorWindow::class.java.getDeclaredField("sCursorWindowSize")
+            field.setAccessible(true)
+            field.set(null, 100 * 1024 * 1024) //the 100MB is the new size
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         val potrzeby = mutableListOf(Potrzeba(this), Potrzeba(this), Potrzeba(this), Potrzeba(this))
         potrzeby[kolejnoscPotrzeb.GLOD.ordinal].setPasekPotrzebyListener(this)
 
@@ -83,14 +91,14 @@ class Gra : AppCompatActivity(), Potrzeba.PasekPotrzebyListener
         ////////
         //tablica itemów, po dodaniu domku do przeniesienia do pokoju
         var listaItemow = listOf(
-            Food(1,0, 30,BitmapFactory.decodeResource(getResources(), R.drawable.orange0),15),
+            Food(1,0, 30,BitmapFactory.decodeResource(getResources(), R.drawable.orang),15),
             Food(2,2,10,BitmapFactory.decodeResource(getResources(), R.drawable.peanut0), 4),
             Higene(3,1,1,BitmapFactory.decodeResource(getResources(), R.drawable.item_lazienka), 1),
-            Fun(4,2,2,BitmapFactory.decodeResource(getResources(), R.drawable.clouds_loading2), 1),
+            Fun(4,2,2,BitmapFactory.decodeResource(getResources(), R.drawable.item_salon), 1),
             Sleep(5,2,3,BitmapFactory.decodeResource(getResources(), R.drawable.item_sypialnia), 1),
-            Food(6,5,2,BitmapFactory.decodeResource(getResources(), R.drawable.cherry), 2),
-            Food(7,0,25,BitmapFactory.decodeResource(getResources(), R.drawable.cheese), 12),
-            Food(8,0,50,BitmapFactory.decodeResource(getResources(), R.drawable.pasta), 30)
+            Food(6,5,2,BitmapFactory.decodeResource(getResources(), R.drawable.wisnia), 2),
+            Food(7,0,25,BitmapFactory.decodeResource(getResources(), R.drawable.ser), 12),
+            Food(8,0,50,BitmapFactory.decodeResource(getResources(), R.drawable.zupa), 30)
             )//zmienić na Itemy]]
 
 

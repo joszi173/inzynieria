@@ -30,8 +30,8 @@
 
         <ImageView
             android:id="@+id/czlowieczekUIIMG"
-            android:layout_width="266dp"
-            android:layout_height="427dp"
+            android:layout_width="400dp"
+            android:layout_height="600dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="60dp"
