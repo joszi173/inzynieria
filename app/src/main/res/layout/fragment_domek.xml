@@ -37,7 +37,7 @@
             android:layout_marginStart="60dp"
             android:layout_marginTop="90dp"
             app:srcCompat="@android:drawable/arrow_up_float"
-            tools:src="@drawable/clouds_loading2" />
+            tools:src="@drawable/bnuy" />
 
         <ImageView
             android:id="@+id/Pasekbottom"

@@ -55,10 +55,10 @@ class Gra : AppCompatActivity(), Potrzeba.PasekPotrzebyListener
         potrzeby[kolejnoscPotrzeb.GLOD.ordinal].setPasekPotrzebyListener(this)
 
         var listaPokoi = listOf(
-            Kuchnia(1,"kuchnia", 'J',BitmapFactory.decodeResource(getResources(), R.drawable.roomp)),
+            Kuchnia(1,"kuchnia", 'J',BitmapFactory.decodeResource(getResources(), R.drawable.kuchnia)),
             Lazienka(2,"lazienka", 'H',BitmapFactory.decodeResource(getResources(), R.drawable.lazienka)),
             Sypialnia(3,"sypialnia", 'S',BitmapFactory.decodeResource(getResources(), R.drawable.shop)),
-            Salon(4,"salon", 'Z',BitmapFactory.decodeResource(getResources(), R.drawable.shop))
+            Salon(4,"salon", 'Z',BitmapFactory.decodeResource(getResources(), R.drawable.roomp))
         )
         dao.insertAllRooms(listaPokoi)
 
@@ -85,9 +85,9 @@ class Gra : AppCompatActivity(), Potrzeba.PasekPotrzebyListener
         var listaItemow = listOf(
             Food(1,0, 30,BitmapFactory.decodeResource(getResources(), R.drawable.orange0),15),
             Food(2,2,10,BitmapFactory.decodeResource(getResources(), R.drawable.peanut0), 4),
-            Higene(3,1,1,BitmapFactory.decodeResource(getResources(), R.drawable.bajablast), 1),
+            Higene(3,1,1,BitmapFactory.decodeResource(getResources(), R.drawable.item_lazienka), 1),
             Fun(4,2,2,BitmapFactory.decodeResource(getResources(), R.drawable.clouds_loading2), 1),
-            Sleep(5,2,3,BitmapFactory.decodeResource(getResources(), R.drawable.sklepik1), 1),
+            Sleep(5,2,3,BitmapFactory.decodeResource(getResources(), R.drawable.item_sypialnia), 1),
             Food(6,5,2,BitmapFactory.decodeResource(getResources(), R.drawable.cherry), 2),
             Food(7,0,25,BitmapFactory.decodeResource(getResources(), R.drawable.cheese), 12),
             Food(8,0,50,BitmapFactory.decodeResource(getResources(), R.drawable.pasta), 30)
