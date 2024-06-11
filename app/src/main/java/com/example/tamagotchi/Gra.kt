@@ -61,6 +61,9 @@ class Gra : AppCompatActivity(), Potrzeba.PasekPotrzebyListener
         }
         val potrzeby = mutableListOf(Potrzeba(this), Potrzeba(this), Potrzeba(this), Potrzeba(this))
         potrzeby[kolejnoscPotrzeb.GLOD.ordinal].setPasekPotrzebyListener(this)
+        potrzeby[kolejnoscPotrzeb.HIGIENA.ordinal].setPasekPotrzebyListener(this)
+        potrzeby[kolejnoscPotrzeb.SEN.ordinal].setPasekPotrzebyListener(this)
+        potrzeby[kolejnoscPotrzeb.ZABAWA.ordinal].setPasekPotrzebyListener(this)
 
         var listaPokoi = listOf(
             Kuchnia(1,"kuchnia", 'J',BitmapFactory.decodeResource(getResources(), R.drawable.kuchnia)),
@@ -92,7 +95,7 @@ class Gra : AppCompatActivity(), Potrzeba.PasekPotrzebyListener
         //tablica itemów, po dodaniu domku do przeniesienia do pokoju
         var listaItemow = listOf(
             Food(1,0, 30,BitmapFactory.decodeResource(getResources(), R.drawable.orang),15),
-            Food(2,2,10,BitmapFactory.decodeResource(getResources(), R.drawable.peenutt), 4),
+            Food(2,2,10,BitmapFactory.decodeResource(getResources(), R.drawable.peanut0), 4),
             Higene(3,1,1,BitmapFactory.decodeResource(getResources(), R.drawable.item_lazienka), 1),
             Fun(4,2,2,BitmapFactory.decodeResource(getResources(), R.drawable.item_salon), 1),
             Sleep(5,2,3,BitmapFactory.decodeResource(getResources(), R.drawable.item_sypialnia), 1),

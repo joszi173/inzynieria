@@ -60,7 +60,7 @@
             android:fontFamily="@font/meow_font"
             android:textAlignment="center"
             android:textSize="150px"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textStyle="bold"
             />
 

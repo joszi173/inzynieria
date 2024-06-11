@@ -8,29 +8,25 @@
     android:background="@color/light_pink"
     tools:context=".Gra">
 
-
-
-
     <Button
         android:id="@+id/sklepikBtn"
-        android:layout_width="120px"
-        android:layout_height="120px"
-        android:layout_marginStart="340dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:background="@drawable/sklepik1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        android:layout_marginEnd="16dp" />
 
     <Button
         android:id="@+id/domekBtn"
-        android:layout_width="120px"
-        android:layout_height="120px"
-        android:layout_marginStart="13dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:background="@drawable/domek1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
 
-
-
+        android:layout_marginStart="16dp" />
 
     <FrameLayout
         android:id="@+id/frameLayout"
@@ -39,7 +35,6 @@
         android:background="#F4C8E2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
 
         <TextView
             android:id="@+id/imieCzlowieczka"
@@ -52,10 +47,7 @@
             android:text="TextView"
             android:textColor="@color/dark_porpl"
             android:textSize="48sp" />
-
-
     </FrameLayout>
-
 
     <ImageView
         android:id="@+id/Pasektop"
@@ -68,33 +60,61 @@
 
     <ImageView
         android:id="@+id/pasekGlod"
-        android:layout_width="170dp"
-        android:layout_height="50dp"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
         android:src="@drawable/pasek_glod_10"
+        app:layout_constraintEnd_toStartOf="@+id/pasekEnergia"
+        app:layout_constraintStart_toEndOf="@+id/domekBtn"
+        app:layout_constraintTop_toBottomOf="@+id/Pasektop"
+         />
+
+    <ImageView
+        android:id="@+id/pasekEnergia"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:src="@drawable/pasek_energia_10"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginLeft="-100dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/pasekGlod"
+        app:layout_constraintTop_toBottomOf="@+id/Pasektop"
+         />
+
+    <ImageView
+        android:id="@+id/pasekHigiena"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:src="@drawable/pasek_higiena_10"
+        app:layout_constraintEnd_toStartOf="@+id/pasekZabawa"
+        app:layout_constraintStart_toEndOf="@+id/domekBtn"
+        app:layout_constraintTop_toBottomOf="@+id/pasekGlod"
+        android:layout_marginTop="8dp" />
+
+    <ImageView
+        android:id="@+id/pasekZabawa"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:src="@drawable/pasek_zabawa_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/pasekHigiena"
+        app:layout_constraintTop_toBottomOf="@+id/pasekEnergia"
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:id="@+id/iloscMonet"
         android:layout_width="137dp"
         android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="8dp"
         android:textColor="#330C0C"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toBottomOf="@+id/sklepikBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="16dp" />
 
     <TextView
         android:id="@+id/iloscMonetD"
         android:layout_width="137dp"
-        android:fontFamily="@font/meow_font"
         android:layout_height="30dp"
-        android:layout_marginStart="230dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/meow_font"
         android:adjustViewBounds="true"
         android:drawableLeft="@drawable/money"
         android:maxWidth="37dp"
@@ -104,11 +124,8 @@
         android:textColor="@android:color/black"
         android:textSize="30dp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-
-
+        app:layout_constraintTop_toBottomOf="@+id/iloscMonet"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
